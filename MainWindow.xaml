@@ -1,0 +1,239 @@
+﻿<Window Name="mwind" x:Class="FinanceManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:FinanceManager.ViewModels"
+        
+        xmlns:Animations="clr-namespace:FinanceManager.Core.Animations"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="Transparent" UseLayoutRounding="False" WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True">
+    <Window.Resources>
+        <SolidColorBrush x:Key="BackGroundColorWin" Color="#b8d3ff"></SolidColorBrush>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Border Margin="6.5,6.5,6.5,6.5" 
+                    Name="windowBorder"
+                    Background="Transparent"
+                    CornerRadius="15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border CornerRadius="15,15,0,0"
+                            Name="windowMenu" 
+                            Grid.Row="0"
+                            Background="{StaticResource BackGroundColorWin}"
+                            MouseLeftButtonDown="WindowMove">
+                        <DockPanel Background="Transparent">
+                            <Image Name="windowIcon"
+                                   Margin="5,0,5,0"
+                                   Width="{Binding ElementName=windowMenu, Path=ActualHeight}"
+                                   Height="{Binding ElementName=windowMenu, Path=ActualHeight}"
+                                   Source="/appIcon.png">
+                            </Image>
+                            <TextBlock Margin="5,5,0,0"
+                                       DockPanel.Dock="Left"  
+                                       Background="Transparent" 
+                                       Text="{TemplateBinding Title}" 
+                                       FontWeight="DemiBold" 
+                                       HorizontalAlignment="Stretch"/>
+                            <Button DockPanel.Dock="Right"
+                                    HorizontalAlignment="Right"
+                                    Style="{StaticResource ExitButton}" 
+                                    Command="{x:Static SystemCommands.CloseWindowCommand}">
+                                <Button.CommandBindings>
+                                    <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" 
+                                                    Executed="Exit_Execute"></CommandBinding>
+                                </Button.CommandBindings>
+                            </Button>
+                            <Button  Style="{StaticResource TurnButton}"
+                                     DockPanel.Dock="Right"
+                                     HorizontalAlignment="Right"
+                                     Command="{x:Static SystemCommands.MaximizeWindowCommand}">
+                                <TextBlock FontSize="20"
+                                           VerticalAlignment="Center" 
+                                           FontWeight="Bold"
+                                           Foreground="#7331af"
+                                           Margin="2,-2,2,0"
+                                           Padding="0,0,0,2"
+                                           Text=" □ ">
+                                </TextBlock>
+                                <Button.CommandBindings>
+                                    <CommandBinding Command="{x:Static SystemCommands.MaximizeWindowCommand}"
+                                                    Executed="Maximize"></CommandBinding>
+                                </Button.CommandBindings>
+                            </Button>
+                            <Button DockPanel.Dock="Right"
+                                    HorizontalAlignment="Right"
+                                    Style="{StaticResource TurnButton}"
+                                    Command="{x:Static SystemCommands.MinimizeWindowCommand}">
+                                <TextBlock FontSize="20" 
+                                           VerticalAlignment="Center" 
+                                           FontWeight="Bold"
+                                           Foreground="#7331af" 
+                                           Margin="2,-2,2,0"
+                                           Text=" ‒ ">
+                                </TextBlock>
+                                <Button.CommandBindings>
+                                    <CommandBinding Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                                                    Executed="Minimize">
+                                    </CommandBinding>
+                                </Button.CommandBindings>
+                            </Button>
+                        </DockPanel>
+                    </Border>
+                    <!--Основное содержание-->
+                    <Border Grid.Row="1"
+                            BorderThickness="0"
+                            Margin="0,-1,0,0"
+                            BorderBrush="Transparent"
+                            Background="#f0f8ff"
+                            CornerRadius="0,0,15,15">
+                        <AdornerDecorator>
+                            <ContentPresenter />
+                        </AdornerDecorator>
+                    </Border>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </Window.Template>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Name="hoverMenuColomn"
+                              MinWidth="100"
+                              MaxWidth="150"
+                              Width="100">
+            </ColumnDefinition>
+            <ColumnDefinition Width="Auto">
+                
+            </ColumnDefinition>
+            <ColumnDefinition Width="*">
+                
+            </ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*">
+                
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Name="hoverMenuBoard"
+                BorderThickness="0"
+                Width="{Binding Mode=OneWayToSource, ElementName=hoverMenuColomn, Path=Width}"
+                CornerRadius="0, 5, 5, 15"
+                Grid.Column="0"
+                Background="{StaticResource BackGroundColorWin}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition>
+                        
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <StackPanel  Grid.Row="0"
+                                 Orientation="Vertical" >
+                        <RadioButton IsChecked="True"
+                                     VerticalAlignment="Stretch" 
+                                     HorizontalAlignment="Stretch"
+                                     Style="{StaticResource MenuButton}"
+                                     Command="{Binding HomeViewCommand}">
+                            <RadioButton.Template>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <Border CornerRadius="5"
+                                            BorderThickness="3,3,3,3"
+                                            Height="50"
+                                            BorderBrush="Transparent"
+                                            VerticalAlignment="Stretch" 
+                                            HorizontalAlignment="Stretch"
+                                            Background="{TemplateBinding Background}">
+                                        <ContentControl HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        Content="{TemplateBinding Content}">
+                                        </ContentControl>
+                                    </Border>
+                                </ControlTemplate>
+                            </RadioButton.Template>
+                            <TextBlock Text="Home">
+
+                            </TextBlock>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource MenuButton}">
+                            <TextBlock Text="Some text">
+
+                            </TextBlock>
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource MenuButton}">
+                            <RadioButton.Template>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <Border CornerRadius="5"
+                                            BorderThickness="3,0,3,3"
+                                            Height="50"
+                                            BorderBrush="Transparent"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Background="{TemplateBinding Background}">
+                                        <ContentControl HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        Content="{TemplateBinding Content}">
+                                        </ContentControl>
+                                    </Border>
+                                </ControlTemplate>
+                            </RadioButton.Template>
+                            <TextBlock Text="Another some text">
+                                
+                            </TextBlock>
+                        </RadioButton>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Border.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <Animations:GridLengthAnimation Storyboard.TargetName="hoverMenuColomn" 
+                                                                Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                                                Duration="0:0:1"
+                                                                From="100"
+                                                                To="200">
+                                </Animations:GridLengthAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <Animations:GridLengthAnimation Storyboard.TargetName="hoverMenuColomn" 
+                                                                Storyboard.TargetProperty="(ColumnDefinition.Width)"
+                                                                Duration="0:0:0.7" From="{Binding ElementName=hoverMenuColomn, Path=Width}"
+                                                                To="{Binding ElementName=hoverMenuColomn, Path=MinWidth}">
+                                </Animations:GridLengthAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Border.Triggers>
+        </Border>
+        <Border CornerRadius="5, 0, 15, 5" 
+                Grid.Column="2"
+                BorderThickness="0"
+                Background="#daf5ff">
+            <Grid>
+                <ContentControl Content="{Binding CurrentView}">
+                    
+                </ContentControl>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
