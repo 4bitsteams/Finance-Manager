@@ -42,7 +42,11 @@ namespace FinanceManager.ViewModels
                 this.CurrentView = this.AccountsView;
             }
             );
+            AccountsViewCommand = new RelayCommand(o =>
 
+            CurrentView = AccountsView
+            );
+            CurrentView = HomeView;
         }
     }
 }
