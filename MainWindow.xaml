@@ -7,7 +7,7 @@
         
         xmlns:Animations="clr-namespace:FinanceManager.Core.Animations"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000"
+        Title="Finance Manager" Height="600" Width="1000"
         WindowStyle="None"
         ResizeMode="CanResize"
         Background="Transparent" UseLayoutRounding="False" WindowStartupLocation="CenterScreen"
@@ -36,14 +36,15 @@
                             MouseLeftButtonDown="WindowMove">
                         <DockPanel Background="Transparent">
                             <Image Name="windowIcon"
-                                   Margin="5,0,5,0"
+                                   Margin="8,0,5,0"
                                    Width="{Binding ElementName=windowMenu, Path=ActualHeight}"
                                    Height="{Binding ElementName=windowMenu, Path=ActualHeight}"
-                                   Source="/appIcon.png">
+                                   Source="/ico.ico">
                             </Image>
-                            <TextBlock Margin="5,5,0,0"
+                            <TextBlock Margin="3,5,0,0"
                                        DockPanel.Dock="Left"  
                                        Background="Transparent" 
+                                       FontSize="14"
                                        Text="{TemplateBinding Title}" 
                                        FontWeight="DemiBold" 
                                        HorizontalAlignment="Stretch"/>

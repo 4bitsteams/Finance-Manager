@@ -19,7 +19,12 @@
             <DataTemplate DataType="{x:Type viewModel:AccountsViewModel}">
                 <view:AccountsView></view:AccountsView>
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type viewModel:AccountEditViewModel}">
+                <view:AccountEditView></view:AccountEditView>
+            </DataTemplate>
+            <BooleanToVisibilityConverter x:Key="BoolToVisConverter">
+            </BooleanToVisibilityConverter>
         </ResourceDictionary>
         
     </Application.Resources>

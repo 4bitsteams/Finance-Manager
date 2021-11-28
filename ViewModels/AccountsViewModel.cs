@@ -12,18 +12,19 @@ namespace FinanceManager.ViewModels
 {
     public class AccountsViewModel : ViewModelBase
     {
-        private Account _selectedAccount;
+        private AccountViewModel _selectedAccount;
 
-        public Account SelectedAccount
+        public AccountViewModel SelectedAccount
         {
             get { return this._selectedAccount; }
             set
             {
-               Set(ref _selectedAccount, value);
+               EditAccountView.Editable = value;
+                this._selectedAccount = value;
             }
         }
 
-        public ObservableCollection<Account> Accounts { get; set; }
+        public ObservableCollection<AccountViewModel> Accounts { get; set; }
         public float TotalAmount
         { 
             get
@@ -31,9 +32,9 @@ namespace FinanceManager.ViewModels
                 float totalAmount = 0;
                 if (Accounts != null && Accounts.Count > 0)
                 {
-                    foreach (Account account in Accounts)
+                    foreach (AccountViewModel account in Accounts)
                     {
-                        if (account.Count)
+                        if (account.ToCount)
                         {
                             totalAmount += account.Amount;
                         }
@@ -41,17 +42,35 @@ namespace FinanceManager.ViewModels
                 }
 
                 return totalAmount;
-            } 
+            }
         }
+
+        public AccountEditViewModel EditAccountView { get; set; }
+
+        public RelayCommand EditAccountCommand { get; set; }
 
         public AccountsViewModel()
         {
-            this.Accounts = new ObservableCollection<Account>()
+            this.Accounts = new ObservableCollection<AccountViewModel>()
             {
-                new Account() { Name = "Cash"},
-                new Account() { Name ="Credit"}
+                new AccountViewModel(new Account() { Name = "Cash"}),
+                new AccountViewModel(new Account() { Name ="Credit"})
             };
+            EditAccountView = new AccountEditViewModel();
+            EditAccountCommand = new RelayCommand(e => EditAccountView.IsVisible = !EditAccountView.IsVisible);
             this.SelectedAccount = Accounts[0];
+            this.SelectedAccount.Amount += 15;
+            this.SelectedAccount.ToCount = true;
+            Accounts[1].ToCount = true;
+            foreach (AccountViewModel account in Accounts)
+            {
+                account.PropertyChanged += AccountsChanged;
+            }
+        }
+
+        private void AccountsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChange(nameof(this.TotalAmount));
         }
     }
 }

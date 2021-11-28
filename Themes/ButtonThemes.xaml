@@ -187,4 +187,42 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <Style BasedOn="{StaticResource {x:Type Button}}"
+           TargetType="Button"
+           x:Key="AddButton">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse x:Name="Shape" Stroke="#90abd5"
+                                     StrokeThickness="2"
+                                     Fill="{TemplateBinding Background}">
+                            </Ellipse>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Shape"
+                                            Storyboard.TargetProperty="Fill.Color" To="#9db8e3" Duration="0:0:0.5"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState Name="Normal">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Shape"
+                                                Storyboard.TargetProperty="Fill.Color" To="{Binding ElementName=Shape, Path=Fill.Color}" Duration="0:0:0.5" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                      
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+        
+    </Style>
 </ResourceDictionary>
