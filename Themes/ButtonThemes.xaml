@@ -3,6 +3,9 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="d">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
     <Style  BasedOn="{StaticResource {x:Type Button}}"
             TargetType="Button"
             x:Key="ExitButton">
@@ -144,7 +147,7 @@
             <Setter Property="Background">
                 <Setter.Value>
                     <SolidColorBrush Opacity="1" 
-                                     Color="#9eb9f2">
+                                     Color="{StaticResource ControlLightColor}">
                     </SolidColorBrush>
                 </Setter.Value>
             </Setter>
@@ -170,7 +173,7 @@
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Opacity="0.7"
-                                         Color="#85a0d7">
+                                         Color="{StaticResource ControlMediumColor}">
                         </SolidColorBrush>
                     </Setter.Value>
                 </Setter>
@@ -180,7 +183,7 @@
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Opacity="1"
-                                         Color="#85a0d7">
+                                         Color="{StaticResource ControlDarkColor}">
                         </SolidColorBrush>
                     </Setter.Value>
                 </Setter>
@@ -189,15 +192,18 @@
     </Style>
     <Style BasedOn="{StaticResource {x:Type Button}}"
            TargetType="Button"
-           x:Key="AddButton">
+           x:Key="AccountButton">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Grid>
-                            <Ellipse x:Name="Shape" Stroke="#90abd5"
+                            <Ellipse x:Name="Shape"
                                      StrokeThickness="2"
                                      Fill="{TemplateBinding Background}">
+                                <Ellipse.Stroke>
+                                    <SolidColorBrush Color="{StaticResource ControlDarkColor}"></SolidColorBrush>
+                                </Ellipse.Stroke>
                             </Ellipse>
                             <ContentPresenter HorizontalAlignment="Center"
                                   VerticalAlignment="Center"/>
@@ -206,7 +212,7 @@
                                     <VisualState Name="MouseOver">
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetName="Shape"
-                                            Storyboard.TargetProperty="Fill.Color" To="#9db8e3" Duration="0:0:0.5"/>
+                                            Storyboard.TargetProperty="Fill.Color" To="{StaticResource ControlMediumColor}" Duration="0:0:0.5"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState Name="Normal">

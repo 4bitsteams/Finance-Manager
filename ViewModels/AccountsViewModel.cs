@@ -19,8 +19,9 @@ namespace FinanceManager.ViewModels
             get { return this._selectedAccount; }
             set
             {
-               EditAccountView.Editable = value;
-                this._selectedAccount = value;
+               this.EditAccountView.Editable = value;
+               this._selectedAccount = value;
+                OnPropertyChange(nameof(Accounts));
             }
         }
 
@@ -49,6 +50,10 @@ namespace FinanceManager.ViewModels
 
         public RelayCommand EditAccountCommand { get; set; }
 
+        public RelayCommand AddAccountCommand { get; set; }
+
+        public RelayCommand DeleteAccountCommand { get; set; }
+
         public AccountsViewModel()
         {
             this.Accounts = new ObservableCollection<AccountViewModel>()
@@ -58,7 +63,23 @@ namespace FinanceManager.ViewModels
             };
             EditAccountView = new AccountEditViewModel();
             EditAccountCommand = new RelayCommand(e => EditAccountView.IsVisible = !EditAccountView.IsVisible);
-            this.SelectedAccount = Accounts[0];
+            AddAccountCommand = new RelayCommand(e =>
+            {
+               AccountViewModel account = new AccountViewModel(new Account()
+               {
+                   Name = "New account",
+                   Amount = 0
+               });
+               account.PropertyChanged += AccountsChanged;
+               Accounts.Add(account);
+            });
+            DeleteAccountCommand = new RelayCommand(e =>
+            {
+                this.Accounts.Remove(this.SelectedAccount);
+                this.SelectedAccount = null;
+                this.OnPropertyChange(nameof(this.TotalAmount));
+            });
+            this.SelectedAccount = Accounts[1];
             this.SelectedAccount.Amount += 15;
             this.SelectedAccount.ToCount = true;
             Accounts[1].ToCount = true;
@@ -70,7 +91,11 @@ namespace FinanceManager.ViewModels
 
         private void AccountsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            OnPropertyChange(nameof(this.TotalAmount));
+            if (e.PropertyName == nameof(AccountViewModel.Amount)
+                || e.PropertyName == nameof(AccountViewModel.ToCount)) 
+            {
+                OnPropertyChange(nameof(this.TotalAmount));
+            }
         }
     }
 }

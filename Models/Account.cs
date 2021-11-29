@@ -37,7 +37,7 @@ namespace FinanceManager.Models
                 return this._amount; 
             } 
         }
-        public bool Count
+        public bool ToCount
         {
             set
             {
@@ -58,6 +58,7 @@ namespace FinanceManager.Models
             this._id = string.Empty;
             this._name = string.Empty;
             this._amount = default;
+            this._count = false;
             this._transactionsHistory = new List<MoneyTransaction>();
         }
     }

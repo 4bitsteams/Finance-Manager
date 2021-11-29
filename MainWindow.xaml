@@ -12,9 +12,6 @@
         ResizeMode="CanResize"
         Background="Transparent" UseLayoutRounding="False" WindowStartupLocation="CenterScreen"
         AllowsTransparency="True">
-    <Window.Resources>
-        <SolidColorBrush x:Key="BackGroundColorWin" Color="#b8d3ff"></SolidColorBrush>
-    </Window.Resources>
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
@@ -32,8 +29,10 @@
                     <Border CornerRadius="15,15,0,0"
                             Name="windowMenu" 
                             Grid.Row="0"
-                            Background="{StaticResource BackGroundColorWin}"
                             MouseLeftButtonDown="WindowMove">
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"/>
+                        </Border.Background>
                         <DockPanel Background="Transparent">
                             <Image Name="windowIcon"
                                    Margin="8,0,5,0"
@@ -131,8 +130,10 @@
                 BorderThickness="0"
                 Width="{Binding Mode=OneWayToSource, ElementName=hoverMenuColomn, Path=Width}"
                 CornerRadius="0, 5, 5, 15"
-                Grid.Column="0"
-                Background="{StaticResource BackGroundColorWin}">
+                Grid.Column="0">
+            <Border.Background>
+                <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"/>
+            </Border.Background>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition>
@@ -141,7 +142,7 @@
                 </Grid.RowDefinitions>
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
                     <StackPanel  Grid.Row="0"
-                                 Orientation="Vertical" >
+                                 Orientation="Vertical">
                         <RadioButton IsChecked="True"
                                      VerticalAlignment="Stretch" 
                                      HorizontalAlignment="Stretch"

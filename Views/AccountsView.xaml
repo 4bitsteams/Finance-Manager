@@ -15,12 +15,12 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="1">
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <TextBlock FontSize="20"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center" 
@@ -37,7 +37,7 @@
                      BorderThickness="0"
                      Background="Transparent"
                      ItemsSource="{Binding Accounts}"
-                     SelectedItem="{Binding SelectedAccount}"
+                     SelectedItem="{Binding SelectedAccount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Width="Auto"
                      Margin="5"
                      ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -56,7 +56,7 @@
                                         Margin="5"
                                         SnapsToDevicePixels="true">
                                     <Border.Background>
-                                        <SolidColorBrush x:Name="BackgroundColor" Color="#b8d3ff" Opacity="0.5" />
+                                        <SolidColorBrush x:Name="BackgroundColor" Color="{StaticResource ContentAreaColorLight}" Opacity="0.5" />
                                     </Border.Background>
                                     <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup x:Name="SelectionStates">
@@ -64,14 +64,14 @@
                                             <VisualState x:Name="Selected">
                                                 <Storyboard>
                                                     <ColorAnimation Storyboard.TargetName="BackgroundColor"
-                                                            Storyboard.TargetProperty="Color" To="Red" Duration="0:0:0.01">
+                                                            Storyboard.TargetProperty="Color" To="{StaticResource ControlMediumColor}" Duration="0:0:0.01">
                                                     </ColorAnimation>
                                                 </Storyboard>
                                             </VisualState>
                                             <VisualState x:Name="SelectedUnfocused">
                                                 <Storyboard>
                                                     <ColorAnimation Storyboard.TargetName="BackgroundColor"
-                                                            Storyboard.TargetProperty="Color" To="#85a0d7" Duration="0:0:0.01">
+                                                            Storyboard.TargetProperty="Color" To="{StaticResource ControlMediumColor}" Duration="0:0:0.01">
                                                     </ColorAnimation>
                                                 </Storyboard>
                                             </VisualState>
@@ -96,18 +96,41 @@
             </ListBox.ItemTemplate>
 
         </ListBox>
-        <Button Grid.Column="2"
-                Grid.Row="2" 
+        <StackPanel Grid.Row="2" 
+                    Grid.Column="2"
+                    Orientation="Horizontal">
+            <Button Name="AddButton"
                 Width="50"
                 Height="50" 
                 HorizontalAlignment="Right"
                 Margin="0 5 20 20"
-                Style="{StaticResource AddButton}" 
+                Style="{StaticResource AccountButton}" 
                 Background="#b8d3ff"
                 Content="Add"
+                Command="{Binding AddAccountCommand}">
+            </Button>
+            <Button Name="RemoveButton"
+                Width="50"
+                Height="50" 
+                HorizontalAlignment="Right"
+                Margin="0 5 20 20"
+                Style="{StaticResource AccountButton}" 
+                Background="#b8d3ff"
+                Content="Remove"
+                Command="{Binding DeleteAccountCommand}">
+            </Button>
+            <Button Name="EditButton"
+                Width="50"
+                Height="50" 
+                HorizontalAlignment="Right"
+                Margin="0 5 20 20"
+                Style="{StaticResource AccountButton}" 
+                Background="#b8d3ff"
+                Content="Edit"
                 Command="{Binding EditAccountCommand}">
-        </Button>
-        <ContentControl Grid.Column="3" Content="{Binding EditAccountView}">
+            </Button>
+        </StackPanel>
+        <ContentControl Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" Content="{Binding EditAccountView}">
 
         </ContentControl>
     </Grid>

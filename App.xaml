@@ -10,6 +10,8 @@
             
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/ButtonThemes.xaml" />
+                <ResourceDictionary Source="Themes/TextConteinersStyles.xaml" />
+                <ResourceDictionary Source="Themes/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
@@ -25,6 +27,9 @@
             </DataTemplate>
             <BooleanToVisibilityConverter x:Key="BoolToVisConverter">
             </BooleanToVisibilityConverter>
+
+            
+            
         </ResourceDictionary>
         
     </Application.Resources>

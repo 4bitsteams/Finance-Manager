@@ -18,6 +18,7 @@ namespace FinanceManager.ViewModels
                 this._account = value;
                 OnPropertyChange(nameof(this.Name));
                 OnPropertyChange(nameof(this.Amount));
+                OnPropertyChange(nameof(this.ToCount));
             }
         }
 
@@ -45,12 +46,12 @@ namespace FinanceManager.ViewModels
         {
             get
             {
-                return this._account.Count;
+                return this._account.ToCount;
             }
 
             set
             {
-                this._account.Count = value;
+                this._account.ToCount = value;
                 OnPropertyChange();
             }
         }
