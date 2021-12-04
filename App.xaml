@@ -25,6 +25,21 @@
             <DataTemplate DataType="{x:Type viewModel:AccountEditViewModel}">
                 <view:AccountEditView></view:AccountEditView>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:InformationViewModel}">
+                <view:InformationView></view:InformationView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AccountViewModel}">
+                <DockPanel Margin="10">
+                    <TextBlock DockPanel.Dock="Left" FontSize="18" Text="{Binding Path=Name}"/>
+                    <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" FontSize="18" Text="{Binding Path=Balance, StringFormat={}{0:C}}"/>
+                </DockPanel>
+                <DataTemplate.Triggers>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+
             <BooleanToVisibilityConverter x:Key="BoolToVisConverter">
             </BooleanToVisibilityConverter>
 

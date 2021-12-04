@@ -4,7 +4,7 @@
     <Color x:Key="ContentAreaColorLight">#b8d3ff</Color>
     <Color x:Key="ContentAreaColorDark">#FF7381F9</Color>
 
-    <Color x:Key="DisabledControlLightColor">#FFE8EDF9</Color>
+    <Color x:Key="DisabledControlLightColor">#e8f0ff</Color>
     <Color x:Key="DisabledControlDarkColor">#FFC5CBF9</Color>
     <Color x:Key="DisabledForegroundColor">#FF888888</Color>
 

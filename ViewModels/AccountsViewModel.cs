@@ -12,7 +12,9 @@ namespace FinanceManager.ViewModels
 {
     public class AccountsViewModel : ViewModelBase
     {
-        private AccountViewModel _selectedAccount;
+        private ApplicationContext _dB;
+
+        private AccountViewModel? _selectedAccount;
 
         public AccountViewModel SelectedAccount
         {
@@ -22,27 +24,51 @@ namespace FinanceManager.ViewModels
                this.EditAccountView.Editable = value;
                this._selectedAccount = value;
                 OnPropertyChange(nameof(Accounts));
+                if (this._selectedAccount != null)
+                {
+                    this.IsEditAble = true;
+                }
+                else
+                {
+                    this.IsEditAble = false;
+                }
+            }
+        }
+
+        private bool _isEditAble;
+
+        public bool IsEditAble
+        {
+            get
+            {
+                return this._isEditAble;
+            }
+
+            set
+            {
+                this._isEditAble = value;
+                OnPropertyChange();
             }
         }
 
         public ObservableCollection<AccountViewModel> Accounts { get; set; }
-        public float TotalAmount
+        public double TotalBalance
         { 
             get
             {
-                float totalAmount = 0;
+                double totalBalance = 0;
                 if (Accounts != null && Accounts.Count > 0)
                 {
                     foreach (AccountViewModel account in Accounts)
                     {
                         if (account.ToCount)
                         {
-                            totalAmount += account.Amount;
+                            totalBalance += account.Balance;
                         }
                     }
                 }
 
-                return totalAmount;
+                return totalBalance;
             }
         }
 
@@ -56,46 +82,51 @@ namespace FinanceManager.ViewModels
 
         public AccountsViewModel()
         {
-            this.Accounts = new ObservableCollection<AccountViewModel>()
-            {
-                new AccountViewModel(new Account() { Name = "Cash"}),
-                new AccountViewModel(new Account() { Name ="Credit"})
-            };
+            this._dB = new ApplicationContext();
+            this.Accounts = new ObservableCollection<AccountViewModel>();
             EditAccountView = new AccountEditViewModel();
-            EditAccountCommand = new RelayCommand(e => EditAccountView.IsVisible = !EditAccountView.IsVisible);
-            AddAccountCommand = new RelayCommand(e =>
+            foreach(var account in this._dB.Accounts)
             {
-               AccountViewModel account = new AccountViewModel(new Account()
-               {
-                   Name = "New account",
-                   Amount = 0
-               });
-               account.PropertyChanged += AccountsChanged;
-               Accounts.Add(account);
-            });
-            DeleteAccountCommand = new RelayCommand(e =>
-            {
-                this.Accounts.Remove(this.SelectedAccount);
-                this.SelectedAccount = null;
-                this.OnPropertyChange(nameof(this.TotalAmount));
-            });
-            this.SelectedAccount = Accounts[1];
-            this.SelectedAccount.Amount += 15;
-            this.SelectedAccount.ToCount = true;
-            Accounts[1].ToCount = true;
+                Accounts.Add(new AccountViewModel(account));
+            }
             foreach (AccountViewModel account in Accounts)
             {
                 account.PropertyChanged += AccountsChanged;
             }
+
+            EditAccountCommand = new RelayCommand(e => EditAccountView.IsVisible = !EditAccountView.IsVisible);
+            AddAccountCommand = new RelayCommand(e =>
+            {
+                AccountViewModel account = new AccountViewModel(new Account()
+                {
+                    Name = "New account",
+                    Balance = 0
+                });
+                account.PropertyChanged += AccountsChanged;
+                Accounts.Add(account);
+                this._dB.Accounts.Add(Accounts[^1].Account);
+                this._dB.SaveChanges();
+            });
+            DeleteAccountCommand = new RelayCommand(e =>
+            {
+                this._dB.Accounts.Remove(this.SelectedAccount.Account);
+                this._dB.SaveChanges();
+                this.Accounts.Remove(this.SelectedAccount);
+                this.OnPropertyChange(nameof(this.TotalBalance));
+
+            });
+
         }
 
         private void AccountsChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(AccountViewModel.Amount)
+            if (e.PropertyName == nameof(AccountViewModel.Balance)
                 || e.PropertyName == nameof(AccountViewModel.ToCount)) 
             {
-                OnPropertyChange(nameof(this.TotalAmount));
+                OnPropertyChange(nameof(this.TotalBalance));
             }
+
+            this._dB?.SaveChanges();
         }
     }
 }

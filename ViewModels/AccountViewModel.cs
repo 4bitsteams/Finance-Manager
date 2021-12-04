@@ -17,7 +17,7 @@ namespace FinanceManager.ViewModels
             {
                 this._account = value;
                 OnPropertyChange(nameof(this.Name));
-                OnPropertyChange(nameof(this.Amount));
+                OnPropertyChange(nameof(this.Balance));
                 OnPropertyChange(nameof(this.ToCount));
             }
         }
@@ -32,12 +32,12 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public float Amount
+        public double Balance
         {
-            get { return _account.Amount; }
+            get { return _account.Balance; }
             set
             {
-                this._account.Amount = value;
+                this._account.Balance = value;
                 OnPropertyChange();
             }
         }

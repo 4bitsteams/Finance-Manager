@@ -28,7 +28,7 @@
             <TextBlock FontSize="20"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Center" 
-                   Text="{Binding TotalAmount, StringFormat={}{0:C}}"></TextBlock>
+                   Text="{Binding TotalBalance, StringFormat={}{0:C}}"></TextBlock>
         </StackPanel>
         <ListBox Height="Auto"
                      Grid.Row="1"
@@ -84,17 +84,6 @@
                     </Setter>
                 </Style>
             </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel Margin="10">
-                        <TextBlock DockPanel.Dock="Left" FontSize="18" Text="{Binding Path=Name}"/>
-                        <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" FontSize="18" Text="{Binding Path=Amount, StringFormat={}{0:C}}"/>
-                    </DockPanel>
-                    <DataTemplate.Triggers>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-
         </ListBox>
         <StackPanel Grid.Row="2" 
                     Grid.Column="2"
@@ -105,9 +94,11 @@
                 HorizontalAlignment="Right"
                 Margin="0 5 20 20"
                 Style="{StaticResource AccountButton}" 
-                Background="#b8d3ff"
                 Content="Add"
                 Command="{Binding AddAccountCommand}">
+                <Button.Background>
+                    <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                </Button.Background>
             </Button>
             <Button Name="RemoveButton"
                 Width="50"
@@ -115,19 +106,25 @@
                 HorizontalAlignment="Right"
                 Margin="0 5 20 20"
                 Style="{StaticResource AccountButton}" 
-                Background="#b8d3ff"
+                IsEnabled="{Binding IsEditAble}"
                 Content="Remove"
                 Command="{Binding DeleteAccountCommand}">
+                <Button.Background>
+                    <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                </Button.Background>
             </Button>
             <Button Name="EditButton"
                 Width="50"
                 Height="50" 
                 HorizontalAlignment="Right"
                 Margin="0 5 20 20"
-                Style="{StaticResource AccountButton}" 
-                Background="#b8d3ff"
+                Style="{StaticResource AccountButton}"
+                IsEnabled="{Binding IsEditAble}"
                 Content="Edit"
                 Command="{Binding EditAccountCommand}">
+                <Button.Background>
+                    <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                </Button.Background>
             </Button>
         </StackPanel>
         <ContentControl Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" Content="{Binding EditAccountView}">

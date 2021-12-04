@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,13 @@ namespace FinanceManager.Models
 {
     public class Account
     {
-        private string _id;
+        private int _id;
         private string _name;
-        private float _amount;
+        private double _balance;
         private bool _count;
-        private List<MoneyTransaction> _transactionsHistory;
 
-        public string Id { get { return _id; } }
+        [Key]
+        public int Id { get { return _id; } }
         public string Name 
         { 
             set 
@@ -26,15 +27,15 @@ namespace FinanceManager.Models
                 return this._name; 
             } 
         }
-        public float Amount 
+        public double Balance 
         { 
             set 
             {
-                this._amount = value;
+                this._balance = value;
             }
             get 
             { 
-                return this._amount; 
+                return this._balance; 
             } 
         }
         public bool ToCount
@@ -48,18 +49,23 @@ namespace FinanceManager.Models
                 return this._count; 
             }
         }
-        public List<MoneyTransaction> TransactionsHistory
-        {
-            get { return this._transactionsHistory; }
-        }
+
 
         public Account() 
         {
-            this._id = string.Empty;
+            this._id = default;
             this._name = string.Empty;
-            this._amount = default;
+            this._balance = default;
             this._count = false;
-            this._transactionsHistory = new List<MoneyTransaction>();
+        }
+
+        public Account (string Name, double Balance, bool ToCount)
+        {
+            this._id = default;
+            this.Name = Name;
+            this.Balance = Balance;
+            this.ToCount = ToCount;
+
         }
     }
 }

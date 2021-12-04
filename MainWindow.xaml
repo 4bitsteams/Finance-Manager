@@ -168,8 +168,9 @@
 
                             </TextBlock>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource MenuButton}">
-                            <TextBlock Text="Some text">
+                        <RadioButton Style="{StaticResource MenuButton}"
+                                     Command="{Binding InformationViewCommand}">
+                            <TextBlock Text="Information">
 
                             </TextBlock>
                         </RadioButton>
@@ -190,7 +191,7 @@
                                     </Border>
                                 </ControlTemplate>
                             </RadioButton.Template>
-                            <TextBlock Text="Another some text">
+                            <TextBlock Text="Accounts">
                                 
                             </TextBlock>
                         </RadioButton>
