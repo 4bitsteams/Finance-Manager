@@ -5,13 +5,13 @@
              xmlns:view="clr-namespace:FinanceManager.Views"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
         <ResourceDictionary>
             
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/ButtonThemes.xaml" />
                 <ResourceDictionary Source="Themes/TextConteinersStyles.xaml" />
                 <ResourceDictionary Source="Themes/Colors.xaml" />
+                <ResourceDictionary Source="Themes/ListBoxStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
@@ -25,6 +25,143 @@
             <DataTemplate DataType="{x:Type viewModel:AccountEditViewModel}">
                 <view:AccountEditView></view:AccountEditView>
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:InformationViewModel}">
+                <view:InformationView></view:InformationView>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AccountViewModel}">
+                <DockPanel Margin="10">
+                    <TextBlock DockPanel.Dock="Left" 
+                               FontSize="18" 
+                               Text="{Binding Path=Name}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock DockPanel.Dock="Right" 
+                               HorizontalAlignment="Right"
+                               FontSize="18" 
+                               Text="{Binding Path=Balance, StringFormat={}{0:C}}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                </DockPanel>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MoneyChangeViewModel}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" 
+                               Grid.Column="0"
+                               FontSize="18" 
+                               Margin="5 0 0 0"
+                               Text="{Binding Category.Name}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               HorizontalAlignment="Right"
+                               FontSize="18" 
+                               Margin="0 0 5 0"
+                               Text="{Binding Path=Impact, StringFormat={}{0:C}}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Name="Description"
+                               Visibility="Collapsed"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="3"
+                               HorizontalAlignment="Center"
+                               TextWrapping="Wrap"
+                               FontSize="18" 
+                               Margin="5 0 5 0"
+                               Text="{Binding Description}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="1" 
+                               Grid.Column="2" 
+                               HorizontalAlignment="Right"
+                               FontSize="18" 
+                               Margin="0 0 5 0"
+                               VerticalAlignment="Top"
+                               Text="{Binding Account.Name}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <CheckBox Name="IsDescriptionShown"
+                              Grid.Column="0"
+                              Grid.Row="1"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Margin="5">
+                        <CheckBox.Template>
+                            <ControlTemplate TargetType="CheckBox">
+                                <Grid>
+                                    <Ellipse Height="20" Width="20">
+                                        <Ellipse.Fill>
+                                            <SolidColorBrush x:Name="BackgroundColor" Color="{StaticResource ControlLightColor}"></SolidColorBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                    </ContentPresenter>
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="MouseOver">
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetName="BackgroundColor"
+                                                            Storyboard.TargetProperty="Color" To="{StaticResource ControlDarkColor}" Duration="0:0:0.01">
+                                                    </ColorAnimation>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </Grid>
+                            </ControlTemplate>
+                        </CheckBox.Template>
+                        <TextBlock Name="Arrow"
+                                   Text="˅"
+                                   FontWeight="Bold">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </CheckBox>
+                </Grid>
+                <DataTemplate.Triggers>
+                    <Trigger SourceName="IsDescriptionShown"
+                             Property="IsChecked"
+                             Value="true">
+                        <Setter TargetName="Description"
+                                Property="Visibility"
+                                Value="Visible"/>
+                        <Setter TargetName="Arrow"
+                                Property="Text"
+                                Value="˄"/>
+                    </Trigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+
             <BooleanToVisibilityConverter x:Key="BoolToVisConverter">
             </BooleanToVisibilityConverter>
 

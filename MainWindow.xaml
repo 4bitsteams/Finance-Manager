@@ -11,7 +11,8 @@
         WindowStyle="None"
         ResizeMode="CanResize"
         Background="Transparent" UseLayoutRounding="False" WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        MouseLeftButtonDown="UnFocusEvent">
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
@@ -46,7 +47,11 @@
                                        FontSize="14"
                                        Text="{TemplateBinding Title}" 
                                        FontWeight="DemiBold" 
-                                       HorizontalAlignment="Stretch"/>
+                                       HorizontalAlignment="Stretch">
+                                <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                            </TextBlock.Foreground>
+                            </TextBlock>
                             <Button DockPanel.Dock="Right"
                                     HorizontalAlignment="Right"
                                     Style="{StaticResource ExitButton}" 
@@ -100,7 +105,7 @@
                             Background="#f0f8ff"
                             CornerRadius="0,0,15,15">
                         <AdornerDecorator>
-                            <ContentPresenter />
+                            <ContentPresenter/>
                         </AdornerDecorator>
                     </Border>
                 </Grid>
@@ -165,12 +170,17 @@
                                 </ControlTemplate>
                             </RadioButton.Template>
                             <TextBlock Text="Home">
-
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                                </TextBlock.Foreground>
                             </TextBlock>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource MenuButton}">
-                            <TextBlock Text="Some text">
-
+                        <RadioButton Style="{StaticResource MenuButton}"
+                                     Command="{Binding InformationViewCommand}">
+                            <TextBlock Text="Information">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                                </TextBlock.Foreground>
                             </TextBlock>
                         </RadioButton>
                         <RadioButton Style="{StaticResource MenuButton}">
@@ -190,8 +200,10 @@
                                     </Border>
                                 </ControlTemplate>
                             </RadioButton.Template>
-                            <TextBlock Text="Another some text">
-                                
+                            <TextBlock Text="Accounts">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                                </TextBlock.Foreground>
                             </TextBlock>
                         </RadioButton>
                     </StackPanel>

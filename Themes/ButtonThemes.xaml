@@ -206,7 +206,7 @@
                                 </Ellipse.Stroke>
                             </Ellipse>
                             <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
+                                              VerticalAlignment="Center"/>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState Name="MouseOver">
@@ -221,14 +221,53 @@
                                                 Storyboard.TargetProperty="Fill.Color" To="{Binding ElementName=Shape, Path=Fill.Color}" Duration="0:0:0.5" />
                                         </Storyboard>
                                     </VisualState>
+                                    <VisualState Name="Disabled">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Shape"
+                                                Storyboard.TargetProperty="Fill.Color" To="{StaticResource DisabledControlLightColor}" Duration="0:0:0.5" />
+                                        </Storyboard>
+
+                                    </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                         </Grid>
-                      
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style.Setters>
-        
+    </Style>
+
+    <Style TargetType="RadioButton"
+           x:Key="InformationButtonStyle">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border CornerRadius="5 5 0 0"
+                                            BorderThickness="0"
+                                            Background="{TemplateBinding Background}">
+                            <ContentPresenter/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource ControlLightColor}"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="IsChecked"
+                                 Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{StaticResource ControlMediumColor}"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

@@ -24,77 +24,32 @@
             <TextBlock FontSize="20"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center" 
-                       Text="Total:"></TextBlock>
+                       Text="Total:">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
             <TextBlock FontSize="20"
                    VerticalAlignment="Top"
                    HorizontalAlignment="Center" 
-                   Text="{Binding TotalAmount, StringFormat={}{0:C}}"></TextBlock>
+                   Text="{Binding TotalBalance, StringFormat={}{0:C}}">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
         </StackPanel>
         <ListBox Height="Auto"
-                     Grid.Row="1"
+                 Grid.Row="1"
                  Grid.Column="0"
                  Grid.ColumnSpan="3"
-                     BorderThickness="0"
-                     Background="Transparent"
-                     ItemsSource="{Binding Accounts}"
-                     SelectedItem="{Binding SelectedAccount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Width="Auto"
-                     Margin="5"
-                     ScrollViewer.VerticalScrollBarVisibility="Hidden">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="SnapsToDevicePixels"
-                    Value="true" />
-                    <Setter Property="OverridesDefaultStyle"
-                    Value="true" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Border x:Name="Border"
-                                        Padding="2"
-                                        CornerRadius="5"
-                                        Margin="5"
-                                        SnapsToDevicePixels="true">
-                                    <Border.Background>
-                                        <SolidColorBrush x:Name="BackgroundColor" Color="{StaticResource ContentAreaColorLight}" Opacity="0.5" />
-                                    </Border.Background>
-                                    <VisualStateManager.VisualStateGroups>
-                                        <VisualStateGroup x:Name="SelectionStates">
-                                            <VisualState x:Name="Unselected" />
-                                            <VisualState x:Name="Selected">
-                                                <Storyboard>
-                                                    <ColorAnimation Storyboard.TargetName="BackgroundColor"
-                                                            Storyboard.TargetProperty="Color" To="{StaticResource ControlMediumColor}" Duration="0:0:0.01">
-                                                    </ColorAnimation>
-                                                </Storyboard>
-                                            </VisualState>
-                                            <VisualState x:Name="SelectedUnfocused">
-                                                <Storyboard>
-                                                    <ColorAnimation Storyboard.TargetName="BackgroundColor"
-                                                            Storyboard.TargetProperty="Color" To="{StaticResource ControlMediumColor}" Duration="0:0:0.01">
-                                                    </ColorAnimation>
-                                                </Storyboard>
-                                            </VisualState>
-                                        </VisualStateGroup>
-                                    </VisualStateManager.VisualStateGroups>
-                                    <ContentPresenter />
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel Margin="10">
-                        <TextBlock DockPanel.Dock="Left" FontSize="18" Text="{Binding Path=Name}"/>
-                        <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" FontSize="18" Text="{Binding Path=Amount, StringFormat={}{0:C}}"/>
-                    </DockPanel>
-                    <DataTemplate.Triggers>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-
+                 BorderThickness="0"
+                 Background="Transparent"
+                 ItemsSource="{Binding Accounts}"
+                 SelectedItem="{Binding SelectedAccount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 Width="Auto"
+                 Margin="5"
+                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                 ItemContainerStyle="{StaticResource ListBoxItemContainerStyle}">
         </ListBox>
         <StackPanel Grid.Row="2" 
                     Grid.Column="2"
@@ -105,9 +60,14 @@
                 HorizontalAlignment="Right"
                 Margin="0 5 20 20"
                 Style="{StaticResource AccountButton}" 
-                Background="#b8d3ff"
                 Content="Add"
                 Command="{Binding AddAccountCommand}">
+                <Button.Background>
+                    <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                </Button.Foreground>
             </Button>
             <Button Name="RemoveButton"
                 Width="50"
@@ -115,19 +75,31 @@
                 HorizontalAlignment="Right"
                 Margin="0 5 20 20"
                 Style="{StaticResource AccountButton}" 
-                Background="#b8d3ff"
+                IsEnabled="{Binding IsEditAble}"
                 Content="Remove"
                 Command="{Binding DeleteAccountCommand}">
+                <Button.Background>
+                    <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                </Button.Foreground>
             </Button>
             <Button Name="EditButton"
                 Width="50"
                 Height="50" 
                 HorizontalAlignment="Right"
                 Margin="0 5 20 20"
-                Style="{StaticResource AccountButton}" 
-                Background="#b8d3ff"
+                Style="{StaticResource AccountButton}"
+                IsEnabled="{Binding IsEditAble}"
                 Content="Edit"
                 Command="{Binding EditAccountCommand}">
+                <Button.Background>
+                    <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                </Button.Foreground>
             </Button>
         </StackPanel>
         <ContentControl Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" Content="{Binding EditAccountView}">

@@ -52,13 +52,12 @@ namespace FinanceManager.Models
         {
             //need toget account by its ID
             Account account = new Account();
-            account.Amount += this.Impact;
+            account.Balance += this.Impact;
             if(this.PerformDate == default)
             {
                 this.PerformDate = DateTime.Today;
             }
 
-            account.TransactionsHistory.Add(this);
 
         }
     }

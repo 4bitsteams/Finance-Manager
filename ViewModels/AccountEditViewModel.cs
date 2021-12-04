@@ -14,21 +14,6 @@ namespace FinanceManager.ViewModels
 
         private bool _isVisible;
 
-        private bool _isAble;
-
-        public bool IsAble
-        {
-            get
-            {
-                return this._isAble;
-            }
-
-            set
-            {
-                this._isAble = value;
-            }
-        }
-
         public bool IsVisible
         {
             get { return this._isVisible; }
@@ -53,11 +38,18 @@ namespace FinanceManager.ViewModels
                 return this._editable; 
             }
             set 
-            { 
+            {
                 this._editable = value;
-                OnPropertyChange(nameof(this.Name));
-                OnPropertyChange(nameof(this.Amount));
-                OnPropertyChange(nameof(this.ToCount));
+                if (this._editable != null)
+                {
+                    OnPropertyChange(nameof(this.Name));
+                    OnPropertyChange(nameof(this.Balance));
+                    OnPropertyChange(nameof(this.ToCount));
+                }
+                else
+                {
+                    this.IsVisible = false;
+                }
             }
         }
 
@@ -89,25 +81,25 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public float Amount
+        public double Balance
         {
             get 
             {
                 if (this._editable != null)
                 {
-                    return _editable.Amount;
+                    return _editable.Balance;
                 }
                 else
                 {
                     this.IsVisible = false;
-                    return 0f;
+                    return 0d;
                 }
             }
             set
             {
                 if (this._editable != null)
                 {
-                    this._editable.Amount = value;
+                    this._editable.Balance = value;
                 }
                 else
                 {
