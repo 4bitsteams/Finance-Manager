@@ -11,8 +11,7 @@
         WindowStyle="None"
         ResizeMode="CanResize"
         Background="Transparent" UseLayoutRounding="False" WindowStartupLocation="CenterScreen"
-        AllowsTransparency="True"
-        MouseLeftButtonDown="UnFocusEvent">
+        AllowsTransparency="True">
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>

@@ -51,10 +51,5 @@ namespace FinanceManager
                 SystemCommands.RestoreWindow(this);
             }
         }
-
-        private void UnFocusEvent(object sender, MouseButtonEventArgs e)
-        {
-            (sender as Window).Focus();
-        }
     }
 }
