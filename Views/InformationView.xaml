@@ -64,7 +64,7 @@
                 <SolidColorBrush Color="{StaticResource ControlMediumColor}"/>
             </Border.Background>
             
-            <Grid>
+    <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -86,6 +86,6 @@
                 </ListBox>
             </Grid>
         </Border>
-
+            
     </Grid>
 </UserControl>
