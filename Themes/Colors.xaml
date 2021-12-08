@@ -15,7 +15,7 @@
     <Color x:Key="ControlMediumColor">#85a0d7</Color>
     <Color x:Key="ControlDarkColor">#90abd5</Color>
 
-    <Color x:Key="ControlMouseOverColor">#FF3843C4</Color>
+    <Color x:Key="ControlMouseOverColor">#90abd5</Color>
     <Color x:Key="ControlPressedColor">#FF211AA9</Color>
 
     <Color x:Key="TextDarkColor">#3b195a</Color>

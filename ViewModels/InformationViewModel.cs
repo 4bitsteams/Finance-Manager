@@ -12,23 +12,23 @@ namespace FinanceManager.ViewModels
     public class InformationViewModel : ViewModelBase
     {
         private ApplicationContext _dB;
-        private ObservableCollection<MoneyChangeViewModel> _shownMoneyChanges;
+        private ObservableCollection<CategoryViewModel> _categories;
         private bool _incomesRadioButtonIsChecked;
         private bool _expencesRadioButtonIsChecked;
 
-        private ObservableCollection<MoneyChangeViewModel> Expences { get; set; }
+        private ObservableCollection<CategoryViewModel> Expences { get; set; }
 
-        private ObservableCollection<MoneyChangeViewModel> Incomes { get; set; }
+        private ObservableCollection<CategoryViewModel> Incomes { get; set; }
 
-        public ObservableCollection<MoneyChangeViewModel> ShownMoneyChanges
+        public ObservableCollection<CategoryViewModel> ShownMoneyChanges
         {
             get
             {
-                return this._shownMoneyChanges;
+                return this._categories;
             }
             set
             {
-                this._shownMoneyChanges = value;
+                this._categories = value;
                 OnPropertyChange();
             }
         }
@@ -66,9 +66,12 @@ namespace FinanceManager.ViewModels
         public InformationViewModel()
         {
             this._dB = new ApplicationContext();
-            Expences = new ObservableCollection<MoneyChangeViewModel>();
-            Incomes = new ObservableCollection<MoneyChangeViewModel>();
-            Expences.Add(new MoneyChangeViewModel());
+            Expences = new ObservableCollection<CategoryViewModel>();
+            Incomes = new ObservableCollection<CategoryViewModel>();
+            Category cat = new Category();
+            cat.Name = "Category";
+            cat.MoneyChanges.Add(new MoneyChange(15, 48 , new Account("Account", 25, true), DateOnly.FromDateTime(DateTime.Now), ChangeType.Expenses, "Some description" ));
+            Expences.Add(new CategoryViewModel(cat));
             ExpencesCommand = new RelayCommand(o =>
             {
                 this.ShownMoneyChanges = Expences;

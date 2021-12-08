@@ -19,7 +19,7 @@
                             Margin="5"
                             SnapsToDevicePixels="true">
                         <Border.Background>
-                            <SolidColorBrush x:Name="BackgroundColor" Color="{StaticResource ContentAreaColorLight}" Opacity="0.5" />
+                            <SolidColorBrush x:Name="BackgroundColor" Color="{StaticResource ContentAreaColorLight}" Opacity="0.8" />
                         </Border.Background>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SelectionStates">
@@ -45,6 +45,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Focusable" Value="False"/>
     </Style>
 </ResourceDictionary>

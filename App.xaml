@@ -49,7 +49,7 @@
                     </TextBlock>
                 </DockPanel>
             </DataTemplate>
-
+            
             <DataTemplate DataType="{x:Type viewModel:MoneyChangeViewModel}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -64,9 +64,12 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" 
                                Grid.Column="0"
+                               Grid.ColumnSpan="2"
                                FontSize="18" 
-                               Margin="5 0 0 0"
-                               Text="{Binding Category.Name}">
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"
+                               Margin="5 0 5 0"
+                               Text="{Binding Description}">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
                         </TextBlock.Foreground>
@@ -77,20 +80,6 @@
                                FontSize="18" 
                                Margin="0 0 5 0"
                                Text="{Binding Path=Impact, StringFormat={}{0:C}}">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                        </TextBlock.Foreground>
-                    </TextBlock>
-                    <TextBlock Name="Description"
-                               Visibility="Collapsed"
-                               Grid.Row="2"
-                               Grid.Column="0"
-                               Grid.ColumnSpan="3"
-                               HorizontalAlignment="Center"
-                               TextWrapping="Wrap"
-                               FontSize="18" 
-                               Margin="5 0 5 0"
-                               Text="{Binding Description}">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
                         </TextBlock.Foreground>
@@ -106,7 +95,58 @@
                             <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <CheckBox Name="IsDescriptionShown"
+                </Grid>
+            </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type viewModel:CategoryViewModel}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                        <RowDefinition Height="Auto" ></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" 
+                               Grid.Column="0"
+                               FontSize="18" 
+                               Margin="5 0 0 0"
+                               Text="{Binding Name}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               HorizontalAlignment="Right"
+                               FontSize="18" 
+                               Margin="0 0 5 0"
+                               Text="{Binding Path=TotalExpencesImpact, StringFormat={}{0:C}}">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <ListBox ItemsSource="{Binding MoneyChanges}"
+                             Name="MoneyChanges"
+                             Visibility="Collapsed"
+                             Grid.Row="2"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3"
+                             HorizontalAlignment="Stretch"
+                             Margin="5 0 5 0">
+                        <ListBox.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource ListBoxItemContainerStyle}"
+                               TargetType="ListBoxItem">
+                                <Setter Property="Focusable"
+                                    Value="False"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                    <CheckBox Name="IsMoneyChangesShown"
                               Grid.Column="0"
                               Grid.Row="1"
                               VerticalAlignment="Center"
@@ -117,7 +157,9 @@
                                 <Grid>
                                     <Ellipse Height="20" Width="20">
                                         <Ellipse.Fill>
-                                            <SolidColorBrush x:Name="BackgroundColor" Color="{StaticResource ControlLightColor}"></SolidColorBrush>
+                                            <SolidColorBrush x:Name="BackgroundColor"
+                                                             Color="{StaticResource ContentAreaColorLight}"
+                                                             Opacity="0.6"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
                                     <ContentPresenter HorizontalAlignment="Center"
@@ -129,7 +171,7 @@
                                             <VisualState x:Name="MouseOver">
                                                 <Storyboard>
                                                     <ColorAnimation Storyboard.TargetName="BackgroundColor"
-                                                            Storyboard.TargetProperty="Color" To="{StaticResource ControlDarkColor}" Duration="0:0:0.01">
+                                                            Storyboard.TargetProperty="Color" To="{StaticResource ControlMediumColor}" Duration="0:0:0.01">
                                                     </ColorAnimation>
                                                 </Storyboard>
                                             </VisualState>
@@ -148,10 +190,10 @@
                     </CheckBox>
                 </Grid>
                 <DataTemplate.Triggers>
-                    <Trigger SourceName="IsDescriptionShown"
+                    <Trigger SourceName="IsMoneyChangesShown"
                              Property="IsChecked"
                              Value="true">
-                        <Setter TargetName="Description"
+                        <Setter TargetName="MoneyChanges"
                                 Property="Visibility"
                                 Value="Visible"/>
                         <Setter TargetName="Arrow"

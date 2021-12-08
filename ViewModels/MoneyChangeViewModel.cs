@@ -12,6 +12,8 @@ namespace FinanceManager.ViewModels
     {
         private MoneyChange _moneyChange;
 
+        private AccountViewModel _account;
+
         public MoneyChange MoneyChange
         {
             get 
@@ -21,7 +23,13 @@ namespace FinanceManager.ViewModels
 
             set 
             { 
-                this._moneyChange = value; 
+                this._moneyChange = value;
+                this._account = new AccountViewModel(this._moneyChange.Account);
+                OnPropertyChange(nameof(this.Impact));
+                OnPropertyChange(nameof(this.Account));
+                OnPropertyChange(nameof(this.Date));
+                OnPropertyChange(nameof(this.Description));
+                OnPropertyChange(nameof(this.Type));
             }
         }
 
@@ -39,16 +47,17 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public Account Account
+        public AccountViewModel Account
         {
             get
             {
-                return this._moneyChange.Account;
+                return this._account;
             }
 
             set
             {
-                this._moneyChange.Account = value;
+                this._account = value;
+                this.MoneyChange.Account = this._account.Account;
                 OnPropertyChange();
             }
         }
@@ -81,16 +90,15 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public Category Category
+        public ChangeType Type
         {
             get
             {
-                return this._moneyChange.Category;
+                return this._moneyChange.Type;
             }
-
             set
             {
-                this._moneyChange.Category = value;
+                this._moneyChange.Type = value;
                 OnPropertyChange();
             }
         }
@@ -98,13 +106,17 @@ namespace FinanceManager.ViewModels
         public MoneyChangeViewModel()
         {
             this._moneyChange = new MoneyChange();
+            this.MoneyChange.Impact = 15;
             this.MoneyChange.Account = new Account("poof", 25, true);
-            this.MoneyChange.Category = new Category();
-            this.MoneyChange.Category.Name = "name";
             this.MoneyChange.Description = "A lot of description A lot of description A lot of description A lot of description A lot of description" +
                 "A lot of description A lot of description A lot of description A lot of description A lot of description" +
                 "A lot of description A lot of description A lot of description A lot of description A lot of description" +
                 "A lot of description A lot of description A lot of description A lot of description A lot of description";
+        }
+
+        public MoneyChangeViewModel(MoneyChange change)
+        {
+            this.MoneyChange = change;
         }
     }
 }

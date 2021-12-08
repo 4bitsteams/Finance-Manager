@@ -192,7 +192,7 @@
     </Style>
     <Style BasedOn="{StaticResource {x:Type Button}}"
            TargetType="Button"
-           x:Key="AccountButton">
+           x:Key="CircleButton">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
@@ -212,19 +212,25 @@
                                     <VisualState Name="MouseOver">
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetName="Shape"
-                                            Storyboard.TargetProperty="Fill.Color" To="{StaticResource ControlMediumColor}" Duration="0:0:0.5"/>
+                                                            Storyboard.TargetProperty="Fill.Color" 
+                                                            To="{StaticResource ControlMouseOverColor}"
+                                                            Duration="0:0:0.5"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState Name="Normal">
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetName="Shape"
-                                                Storyboard.TargetProperty="Fill.Color" To="{Binding ElementName=Shape, Path=Fill.Color}" Duration="0:0:0.5" />
+                                                            Storyboard.TargetProperty="Fill.Color"
+                                                            To="{Binding ElementName=Shape, Path=Fill.Color}"
+                                                            Duration="0:0:0.5"/>
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState Name="Disabled">
                                         <Storyboard>
                                             <ColorAnimation Storyboard.TargetName="Shape"
-                                                Storyboard.TargetProperty="Fill.Color" To="{StaticResource DisabledControlLightColor}" Duration="0:0:0.5" />
+                                                            Storyboard.TargetProperty="Fill.Color" 
+                                                            To="{StaticResource DisabledControlLightColor}"
+                                                            Duration="0:0:0.5" />
                                         </Storyboard>
 
                                     </VisualState>
@@ -255,7 +261,7 @@
             </Setter>
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Color="{StaticResource ControlLightColor}"/>
+                    <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"/>
                 </Setter.Value>
             </Setter>
         </Style.Setters>
@@ -264,7 +270,7 @@
                                  Value="True">
                 <Setter Property="Background">
                     <Setter.Value>
-                        <SolidColorBrush Color="{StaticResource ControlMediumColor}"/>
+                        <SolidColorBrush Color="{StaticResource ControlLightColor}"/>
                     </Setter.Value>
                 </Setter>
             </Trigger>

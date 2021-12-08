@@ -10,11 +10,13 @@ namespace FinanceManager.Models
     {
         private string _id;
         private string _name;
+        private List<MoneyChange> _changes;
         private string _imageSource;
 
         public string Id
         {
             get { return this._id; }
+            set { this._id = value; }
         }
         public string Name 
         {
@@ -27,6 +29,57 @@ namespace FinanceManager.Models
             get { return this._imageSource; }
         }
 
-        public Category() { }
+        public List<MoneyChange> MoneyChanges
+        {
+            get { return this._changes; }
+            set { this._changes = value; }
+        }
+
+        public double TotalExpencesImpact
+        {
+            get
+            {
+                double totalExpencesImpact = 0;
+                foreach (MoneyChange change in MoneyChanges)
+                {
+                    if (change.Type == ChangeType.Expenses)
+                    {
+                        totalExpencesImpact += change.Impact;
+                    }
+                }
+
+                return totalExpencesImpact;
+            }
+        }
+
+        public double TotalIncomesImpact
+        {
+            get
+            {
+                double totalIncomesImpact = 0;
+                foreach (MoneyChange change in MoneyChanges)
+                {
+                    if (change.Type == ChangeType.Income)
+                    {
+                        totalIncomesImpact += change.Impact;
+                    }
+                }
+
+                return totalIncomesImpact;
+            }
+        }
+
+        public Category()
+        {
+            this._changes = new List<MoneyChange>();
+        }
+
+        public Category(string Id, string Name, string ImageSource, List<MoneyChange> MoneyChanges)
+        {
+            this.Id = Id;
+            this.Name = Name;
+            this.ImageSource = ImageSource;
+            this.MoneyChanges = MoneyChanges;
+        }
     }
 }

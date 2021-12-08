@@ -24,15 +24,17 @@
             <TextBlock FontSize="20"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center" 
-                       Text="Total:">
+                       Text="Total:"
+                       FontWeight="DemiBold">
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
                 </TextBlock.Foreground>
             </TextBlock>
             <TextBlock FontSize="20"
-                   VerticalAlignment="Top"
-                   HorizontalAlignment="Center" 
-                   Text="{Binding TotalBalance, StringFormat={}{0:C}}">
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center" 
+                       Text="{Binding TotalBalance, StringFormat={}{0:C}}"
+                       FontWeight="DemiBold">
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
                 </TextBlock.Foreground>
@@ -55,13 +57,14 @@
                     Grid.Column="2"
                     Orientation="Horizontal">
             <Button Name="AddButton"
-                Width="50"
-                Height="50" 
-                HorizontalAlignment="Right"
-                Margin="0 5 20 20"
-                Style="{StaticResource AccountButton}" 
-                Content="Add"
-                Command="{Binding AddAccountCommand}">
+                    Width="50"
+                    Height="50" 
+                    HorizontalAlignment="Right"
+                    Margin="0 5 20 20"
+                    Style="{StaticResource CircleButton}"
+                    Content="Add"
+                    FontWeight="DemiBold"
+                    Command="{Binding AddAccountCommand}">
                 <Button.Background>
                     <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
                 </Button.Background>
@@ -70,14 +73,15 @@
                 </Button.Foreground>
             </Button>
             <Button Name="RemoveButton"
-                Width="50"
-                Height="50" 
-                HorizontalAlignment="Right"
-                Margin="0 5 20 20"
-                Style="{StaticResource AccountButton}" 
-                IsEnabled="{Binding IsEditAble}"
-                Content="Remove"
-                Command="{Binding DeleteAccountCommand}">
+                    Width="50"
+                    Height="50"
+                    HorizontalAlignment="Right"
+                    Margin="0 5 20 20"
+                    Style="{StaticResource CircleButton}"
+                    IsEnabled="{Binding IsEditAble}"
+                    Content="Remove"
+                    FontWeight="DemiBold"
+                    Command="{Binding DeleteAccountCommand}">
                 <Button.Background>
                     <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
                 </Button.Background>
@@ -86,14 +90,15 @@
                 </Button.Foreground>
             </Button>
             <Button Name="EditButton"
-                Width="50"
-                Height="50" 
-                HorizontalAlignment="Right"
-                Margin="0 5 20 20"
-                Style="{StaticResource AccountButton}"
-                IsEnabled="{Binding IsEditAble}"
-                Content="Edit"
-                Command="{Binding EditAccountCommand}">
+                    Width="50"
+                    Height="50"
+                    HorizontalAlignment="Right"
+                    Margin="0 5 20 20"
+                    Style="{StaticResource CircleButton}"
+                    IsEnabled="{Binding IsEditAble}"
+                    Content="Edit"
+                    FontWeight="DemiBold"
+                    Command="{Binding EditAccountCommand}">
                 <Button.Background>
                     <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
                 </Button.Background>
@@ -102,8 +107,10 @@
                 </Button.Foreground>
             </Button>
         </StackPanel>
-        <ContentControl Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" Content="{Binding EditAccountView}">
+        <ContentControl Grid.Column="3"
+                        Grid.Row="0" 
+                        Grid.RowSpan="3" 
+                        Content="{Binding EditAccountView}"/>
 
-        </ContentControl>
     </Grid>
 </UserControl>

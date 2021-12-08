@@ -14,13 +14,18 @@ namespace FinanceManager.Models
 
     public class MoneyChange
     {
+        private int _id;
         private double _impact;
         private Account _account;
         private DateOnly _date;
-        private Category _category;
-        private ChangeType _type;
         private string _description;
 
+
+        public int Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
         public double Impact 
         {
             get
@@ -73,19 +78,6 @@ namespace FinanceManager.Models
             }
         }
 
-        public Category Category
-        {
-            get
-            {
-                return this._category;
-            }
-
-            set
-            {
-                this._category = value;
-            }
-        }
-
         public ChangeType Type { get; set; }
 
         public MoneyChange() 
@@ -93,8 +85,17 @@ namespace FinanceManager.Models
             this._impact = 0;
             this._account = null;
             this._date = DateOnly.FromDateTime(DateTime.Now);
-            this._category = null;
             this._description = null;
+        }
+
+        public MoneyChange(int Id, double Impact, Account Account, DateOnly Date, ChangeType Type, string Description)
+        {
+            this._id = Id;
+            this._impact = Impact;
+            this._account = Account;
+            this._date = Date;
+            this._description = Description;
+            this.Type = Type;
         }
     }
 }

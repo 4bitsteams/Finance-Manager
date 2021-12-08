@@ -18,11 +18,14 @@ namespace FinanceManager.ViewModels
 
         public AccountViewModel SelectedAccount
         {
-            get { return this._selectedAccount; }
+            get 
+            { 
+                return this._selectedAccount; 
+            }
             set
             {
-               this.EditAccountView.Editable = value;
-               this._selectedAccount = value;
+                this.EditAccountView.Editable = value;
+                this._selectedAccount = value;
                 OnPropertyChange(nameof(Accounts));
                 if (this._selectedAccount != null)
                 {
@@ -32,6 +35,7 @@ namespace FinanceManager.ViewModels
                 {
                     this.IsEditAble = false;
                 }
+                OnPropertyChange();
             }
         }
 
@@ -103,9 +107,11 @@ namespace FinanceManager.ViewModels
                     Balance = 0
                 });
                 account.PropertyChanged += AccountsChanged;
-                Accounts.Add(account);
+                this.Accounts.Add(account);
+                this.SelectedAccount = this.Accounts[^1];
                 this._dB.Accounts.Add(Accounts[^1].Account);
                 this._dB.SaveChanges();
+                this.EditAccountView.IsVisible = true;
             });
             DeleteAccountCommand = new RelayCommand(e =>
             {
