@@ -17,9 +17,9 @@ namespace FinanceManager.Models
         private int _id;
         private double _impact;
         private Account _account;
-        private DateOnly _date;
+        private DateTime _date;
         private string _description;
-
+        private Category _category;
 
         public int Id
         {
@@ -48,11 +48,24 @@ namespace FinanceManager.Models
 
             set
             {
-                this._account = value;
+                if (this._account != null)
+                {
+                    if (this._account != value)
+                    {
+                        this._account.RemoveMoneyChange(this);
+                        (value as Account).AddMoneyChange(this);
+                        this._account = value;
+                    }
+                }
+                else
+                {
+                    this._account = value;
+                    (value as Account).AddMoneyChange(this);
+                }
             }
         }
 
-        public DateOnly Date
+        public DateTime Date
         {
             get 
             { 
@@ -78,24 +91,51 @@ namespace FinanceManager.Models
             }
         }
 
+        public Category Category
+        {
+            get 
+            { 
+                return this._category;
+            }
+
+            set
+            {
+                if (this._category != null)
+                {
+                    if (this._category != value)
+                    {
+                        this._category.RemoveMoneyChange(this);
+                        (value as Category).AddMoneyChange(this);
+                        this._category = value;
+                    }
+                }
+                else
+                {
+                    this._category = value;
+                    (value as Category).AddMoneyChange(this);
+                }
+            }
+        }
+
         public ChangeType Type { get; set; }
 
         public MoneyChange() 
         {
             this._impact = 0;
             this._account = null;
-            this._date = DateOnly.FromDateTime(DateTime.Now);
+            this._date = DateTime.Now;
             this._description = null;
         }
 
-        public MoneyChange(int Id, double Impact, Account Account, DateOnly Date, ChangeType Type, string Description)
+        public MoneyChange(int Id, double Impact, Account Account, DateTime Date, ChangeType Type, string Description, Category Category)
         {
-            this._id = Id;
-            this._impact = Impact;
-            this._account = Account;
-            this._date = Date;
-            this._description = Description;
+            this.Id = Id;
+            this.Impact = Impact;
+            this.Account = Account;
+            this.Date = Date;
+            this.Description = Description;
             this.Type = Type;
+            this.Category = Category;
         }
     }
 }

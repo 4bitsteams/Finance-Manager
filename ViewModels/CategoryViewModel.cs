@@ -13,6 +13,8 @@ namespace FinanceManager.ViewModels
     {
         private Category _category;
 
+        private MoneyChangeViewModel? _selectedmoneyChange;
+
         private ObservableCollection<MoneyChangeViewModel> _moneyChanges;
 
         public Category Category
@@ -29,6 +31,20 @@ namespace FinanceManager.ViewModels
                 OnPropertyChange(nameof(this.Name));
                 OnPropertyChange(nameof(this.ImageSource));
                 OnPropertyChange(nameof(this.MoneyChanges));
+            }
+        }
+
+        public MoneyChangeViewModel? SelectedMoneyChange
+        {
+            get
+            {
+                return this._selectedmoneyChange;
+            }
+
+            set
+            {
+                this._selectedmoneyChange = value;
+                OnPropertyChange();
             }
         }
 

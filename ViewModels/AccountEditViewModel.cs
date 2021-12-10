@@ -16,7 +16,10 @@ namespace FinanceManager.ViewModels
 
         public bool IsVisible
         {
-            get { return this._isVisible; }
+            get 
+            { 
+                return this._isVisible;
+            }
             set
             {
                 if (this._editable != null)
@@ -40,15 +43,13 @@ namespace FinanceManager.ViewModels
             set 
             {
                 this._editable = value;
-                if (this._editable != null)
+                if (this.VisibilityCheck())
                 {
                     OnPropertyChange(nameof(this.Name));
                     OnPropertyChange(nameof(this.Balance));
                     OnPropertyChange(nameof(this.ToCount));
-                }
-                else
-                {
-                    this.IsVisible = false;
+                    this._editable.PropertyChanged -= PropertyChanged;
+                    this._editable.PropertyChanged += PropertyChanged;
                 }
             }
         }
@@ -57,27 +58,19 @@ namespace FinanceManager.ViewModels
         {
             get 
             {
-                if (this._editable != null)
+                if (this.VisibilityCheck())
                 {
                     return this._editable.Name;
                 }
-                else
-                {
-                    IsVisible = false;
-                    return string.Empty;
-                }
+
+                return string.Empty;
             }
             set
             {
-                if (this._editable != null)
+                if (this.VisibilityCheck())
                 {
                     this._editable.Name = value;
                 }
-                else
-                {
-                    this.IsVisible = false;
-                }
-                OnPropertyChange();
             }
         }
 
@@ -85,27 +78,19 @@ namespace FinanceManager.ViewModels
         {
             get 
             {
-                if (this._editable != null)
+                if (this.VisibilityCheck())
                 {
                     return _editable.Balance;
                 }
-                else
-                {
-                    this.IsVisible = false;
-                    return 0d;
-                }
+
+                return 0d;
             }
             set
             {
-                if (this._editable != null)
+                if (this.VisibilityCheck())
                 {
                     this._editable.Balance = value;
                 }
-                else
-                {
-                    this.IsVisible = false;
-                }
-                OnPropertyChange();
             }
         }
 
@@ -113,33 +98,58 @@ namespace FinanceManager.ViewModels
         {
             get
             {
-                if (this._editable != null)
+                if (this.VisibilityCheck())
                 {
                     return this._editable.ToCount;
                 }
-                else
-                {
-                    this.IsVisible = false;
-                    return false;
-                }
+                
+                return false;
             }
             set
             {
-                if (this._editable != null)
+                if (this.VisibilityCheck())
                 {
                     this._editable.ToCount = value;
                 }
-                else
-                {
-                    this.IsVisible = false;
-                }
-                OnPropertyChange();
             }
         }
 
         public AccountEditViewModel()
         {
+        }
 
+        public AccountEditViewModel(AccountViewModel account)
+        {
+            this.Editable = account;
+        }
+
+        private void PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(AccountViewModel.Balance):
+                    OnPropertyChange(nameof(this.Balance));
+                    break;
+                case nameof(AccountViewModel.ToCount):
+                    OnPropertyChange(nameof(this.ToCount));
+                    break;
+                case nameof(AccountViewModel.Name):
+                    OnPropertyChange(nameof(this.Name));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private bool VisibilityCheck()
+        {
+            if (this._editable != null)
+            {
+                return true;
+            }
+
+            this.IsVisible = false;
+            return false;
         }
     }
 }

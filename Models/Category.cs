@@ -81,5 +81,18 @@ namespace FinanceManager.Models
             this.ImageSource = ImageSource;
             this.MoneyChanges = MoneyChanges;
         }
+
+        public void AddMoneyChange(MoneyChange change)
+        {
+            if (!this.MoneyChanges.Contains(change))
+            {
+                this.MoneyChanges.Add(change);
+            }
+        }
+
+        public void RemoveMoneyChange(MoneyChange change)
+        {
+            this.MoneyChanges.Remove(change);
+        }
     }
 }

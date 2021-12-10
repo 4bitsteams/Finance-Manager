@@ -12,13 +12,17 @@ namespace FinanceManager.ViewModels
     public class InformationViewModel : ViewModelBase
     {
         private ApplicationContext _dB;
+
+        private MoneyChangeViewModel? _selectedmoneyChange;
         private ObservableCollection<CategoryViewModel> _categories;
         private bool _incomesRadioButtonIsChecked;
         private bool _expencesRadioButtonIsChecked;
 
-        private ObservableCollection<CategoryViewModel> Expences { get; set; }
+        public ObservableCollection<CategoryViewModel> Expences { get; set; }
 
-        private ObservableCollection<CategoryViewModel> Incomes { get; set; }
+        public ObservableCollection<CategoryViewModel> Incomes { get; set; }
+
+        public MoneyChangeEditViewModel MoneyChangeEditViewModel { get; set; }
 
         public ObservableCollection<CategoryViewModel> ShownMoneyChanges
         {
@@ -29,6 +33,21 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._categories = value;
+                OnPropertyChange();
+            }
+        }
+
+        public MoneyChangeViewModel? SelectedMoneyChange
+        {
+            get 
+            { 
+                return this._selectedmoneyChange; 
+            }
+
+            set 
+            { 
+                this._selectedmoneyChange = value;
+                this.MoneyChangeEditViewModel.MoneyChange = this._selectedmoneyChange;
                 OnPropertyChange();
             }
         }
@@ -66,12 +85,19 @@ namespace FinanceManager.ViewModels
         public InformationViewModel()
         {
             this._dB = new ApplicationContext();
+            MoneyChangeEditViewModel = new MoneyChangeEditViewModel();
             Expences = new ObservableCollection<CategoryViewModel>();
             Incomes = new ObservableCollection<CategoryViewModel>();
             Category cat = new Category();
             cat.Name = "Category";
-            cat.MoneyChanges.Add(new MoneyChange(15, 48 , new Account("Account", 25, true), DateOnly.FromDateTime(DateTime.Now), ChangeType.Expenses, "Some description" ));
+            cat.AddMoneyChange(new MoneyChange(15, 48 , new Account("Account", 25, true), DateTime.Now, ChangeType.Expenses, "Some description", cat));
+            cat.AddMoneyChange(new MoneyChange(15, 36.15, new Account("Account", 25, true), DateTime.Now, ChangeType.Expenses, "Some description", cat));
             Expences.Add(new CategoryViewModel(cat));
+            Expences.Add(new CategoryViewModel(cat));
+            Expences.Add(new CategoryViewModel(cat));
+            Expences[^1].PropertyChanged += CategoryViewModelPropertyChanged;
+            Expences[^2].PropertyChanged += CategoryViewModelPropertyChanged;
+            Expences[^3].PropertyChanged += CategoryViewModelPropertyChanged;
             ExpencesCommand = new RelayCommand(o =>
             {
                 this.ShownMoneyChanges = Expences;
@@ -84,5 +110,29 @@ namespace FinanceManager.ViewModels
             ExpenxesRadioButtonIsChecked = true;
         }
 
+        private void CategoryViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (sender is CategoryViewModel category)
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(CategoryViewModel.SelectedMoneyChange):
+                        if (category.SelectedMoneyChange != null)
+                        {
+                            this.SelectedMoneyChange = category.SelectedMoneyChange;
+                            foreach (CategoryViewModel anotherCategory in this.ShownMoneyChanges)
+                            {
+                                if (anotherCategory != category && anotherCategory.SelectedMoneyChange != null)
+                                {
+                                    anotherCategory.SelectedMoneyChange = null;
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }
