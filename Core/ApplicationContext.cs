@@ -12,6 +12,10 @@ namespace FinanceManager.Core
     {
         public DbSet<Account> Accounts { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<MoneyChange> MoneyChanges { get; set; }
+
         public string DbPath { get; private set; }
 
         public ApplicationContext() : base()

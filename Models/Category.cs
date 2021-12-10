@@ -8,12 +8,12 @@ namespace FinanceManager.Models
 {
     public class Category
     {
-        private string _id;
+        private int _id;
         private string _name;
         private List<MoneyChange> _changes;
         private string _imageSource;
 
-        public string Id
+        public int Id
         {
             get { return this._id; }
             set { this._id = value; }
@@ -74,12 +74,25 @@ namespace FinanceManager.Models
             this._changes = new List<MoneyChange>();
         }
 
-        public Category(string Id, string Name, string ImageSource, List<MoneyChange> MoneyChanges)
+        public Category(int Id, string Name, string ImageSource, List<MoneyChange> MoneyChanges)
         {
             this.Id = Id;
             this.Name = Name;
             this.ImageSource = ImageSource;
             this.MoneyChanges = MoneyChanges;
+        }
+
+        public void AddMoneyChange(MoneyChange change)
+        {
+            if (!this.MoneyChanges.Contains(change))
+            {
+                this.MoneyChanges.Add(change);
+            }
+        }
+
+        public void RemoveMoneyChange(MoneyChange change)
+        {
+            this.MoneyChanges.Remove(change);
         }
     }
 }

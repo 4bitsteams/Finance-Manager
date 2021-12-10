@@ -9,13 +9,12 @@ namespace FinanceManager.Models
 {
     public class Account
     {
-        private int _id;
         private string _name;
         private double _balance;
         private bool _count;
+        private List<MoneyChange> _influenceMoneyChanges;
 
-        [Key]
-        public int Id { get { return _id; } }
+        public int Id { get; set; }
         public string Name 
         { 
             set 
@@ -35,7 +34,16 @@ namespace FinanceManager.Models
             }
             get 
             { 
-                return this._balance; 
+                double balance = this._balance;
+                if (this._influenceMoneyChanges != null)
+                {
+                    foreach (MoneyChange change in this._influenceMoneyChanges)
+                    {
+                        balance += change.Impact;
+                    }
+                }
+
+                return balance; 
             } 
         }
         public bool ToCount
@@ -50,22 +58,55 @@ namespace FinanceManager.Models
             }
         }
 
+        public List<MoneyChange> InfluenceMoneyChanges
+        {
+            get
+            {
+                return this._influenceMoneyChanges;
+            }
+
+            set
+            {
+                this._influenceMoneyChanges = value;
+            }
+        }
+
 
         public Account() 
         {
-            this._id = default;
+            this.Id = default;
             this._name = string.Empty;
             this._balance = default;
             this._count = false;
+            this._influenceMoneyChanges = new List<MoneyChange>();
         }
 
-        public Account (string Name, double Balance, bool ToCount)
+        public Account (string Name, double Balance, bool ToCount, List<MoneyChange> InfluenceMoneyChanges = null)
         {
-            this._id = default;
+            this.Id = default;
             this.Name = Name;
             this.Balance = Balance;
             this.ToCount = ToCount;
 
+            if (InfluenceMoneyChanges == null)
+            { 
+                InfluenceMoneyChanges = new List<MoneyChange>(); 
+            }
+
+            this.InfluenceMoneyChanges = InfluenceMoneyChanges;
+        }
+
+        public void AddMoneyChange(MoneyChange change)
+        {
+            if (!this.InfluenceMoneyChanges.Contains(change))
+            {
+                this.InfluenceMoneyChanges.Add(change);
+            }
+        }
+
+        public void RemoveMoneyChange(MoneyChange change)
+        {
+            this.InfluenceMoneyChanges.Remove(change);
         }
     }
 }

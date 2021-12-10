@@ -12,8 +12,6 @@ namespace FinanceManager.ViewModels
 {
     public class AccountsViewModel : ViewModelBase
     {
-        private ApplicationContext _dB;
-
         private AccountViewModel? _selectedAccount;
 
         public AccountViewModel SelectedAccount
@@ -86,10 +84,9 @@ namespace FinanceManager.ViewModels
 
         public AccountsViewModel()
         {
-            this._dB = new ApplicationContext();
             this.Accounts = new ObservableCollection<AccountViewModel>();
             EditAccountView = new AccountEditViewModel();
-            foreach(var account in this._dB.Accounts)
+            foreach(var account in Service.Accounts)
             {
                 Accounts.Add(new AccountViewModel(account));
             }
@@ -109,14 +106,12 @@ namespace FinanceManager.ViewModels
                 account.PropertyChanged += AccountsChanged;
                 this.Accounts.Add(account);
                 this.SelectedAccount = this.Accounts[^1];
-                this._dB.Accounts.Add(Accounts[^1].Account);
-                this._dB.SaveChanges();
+                Service.AddAccount(this.SelectedAccount.Account);
                 this.EditAccountView.IsVisible = true;
             });
             DeleteAccountCommand = new RelayCommand(e =>
             {
-                this._dB.Accounts.Remove(this.SelectedAccount.Account);
-                this._dB.SaveChanges();
+                Service.RemoveAccount(this.SelectedAccount.Account);
                 this.Accounts.Remove(this.SelectedAccount);
                 this.OnPropertyChange(nameof(this.TotalBalance));
 
@@ -132,7 +127,7 @@ namespace FinanceManager.ViewModels
                 OnPropertyChange(nameof(this.TotalBalance));
             }
 
-            this._dB?.SaveChanges();
+            Service.SaveChanges();
         }
     }
 }

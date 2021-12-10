@@ -51,6 +51,8 @@
                  Width="Auto"
                  Margin="5"
                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                 ScrollViewer.IsDeferredScrollingEnabled="True"
+                 ScrollViewer.CanContentScroll="False"
                  ItemContainerStyle="{StaticResource ListBoxItemContainerStyle}">
         </ListBox>
         <StackPanel Grid.Row="2" 

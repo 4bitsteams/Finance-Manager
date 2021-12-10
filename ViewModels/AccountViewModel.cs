@@ -56,11 +56,20 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public AccountViewModel() { }
+        public AccountViewModel() 
+        {
+            this._account = new Account();
+            this.PropertyChanged += DB_SaveChanges;
+        }
 
-        public AccountViewModel(Account account)
+        public AccountViewModel(Account account) : this()
         {
             this.Account = account;
+        }
+
+        private void DB_SaveChanges(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Service.SaveChanges();
         }
     }
 }

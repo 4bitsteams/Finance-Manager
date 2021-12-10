@@ -11,8 +11,8 @@ namespace FinanceManager.ViewModels
     public class MoneyChangeViewModel : ViewModelBase
     {
         private MoneyChange _moneyChange;
-
         private AccountViewModel _account;
+        private CategoryViewModel _category;
 
         public MoneyChange MoneyChange
         {
@@ -24,11 +24,11 @@ namespace FinanceManager.ViewModels
             set 
             { 
                 this._moneyChange = value;
-                this._account = new AccountViewModel(this._moneyChange.Account);
                 OnPropertyChange(nameof(this.Impact));
                 OnPropertyChange(nameof(this.Account));
                 OnPropertyChange(nameof(this.Date));
                 OnPropertyChange(nameof(this.Description));
+                OnPropertyChange(nameof(this.Category));
                 OnPropertyChange(nameof(this.Type));
             }
         }
@@ -51,18 +51,17 @@ namespace FinanceManager.ViewModels
         {
             get
             {
-                return this._account;
+                return new AccountViewModel(this.MoneyChange.Account);
             }
 
             set
             {
-                this._account = value;
-                this.MoneyChange.Account = this._account.Account;
+                this.MoneyChange.Account = (value as AccountViewModel).Account;
                 OnPropertyChange();
             }
         }
 
-        public DateOnly Date
+        public DateTime Date
         {
             get
             {
@@ -90,6 +89,20 @@ namespace FinanceManager.ViewModels
             }
         }
 
+        public CategoryViewModel Category
+        {
+            get
+            {
+                return new CategoryViewModel(this.MoneyChange.Category);
+            }
+
+            set
+            {
+                this.MoneyChange.Category = (value as CategoryViewModel).Category;
+                OnPropertyChange();
+            }
+        }
+
         public ChangeType Type
         {
             get
@@ -106,17 +119,21 @@ namespace FinanceManager.ViewModels
         public MoneyChangeViewModel()
         {
             this._moneyChange = new MoneyChange();
-            this.MoneyChange.Impact = 15;
-            this.MoneyChange.Account = new Account("poof", 25, true);
-            this.MoneyChange.Description = "A lot of description A lot of description A lot of description A lot of description A lot of description" +
-                "A lot of description A lot of description A lot of description A lot of description A lot of description" +
-                "A lot of description A lot of description A lot of description A lot of description A lot of description" +
-                "A lot of description A lot of description A lot of description A lot of description A lot of description";
+            this.MoneyChange.Impact = default;
+            this.MoneyChange.Account = new Account();
+            this.MoneyChange.Category = new Category();
+            this.MoneyChange.Description = string.Empty;
+            this.PropertyChanged += DB_SaveChanges;
         }
 
-        public MoneyChangeViewModel(MoneyChange change)
+        public MoneyChangeViewModel(MoneyChange change) : this()
         {
             this.MoneyChange = change;
+        }
+
+        private void DB_SaveChanges(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Service.SaveChanges();
         }
     }
 }

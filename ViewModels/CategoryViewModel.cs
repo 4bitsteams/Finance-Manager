@@ -13,6 +13,8 @@ namespace FinanceManager.ViewModels
     {
         private Category _category;
 
+        private MoneyChangeViewModel? _selectedmoneyChange;
+
         private ObservableCollection<MoneyChangeViewModel> _moneyChanges;
 
         public Category Category
@@ -29,6 +31,20 @@ namespace FinanceManager.ViewModels
                 OnPropertyChange(nameof(this.Name));
                 OnPropertyChange(nameof(this.ImageSource));
                 OnPropertyChange(nameof(this.MoneyChanges));
+            }
+        }
+
+        public MoneyChangeViewModel? SelectedMoneyChange
+        {
+            get
+            {
+                return this._selectedmoneyChange;
+            }
+
+            set
+            {
+                this._selectedmoneyChange = value;
+                OnPropertyChange();
             }
         }
 
@@ -93,13 +109,32 @@ namespace FinanceManager.ViewModels
         {
             this.Category = new Category();
             this.MoneyChangesLoad();
+            this.PropertyChanged += DB_SaveChanges;
         }
 
-        public CategoryViewModel(Category category)
+        public CategoryViewModel(Category category) : this()
         {
             this.Category = category;
-            this.MoneyChangesLoad();
         }
+
+        private void MoneyChangeImpactChange(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(MoneyChangeViewModel.Impact):
+                    OnPropertyChange(nameof(this.TotalExpencesImpact));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        private void DB_SaveChanges(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Service.SaveChanges();
+        }
+
 
         private void MoneyChangesLoad()
         {
@@ -108,7 +143,10 @@ namespace FinanceManager.ViewModels
                 this._moneyChanges = new ObservableCollection<MoneyChangeViewModel>();
                 foreach (MoneyChange change in this._category.MoneyChanges)
                 {
-                    this.MoneyChanges.Add(new MoneyChangeViewModel(change));
+                    MoneyChangeViewModel moneyChange = new MoneyChangeViewModel(change);
+                    moneyChange.PropertyChanged -= MoneyChangeImpactChange;
+                    moneyChange.PropertyChanged += MoneyChangeImpactChange;
+                    this.MoneyChanges.Add(moneyChange);
                 }
             }
         }

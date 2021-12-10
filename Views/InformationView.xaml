@@ -66,7 +66,7 @@
             
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -74,24 +74,12 @@
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Name="AddButton"
-                        Width="50"
-                        Height="50"
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Right"
-                        Margin="0 5 20 20"
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Style="{StaticResource CircleButton}"
-                        Content="Add"
-                        FontWeight="DemiBold">
-                    <Button.Background>
-                        <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
-                    </Button.Background>
-                    <Button.Foreground>
-                        <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                    </Button.Foreground>
-                </Button>
+                <ContentControl Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Content="{Binding MoneyChangeEditViewModel}">
+                    
+                </ContentControl>
                 <ListBox Grid.Row="1"
                          Grid.Column="0"
                          Grid.ColumnSpan="3"
@@ -100,7 +88,9 @@
                          ItemsSource="{Binding ShownMoneyChanges}"
                          Margin="0 0 0 10"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                         ScrollViewer.IsDeferredScrollingEnabled="True"
+                         ScrollViewer.CanContentScroll="False">
                     <ListBox.ItemContainerStyle>
                         <Style BasedOn="{StaticResource ListBoxItemContainerStyle}"
                                TargetType="ListBoxItem">
