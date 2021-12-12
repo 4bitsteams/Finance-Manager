@@ -55,12 +55,12 @@
                     </TextBlock.Foreground>
                 </TextBlock>
                     <TextBox Text="{Binding Impact, StringFormat={}{0:N2}, Mode=TwoWay}"
-                             Style="{StaticResource AccountInfoEdit}"
+                         Style="{StaticResource AccountInfoEdit}"
                              MaxLength="9"
-                             Margin="3 5 3 0"
-                             Height="Auto"
-                             MaxWidth="500">
-
+                         Margin="3 5 3 0"
+                         Height="Auto"
+                         MaxWidth="500">
+                    
                 </TextBox>
                 </StackPanel>
             </Grid>
