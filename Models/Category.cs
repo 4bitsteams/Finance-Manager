@@ -72,11 +72,11 @@ namespace FinanceManager.Models
         public Category()
         {
             this._changes = new List<MoneyChange>();
+            this.ImageSource = "some source";
         }
 
-        public Category(int Id, string Name, string ImageSource, List<MoneyChange> MoneyChanges)
+        public Category(string Name, string ImageSource, List<MoneyChange> MoneyChanges)
         {
-            this.Id = Id;
             this.Name = Name;
             this.ImageSource = ImageSource;
             this.MoneyChanges = MoneyChanges;

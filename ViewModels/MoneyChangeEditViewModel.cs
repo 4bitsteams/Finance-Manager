@@ -11,6 +11,10 @@ namespace FinanceManager.ViewModels
     public class MoneyChangeEditViewModel : ViewModelBase
     {
         private MoneyChangeViewModel? _moneyChange;
+        private CategoryViewModel? _selectedCategory;
+        private AccountViewModel? _selectedAccount;
+        private ObservableCollection<CategoryViewModel> _availibleCategories;
+        private ObservableCollection<AccountViewModel> _availibleAccounts;
         private bool _isEditable;
         private bool _isVisible;
 
@@ -31,7 +35,7 @@ namespace FinanceManager.ViewModels
                 {
                     this._isEditable = value;
                 }
-                OnPropertyChange();
+                this.OnPropertyChange();
             }
         }
 
@@ -48,7 +52,7 @@ namespace FinanceManager.ViewModels
                 {
                     this.IsEditable = false;
                 }
-                OnPropertyChange();
+                this.OnPropertyChange();
             }
         }
 
@@ -67,12 +71,14 @@ namespace FinanceManager.ViewModels
                     this._moneyChange.PropertyChanged -= MoneyChangeEditPropertyChanged;
                     this._moneyChange.PropertyChanged += MoneyChangeEditPropertyChanged;
                     this.IsVisible = true;
-                    OnPropertyChange(nameof(this.Account));
-                    OnPropertyChange(nameof(this.Category));
-                    OnPropertyChange(nameof(this.Date));
-                    OnPropertyChange(nameof(this.Description));
-                    OnPropertyChange(nameof(this.Impact));
-                    OnPropertyChange();
+                    this._selectedAccount = this._moneyChange.Account;
+                    this.OnPropertyChange(nameof(this.SelectedAccount));
+                    this.OnPropertyChange(nameof(this.Account));
+                    this.OnPropertyChange(nameof(this.Category));
+                    this.OnPropertyChange(nameof(this.Date));
+                    this.OnPropertyChange(nameof(this.Description));
+                    this.OnPropertyChange(nameof(this.Impact));
+                    this.OnPropertyChange();
                 }
             }
         }
@@ -140,7 +146,33 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public ObservableCollection<CategoryViewModel> AvailibleCategories { get; set; }
+        public CategoryViewModel? SelectedCategory
+        {
+            get
+            {
+                return this._selectedCategory;
+            }
+
+            set
+            {
+                this._selectedCategory = value;
+                this.OnPropertyChange();
+            }
+        }
+
+        public ObservableCollection<CategoryViewModel> AvailibleCategories
+        {
+            get
+            {
+                AvailibleCategoriesLoad();
+                return this._availibleCategories;
+            }
+            set
+            {
+                this._availibleCategories = value;
+                this.OnPropertyChange();
+            }
+        }
 
         public DateTime Date
         {
@@ -184,7 +216,34 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public ObservableCollection<AccountViewModel> AvailibleAccounts { get; set; }
+        public AccountViewModel? SelectedAccount
+        {
+            get
+            {
+                return this._selectedAccount;
+            }
+
+            set
+            {
+                this._selectedAccount = value;
+                this.Account = this._selectedAccount;
+                this.OnPropertyChange();
+            }
+        }
+
+        public ObservableCollection<AccountViewModel> AvailibleAccounts
+        {
+            get
+            {
+                AvailibleAccountsLoad();
+                return this._availibleAccounts;
+            }
+            set
+            {
+                this._availibleAccounts = value;
+                this.OnPropertyChange();
+            }
+        }
 
         public RelayCommand EditCommand { get; set; }
 
@@ -196,6 +255,8 @@ namespace FinanceManager.ViewModels
             {
                 this.IsEditable = true;
             });
+            AvailibleAccountsLoad();
+            AvailibleCategoriesLoad();
         }
 
         public MoneyChangeEditViewModel(MoneyChangeViewModel moneyChange) : this()
@@ -208,19 +269,19 @@ namespace FinanceManager.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(MoneyChangeViewModel.Description):
-                    OnPropertyChange(nameof(this.Description));
+                    this.OnPropertyChange(nameof(this.Description));
                     break;
                 case nameof(MoneyChangeViewModel.Category):
-                    OnPropertyChange(nameof(this.Category));
+                    this.OnPropertyChange(nameof(this.Category));
                     break;
                 case nameof(MoneyChangeViewModel.Date):
-                    OnPropertyChange(nameof(this.Date));
+                    this.OnPropertyChange(nameof(this.Date));
                     break;
                 case nameof(MoneyChangeViewModel.Impact):
-                    OnPropertyChange(nameof(this.Impact));
+                    this.OnPropertyChange(nameof(this.Impact));
                     break;
                 case nameof(MoneyChangeViewModel.Account):
-                    OnPropertyChange(nameof(this.Account));
+                    this.OnPropertyChange(nameof(this.Account));
                     break;
                 default:
                     break;
@@ -236,6 +297,38 @@ namespace FinanceManager.ViewModels
 
             this.IsVisible = false;
             return false;
+        }
+
+        private void AvailibleAccountsLoad()
+        {
+            if (this._availibleAccounts != null)
+            {
+                this._availibleAccounts.Clear();
+            }
+            else
+            {
+                this._availibleAccounts = new ObservableCollection<AccountViewModel>();
+            }
+            foreach(var account in Service.Accounts)
+            {
+                this._availibleAccounts.Add(new AccountViewModel(account));
+            }
+        }
+
+        private void AvailibleCategoriesLoad()
+        {
+            if (this._availibleCategories != null)
+            {
+                this._availibleCategories.Clear();
+            }
+            else
+            {
+                this._availibleCategories = new ObservableCollection<CategoryViewModel>();
+            }
+            foreach (var category in Service.Categories)
+            {
+                this._availibleCategories.Add(new CategoryViewModel(category));
+            }
         }
     }
 }

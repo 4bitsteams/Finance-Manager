@@ -31,37 +31,48 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <StackPanel>
-                <TextBlock Text="Description"
-                           FontWeight="SemiBold"
-                           Margin="3 5 3 0">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
-                <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource AccountInfoEdit}"
-                         Margin="3 5 3 0"
-                         Height="Auto"
-                         MaxLength="40"
-                         TextWrapping="Wrap"
-                         MaxWidth="500">
-                    
-                </TextBox>
-                <TextBlock Text="Blance"
-                           FontWeight="SemiBold"
-                           Margin="3 5 3 0">
-                    <TextBlock.Foreground>
-                        <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                    </TextBlock.Foreground>
-                </TextBlock>
+                    <TextBlock Text="Description"
+                               Style="{StaticResource Label}"
+                               Margin="3 5 3 0">
+                    </TextBlock>
+                    <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource AccountInfoEdit}"
+                             Margin="3 5 3 0"
+                             Height="Auto"
+                             MaxLength="40"
+                             TextWrapping="Wrap"
+                             MaxWidth="500">
+                        
+                    </TextBox>
+                    <TextBlock Style="{StaticResource Label}"
+                               Text="Blance"
+                               Margin="3 5 3 0">
+                    </TextBlock>
                     <TextBox Text="{Binding Impact, StringFormat={}{0:N2}, Mode=TwoWay}"
-                         Style="{StaticResource AccountInfoEdit}"
+                             Style="{StaticResource AccountInfoEdit}"
                              MaxLength="9"
-                         Margin="3 5 3 0"
-                         Height="Auto"
-                         MaxWidth="500">
-                    
-                </TextBox>
+                             Margin="3 5 3 0"
+                             Height="Auto"
+                             MaxWidth="500">
+                    </TextBox>
+                    <TextBlock Style="{StaticResource Label}"
+                               Text="Account"
+                               Margin="3 5 3 0">
+                    </TextBlock>
+                    <ComboBox ItemsSource="{Binding AvailibleAccounts}"
+                              Margin="3 5 3 0"
+                              SelectedItem="{Binding SelectedAccount}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource Label}"
+                                               HorizontalAlignment="Left"
+                                               FontSize="12"
+                                               Text="{Binding Name}">
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        
+                    </ComboBox>
                 </StackPanel>
             </Grid>
             

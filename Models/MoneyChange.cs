@@ -127,9 +127,8 @@ namespace FinanceManager.Models
             this._description = null;
         }
 
-        public MoneyChange(int Id, double Impact, Account Account, DateTime Date, ChangeType Type, string Description, Category Category)
+        public MoneyChange(double Impact, Account Account, DateTime Date, ChangeType Type, string Description, Category Category)
         {
-            this.Id = Id;
             this.Impact = Impact;
             this.Account = Account;
             this.Date = Date;

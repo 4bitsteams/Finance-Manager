@@ -22,17 +22,11 @@ namespace FinanceManager.Core
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}blogging.db";
+            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}dataBase.db";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Account>()
-                    .ToTable("Accounts").HasKey(p => p.Id);
-        }
 
     }
 }

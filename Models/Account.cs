@@ -83,7 +83,6 @@ namespace FinanceManager.Models
 
         public Account (string Name, double Balance, bool ToCount, List<MoneyChange> InfluenceMoneyChanges = null)
         {
-            this.Id = default;
             this.Name = Name;
             this.Balance = Balance;
             this.ToCount = ToCount;

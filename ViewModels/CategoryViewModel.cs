@@ -57,7 +57,17 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._moneyChanges = value;
+                this._moneyChanges.CollectionChanged -= CollectionChanged;
+                this._moneyChanges.CollectionChanged += CollectionChanged;
                 OnPropertyChange();
+            }
+        }
+
+        private void CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                Service.AddMoneyChange(this.MoneyChanges[^1].MoneyChange);
             }
         }
 
@@ -130,6 +140,7 @@ namespace FinanceManager.ViewModels
         }
 
 
+
         private void DB_SaveChanges(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             Service.SaveChanges();
@@ -149,6 +160,7 @@ namespace FinanceManager.ViewModels
                     this.MoneyChanges.Add(moneyChange);
                 }
             }
+            OnPropertyChange(nameof(this.MoneyChanges));
         }
     }
 }

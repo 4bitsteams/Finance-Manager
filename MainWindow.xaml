@@ -42,14 +42,11 @@
                             </Image>
                             <TextBlock Margin="3,5,0,0"
                                        DockPanel.Dock="Left"  
+                                       Style="{StaticResource Label}"
                                        Background="Transparent" 
                                        FontSize="14"
                                        Text="{TemplateBinding Title}" 
-                                       FontWeight="DemiBold" 
                                        HorizontalAlignment="Stretch">
-                                <TextBlock.Foreground>
-                                <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                            </TextBlock.Foreground>
                             </TextBlock>
                             <Button DockPanel.Dock="Right"
                                     HorizontalAlignment="Right"
@@ -168,18 +165,16 @@
                                     </Border>
                                 </ControlTemplate>
                             </RadioButton.Template>
-                            <TextBlock Text="Home">
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                                </TextBlock.Foreground>
+                            <TextBlock Text="Home"
+                                       Style="{StaticResource Label}"
+                                       FontSize="20">
                             </TextBlock>
                         </RadioButton>
                         <RadioButton Style="{StaticResource MenuButton}"
                                      Command="{Binding InformationViewCommand}">
-                            <TextBlock Text="Information">
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                                </TextBlock.Foreground>
+                            <TextBlock Text="Information"
+                                       Style="{StaticResource Label}"
+                                       FontSize="20">
                             </TextBlock>
                         </RadioButton>
                         <RadioButton Style="{StaticResource MenuButton}">
@@ -199,10 +194,9 @@
                                     </Border>
                                 </ControlTemplate>
                             </RadioButton.Template>
-                            <TextBlock Text="Accounts">
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                                </TextBlock.Foreground>
+                            <TextBlock Text="Accounts"
+                                       Style="{StaticResource Label}"
+                                       FontSize="20">
                             </TextBlock>
                         </RadioButton>
                     </StackPanel>

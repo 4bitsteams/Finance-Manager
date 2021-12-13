@@ -21,23 +21,17 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-            <TextBlock FontSize="20"
+            <TextBlock Style="{StaticResource Label}"
+                       FontSize="20"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center" 
-                       Text="Total:"
-                       FontWeight="DemiBold">
-                <TextBlock.Foreground>
-                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                </TextBlock.Foreground>
+                       Text="Total:">
             </TextBlock>
-            <TextBlock FontSize="20"
+            <TextBlock Style="{StaticResource Label}"
+                       FontSize="20"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Center" 
-                       Text="{Binding TotalBalance, StringFormat={}{0:C}}"
-                       FontWeight="DemiBold">
-                <TextBlock.Foreground>
-                    <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                </TextBlock.Foreground>
+                       Text="{Binding TotalBalance, StringFormat={}{0:C}}">
             </TextBlock>
         </StackPanel>
         <ListBox Height="Auto"

@@ -35,7 +35,7 @@ namespace FinanceManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("FinanceManager.Models.Category", b =>

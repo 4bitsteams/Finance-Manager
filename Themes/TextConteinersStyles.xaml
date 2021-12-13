@@ -40,6 +40,38 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource TextDarkColor}">
+                    </SolidColorBrush>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    <Style x:Key="Label"
+           BasedOn="{StaticResource {x:Type TextBlock}}"
+           TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="SnapsToDevicePixels"
+                    Value="True" />
+            <Setter Property="OverridesDefaultStyle"
+                    Value="True" />
+            <Setter Property="KeyboardNavigation.TabNavigation"
+                    Value="None" />
+            <Setter Property="FocusVisualStyle"
+                    Value="{x:Null}" />
+            <Setter Property="FontSize"
+                    Value="12">
+            </Setter>
+            <Setter Property="FontWeight"
+                    Value="DemiBold">
+            </Setter>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource TextDarkColor}">
+                    </SolidColorBrush>
+                </Setter.Value>
+            </Setter>
         </Style.Setters>
     </Style>
 </ResourceDictionary>

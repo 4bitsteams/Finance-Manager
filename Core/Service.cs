@@ -29,29 +29,29 @@ namespace FinanceManager.Core
             }
         }
 
-        public static List<Account> Categories
+        public static List<Category> Categories
         {
             get
             {
-                List<Account> accounts = new List<Account>();
-                foreach (var account in _db.Accounts)
+                List<Category> categories = new List<Category>();
+                foreach (var category in _db.Categories)
                 {
-                    accounts.Add(account);
+                    categories.Add(category);
                 }
-                return accounts;
+                return categories;
             }
         }
 
-        public static List<Account> MoneyChanges
+        public static List<MoneyChange> MoneyChanges
         {
             get
             {
-                List<Account> accounts = new List<Account>();
-                foreach (var account in _db.Accounts)
+                List<MoneyChange> changes = new List<MoneyChange>();
+                foreach (var change in _db.MoneyChanges)
                 {
-                    accounts.Add(account);
+                    changes.Add(change);
                 }
-                return accounts;
+                return changes;
             }
         }
 
@@ -67,21 +67,42 @@ namespace FinanceManager.Core
             _db.SaveChanges();
         }
 
-        public static void AddCategory(Account account)
+        public static void AddCategory(Category category)
         {
-            _db.Accounts.Add(account);
+            _db.Categories.Add(category);
             _db.SaveChanges();
         }
 
-        public static void RemoveCategory(Account account)
+        public static void RemoveCategory(Category category)
         {
-            _db.Accounts.Remove(account);
+            _db.Categories.Remove(category);
+            _db.SaveChanges();
+        }
+
+        public static void AddMoneyChange(MoneyChange change)
+        {
+            _db.MoneyChanges.Add(change);
+            _db.SaveChanges();
+        }
+
+        public static void RemoveMoneyChange(MoneyChange change)
+        {
+            _db.MoneyChanges.Remove(change);
             _db.SaveChanges();
         }
 
         public static void SaveChanges()
         {
             _db.SaveChanges();
+        }
+
+        public static void ClearCategories()
+        {
+            while(Categories.Count > 0)
+            {
+                _db.Categories.Remove(Categories[0]);
+                _db.SaveChanges();
+            }
         }
 
     }

@@ -11,14 +11,24 @@ namespace FinanceManager.ViewModels
 {
     public class InformationViewModel : ViewModelBase
     {
-        private ApplicationContext _dB;
-
         private MoneyChangeViewModel? _selectedmoneyChange;
         private ObservableCollection<CategoryViewModel> _categories;
+        private ObservableCollection<CategoryViewModel> _expances;
         private bool _incomesRadioButtonIsChecked;
         private bool _expencesRadioButtonIsChecked;
 
-        public ObservableCollection<CategoryViewModel> Expences { get; set; }
+        public ObservableCollection<CategoryViewModel> Expences 
+        { 
+            get
+            {
+                return this._expances;
+            }
+
+            set
+            {
+                this._expances = value;
+            }
+        }
 
         public ObservableCollection<CategoryViewModel> Incomes { get; set; }
 
@@ -84,20 +94,10 @@ namespace FinanceManager.ViewModels
 
         public InformationViewModel()
         {
-            this._dB = new ApplicationContext();
             MoneyChangeEditViewModel = new MoneyChangeEditViewModel();
-            Expences = new ObservableCollection<CategoryViewModel>();
+            this.ExpenscesLoad();
+            Expences[0].MoneyChanges.Add(new MoneyChangeViewModel(new MoneyChange(50, Service.Accounts[0], DateTime.Now, ChangeType.Expenses, "Some description", Expences[0].Category)));
             Incomes = new ObservableCollection<CategoryViewModel>();
-            Category cat = new Category();
-            cat.Name = "Category";
-            cat.AddMoneyChange(new MoneyChange(15, 48 , new Account("Account", 25, true), DateTime.Now, ChangeType.Expenses, "Some description", cat));
-            cat.AddMoneyChange(new MoneyChange(15, 36.15, new Account("Account", 25, true), DateTime.Now, ChangeType.Expenses, "Some description", cat));
-            Expences.Add(new CategoryViewModel(cat));
-            Expences.Add(new CategoryViewModel(cat));
-            Expences.Add(new CategoryViewModel(cat));
-            Expences[^1].PropertyChanged += CategoryViewModelPropertyChanged;
-            Expences[^2].PropertyChanged += CategoryViewModelPropertyChanged;
-            Expences[^3].PropertyChanged += CategoryViewModelPropertyChanged;
             ExpencesCommand = new RelayCommand(o =>
             {
                 this.ShownMoneyChanges = Expences;
@@ -131,6 +131,27 @@ namespace FinanceManager.ViewModels
                         break;
                     default:
                         break;
+                }
+            }
+        }
+
+        private void ExpenscesLoad()
+        {
+            if(this.Expences != null)
+            {
+                this.Expences.Clear();
+            }
+            else
+            {
+                this.Expences = new ObservableCollection<CategoryViewModel>();
+            }
+            foreach (var category in Service.Categories)
+            {
+                
+                //if (category.MoneyChanges.Count > 0)
+                {
+                    this.Expences.Add(new CategoryViewModel(category));
+                    this.Expences[^1].PropertyChanged += CategoryViewModelPropertyChanged;
                 }
             }
         }
