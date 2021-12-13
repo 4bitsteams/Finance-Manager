@@ -177,6 +177,13 @@
                                        FontSize="20">
                             </TextBlock>
                         </RadioButton>
+                        <RadioButton Style="{StaticResource MenuButton}"
+                                     Command="{Binding CategoriesViewCommand}">
+                            <TextBlock Text="Categories"
+                                       Style="{StaticResource Label}"
+                                       FontSize="20">
+                            </TextBlock>
+                        </RadioButton>
                         <RadioButton Style="{StaticResource MenuButton}">
                             <RadioButton.Template>
                                 <ControlTemplate TargetType="RadioButton">

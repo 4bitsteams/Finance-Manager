@@ -12,6 +12,7 @@ namespace FinanceManager.ViewModels
         public RelayCommand HomeViewCommand { get; set; }
         public RelayCommand AccountsViewCommand { get; set; }
         public RelayCommand InformationViewCommand { get; set; }
+        public RelayCommand CategoriesViewCommand { get; set; }
 
         private object _currentView;
 
@@ -27,19 +28,18 @@ namespace FinanceManager.ViewModels
         public HomeViewModel HomeView { get; set; }
         public AccountsViewModel AccountsView { get; set; }
         public InformationViewModel InformationView { get; set; }
+        public CategoriesViewModel CategoriesView { get; set; }
 
         public MainViewModel()
         {
             this.HomeView = new HomeViewModel();
             this.AccountsView = new AccountsViewModel();
             this.InformationView = new InformationViewModel();
-
-            this.CurrentView = HomeView;
-            this.HomeViewCommand = new RelayCommand(
-                o =>
-                {
-                    this.CurrentView = this.HomeView;
-                }
+            this.CategoriesView = new CategoriesViewModel();
+            this.HomeViewCommand = new RelayCommand(o =>
+            {
+                this.CurrentView = this.HomeView;
+            }
             );
             this.AccountsViewCommand = new RelayCommand(o =>
             {
@@ -51,10 +51,13 @@ namespace FinanceManager.ViewModels
                 this.CurrentView = this.AccountsView;
             }
             );
-
             InformationViewCommand = new RelayCommand(o =>
             {
                 this.CurrentView = this.InformationView;
+            });
+            this.CategoriesViewCommand = new RelayCommand(o =>
+            {
+                this.CurrentView = this.CategoriesView;
             });
             CurrentView = HomeView;
         }

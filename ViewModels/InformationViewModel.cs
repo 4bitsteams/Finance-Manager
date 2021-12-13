@@ -96,7 +96,6 @@ namespace FinanceManager.ViewModels
         {
             MoneyChangeEditViewModel = new MoneyChangeEditViewModel();
             this.ExpenscesLoad();
-            Expences[0].MoneyChanges.Add(new MoneyChangeViewModel(new MoneyChange(50, Service.Accounts[0], DateTime.Now, ChangeType.Expenses, "Some description", Expences[0].Category)));
             Incomes = new ObservableCollection<CategoryViewModel>();
             ExpencesCommand = new RelayCommand(o =>
             {
@@ -150,6 +149,8 @@ namespace FinanceManager.ViewModels
                 
                 //if (category.MoneyChanges.Count > 0)
                 {
+                    //category.AddMoneyChange(new MoneyChange(50, Service.Accounts[0], DateTime.Now, ChangeType.Expenses, "Some description", category));
+                    //Service.SaveChanges();
                     this.Expences.Add(new CategoryViewModel(category));
                     this.Expences[^1].PropertyChanged += CategoryViewModelPropertyChanged;
                 }

@@ -75,7 +75,7 @@ namespace FinanceManager.Models
             this.ImageSource = "some source";
         }
 
-        public Category(string Name, string ImageSource, List<MoneyChange> MoneyChanges)
+        public Category(string Name, string ImageSource, List<MoneyChange> MoneyChanges) : this()
         {
             this.Name = Name;
             this.ImageSource = ImageSource;

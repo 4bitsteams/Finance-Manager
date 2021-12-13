@@ -1,4 +1,5 @@
 ﻿using FinanceManager.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,18 +15,15 @@ namespace FinanceManager.Core
         static Service()
         {
             _db = new ApplicationContext();
+            var categories = _db.Categories.Include(c => c.MoneyChanges).ToList();
+            var changes = _db.MoneyChanges.Include(m => m.Category).Include(m => m.Account).ToList();
         }
 
         public static List<Account> Accounts
         {
             get 
-            { 
-                List<Account> accounts = new List<Account>();
-                foreach(var account in _db.Accounts)
-                {
-                    accounts.Add(account);
-                }
-                return accounts;
+            {
+                return _db.Accounts.ToList();
             }
         }
 
@@ -81,6 +79,7 @@ namespace FinanceManager.Core
 
         public static void AddMoneyChange(MoneyChange change)
         {
+            change.Category.AddMoneyChange(change);
             _db.MoneyChanges.Add(change);
             _db.SaveChanges();
         }
@@ -101,6 +100,24 @@ namespace FinanceManager.Core
             while(Categories.Count > 0)
             {
                 _db.Categories.Remove(Categories[0]);
+                _db.SaveChanges();
+            }
+        }
+
+        public static void ClearAccounts()
+        {
+            while (Accounts.Count > 0)
+            {
+                _db.Accounts.Remove(Accounts[0]);
+                _db.SaveChanges();
+            }
+        }
+
+        public static void ClearMoneyChanges()
+        {
+            while (MoneyChanges.Count > 0)
+            {
+                _db.MoneyChanges.Remove(MoneyChanges[0]);
                 _db.SaveChanges();
             }
         }

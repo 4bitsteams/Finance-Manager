@@ -34,16 +34,7 @@ namespace FinanceManager.Models
             }
             get 
             { 
-                double balance = this._balance;
-                if (this._influenceMoneyChanges != null)
-                {
-                    foreach (MoneyChange change in this._influenceMoneyChanges)
-                    {
-                        balance += change.Impact;
-                    }
-                }
-
-                return balance; 
+                return this._balance; 
             } 
         }
         public bool ToCount
@@ -67,7 +58,15 @@ namespace FinanceManager.Models
 
             set
             {
-                this._influenceMoneyChanges = value;
+                foreach (MoneyChange change in this._influenceMoneyChanges)
+                {
+                    RemoveMoneyChange(change);
+                }
+
+                foreach (MoneyChange change in value)
+                {
+                    AddMoneyChange(change);
+                }
             }
         }
 
@@ -100,12 +99,28 @@ namespace FinanceManager.Models
             if (!this.InfluenceMoneyChanges.Contains(change))
             {
                 this.InfluenceMoneyChanges.Add(change);
+                if (change.Type is ChangeType.Expenses)
+                {
+                    this.Balance -= change.Impact;
+                }
+                else
+                {
+                    this.Balance += change.Impact;
+                }
             }
         }
 
         public void RemoveMoneyChange(MoneyChange change)
         {
             this.InfluenceMoneyChanges.Remove(change);
+            if (change.Type is ChangeType.Income)
+            {
+                this.Balance -= change.Impact;
+            }
+            else
+            {
+                this.Balance += change.Impact;
+            }
         }
     }
 }

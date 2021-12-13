@@ -267,7 +267,7 @@
         </Style.Setters>
         <Style.Triggers>
             <Trigger Property="IsChecked"
-                                 Value="True">
+                     Value="True">
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Color="{StaticResource ControlLightColor}"/>

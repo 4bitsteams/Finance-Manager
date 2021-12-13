@@ -105,14 +105,14 @@ namespace FinanceManager.Models
                     if (this._category != value)
                     {
                         this._category.RemoveMoneyChange(this);
-                        (value as Category).AddMoneyChange(this);
                         this._category = value;
+                        this._category.AddMoneyChange(this);
                     }
                 }
                 else
                 {
                     this._category = value;
-                    (value as Category).AddMoneyChange(this);
+                    this._category.AddMoneyChange(this);
                 }
             }
         }

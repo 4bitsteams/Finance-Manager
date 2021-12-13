@@ -19,6 +19,10 @@
         <view:InformationView></view:InformationView>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type viewModel:CategoriesViewModel}">
+        <view:CategoriesView></view:CategoriesView>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type viewModel:AccountViewModel}">
         <DockPanel Margin="10">
             <TextBlock DockPanel.Dock="Left" 

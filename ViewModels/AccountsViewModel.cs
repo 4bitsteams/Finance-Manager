@@ -126,8 +126,6 @@ namespace FinanceManager.ViewModels
             {
                 OnPropertyChange(nameof(this.TotalBalance));
             }
-
-            Service.SaveChanges();
         }
     }
 }

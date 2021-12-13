@@ -67,7 +67,9 @@ namespace FinanceManager.ViewModels
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                Service.AddMoneyChange(this.MoneyChanges[^1].MoneyChange);
+                this._category.MoneyChanges.Add(this.MoneyChanges[^1].MoneyChange);
+                Service.SaveChanges();
+
             }
         }
 
@@ -117,7 +119,7 @@ namespace FinanceManager.ViewModels
 
         public CategoryViewModel()
         {
-            this.Category = new Category();
+            this._category = new Category();
             this.MoneyChangesLoad();
             this.PropertyChanged += DB_SaveChanges;
         }
