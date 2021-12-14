@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace FinanceManager.ViewModels
 {
@@ -30,6 +31,7 @@ namespace FinanceManager.ViewModels
                 this.MoneyChangesLoad();
                 OnPropertyChange(nameof(this.Name));
                 OnPropertyChange(nameof(this.ImageSource));
+                OnPropertyChange(nameof(this.Color));
                 OnPropertyChange(nameof(this.MoneyChanges));
             }
         }
@@ -97,6 +99,20 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._category.ImageSource = value;
+                OnPropertyChange();
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return this._category.Color;
+            }
+
+            set 
+            {
+                this._category.Color = value;
                 OnPropertyChange();
             }
         }

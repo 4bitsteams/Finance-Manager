@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+
         <ResourceDictionary>
-            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/ButtonThemes.xaml" />
                 <ResourceDictionary Source="Themes/TextConteinersStyles.xaml" />
@@ -13,13 +13,9 @@
                 <ResourceDictionary Source="Themes/DataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            
-
             <BooleanToVisibilityConverter x:Key="BoolToVisConverter">
             </BooleanToVisibilityConverter>
 
-            
-            
         </ResourceDictionary>
         
     </Application.Resources>

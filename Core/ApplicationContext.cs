@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FinanceManager.Models;
+using System.Windows.Media;
 
 namespace FinanceManager.Core
 {

@@ -94,19 +94,19 @@ namespace FinanceManager.ViewModels
 
         public InformationViewModel()
         {
-            MoneyChangeEditViewModel = new MoneyChangeEditViewModel();
+            this.MoneyChangeEditViewModel = new MoneyChangeEditViewModel();
             this.ExpenscesLoad();
-            Incomes = new ObservableCollection<CategoryViewModel>();
-            ExpencesCommand = new RelayCommand(o =>
+            this.Incomes = new ObservableCollection<CategoryViewModel>();
+            this.ExpencesCommand = new RelayCommand(o =>
             {
                 this.ShownMoneyChanges = Expences;
             });
-            IncomesCommand = new RelayCommand(o =>
+            this.IncomesCommand = new RelayCommand(o =>
             {
                 this.ShownMoneyChanges = Incomes;
             });
-            this.ShownMoneyChanges = Expences;
-            ExpenxesRadioButtonIsChecked = true;
+            this.ShownMoneyChanges = this.Expences;
+            this.ExpenxesRadioButtonIsChecked = true;
         }
 
         private void CategoryViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

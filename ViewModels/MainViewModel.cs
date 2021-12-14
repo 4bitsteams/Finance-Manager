@@ -43,6 +43,7 @@ namespace FinanceManager.ViewModels
             );
             this.AccountsViewCommand = new RelayCommand(o =>
             {
+                this.AccountsView.AccountsUpdate();
                 this.CurrentView = this.AccountsView;
             }
             );

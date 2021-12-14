@@ -84,17 +84,8 @@ namespace FinanceManager.ViewModels
 
         public AccountsViewModel()
         {
-            this.Accounts = new ObservableCollection<AccountViewModel>();
+            this.AccountsLoad();
             EditAccountView = new AccountEditViewModel();
-            foreach(var account in Service.Accounts)
-            {
-                Accounts.Add(new AccountViewModel(account));
-            }
-            foreach (AccountViewModel account in Accounts)
-            {
-                account.PropertyChanged += AccountsChanged;
-            }
-
             EditAccountCommand = new RelayCommand(e => EditAccountView.IsVisible = !EditAccountView.IsVisible);
             AddAccountCommand = new RelayCommand(e =>
             {
@@ -117,6 +108,55 @@ namespace FinanceManager.ViewModels
 
             });
 
+        }
+
+        public void AccountsLoad()
+        {
+            if(this.Accounts != null)
+            {
+                this.Accounts.Clear();
+            }
+            else
+            {
+                this.Accounts = new ObservableCollection<AccountViewModel>();
+            }
+            foreach (var account in Service.Accounts)
+            {
+                AccountViewModel acc = new AccountViewModel(account);
+                acc.PropertyChanged += AccountsChanged;
+                Accounts.Add(new AccountViewModel(account));
+            }
+        }
+
+        public void AccountsUpdate()
+        {
+            if (this.Accounts == null)
+            {
+                this.Accounts = new ObservableCollection<AccountViewModel>();
+                this.AccountsLoad();
+            }
+            else
+            {
+                foreach (var account in Service.Accounts)
+                {
+                    bool flag = true;
+                    foreach (var exAcc in this.Accounts)
+                    {
+                        if (exAcc.Account == account)
+                        {
+                            flag = false;
+                            break;
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        AccountViewModel acc = new AccountViewModel(account);
+                        acc.PropertyChanged += AccountsChanged;
+                        Accounts.Add(new AccountViewModel(account));
+                    }
+                }
+            }
         }
 
         private void AccountsChanged(object? sender, PropertyChangedEventArgs e)
