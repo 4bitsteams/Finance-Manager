@@ -228,7 +228,6 @@ namespace FinanceManager.ViewModels
         {
             get
             {
-                AvailibleCategoriesLoad();
                 return this._availibleCategories;
             }
             set
