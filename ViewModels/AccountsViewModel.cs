@@ -94,6 +94,7 @@ namespace FinanceManager.ViewModels
                     Name = "New account",
                     Balance = 0
                 });
+                Service.SaveChanges();
                 account.PropertyChanged += AccountsChanged;
                 this.Accounts.Add(account);
                 this.SelectedAccount = this.Accounts[^1];

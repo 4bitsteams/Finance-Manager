@@ -113,7 +113,7 @@ namespace FinanceManager.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(MoneyChangeEditViewModel.SelectedCategory):
+                case nameof(MoneyChangeEditViewModel.Category):
                     if (this.MoneyChangeEditViewModel.MoneyChange != this.SelectedMoneyChange)
                     {
                         this._selectedmoneyChange = null;

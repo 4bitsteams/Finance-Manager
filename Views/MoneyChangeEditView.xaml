@@ -14,7 +14,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"
+                              MinWidth="300"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0"
@@ -27,16 +28,19 @@
             </Border.Background>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
                     <TextBlock Text="Description"
                                Style="{StaticResource Label}"
                                Margin="3 5 3 0">
                     </TextBlock>
-                    <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding SupposedDescription, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource AccountInfoEdit}"
                              Margin="3 5 3 0"
                              Height="Auto"
@@ -49,7 +53,7 @@
                                Text="Balance"
                                Margin="3 5 3 0">
                     </TextBlock>
-                    <TextBox Text="{Binding Impact, StringFormat={}{0:N2}, Mode=TwoWay}"
+                    <TextBox Text="{Binding SupposedImpact, StringFormat={}{0:N2}, Mode=TwoWay}"
                              Style="{StaticResource AccountInfoEdit}"
                              MaxLength="9"
                              Margin="3 5 3 0"
@@ -62,17 +66,20 @@
                     </TextBlock>
                     <syncfusion:SfDatePicker x:Name="sfDatePicker" 
                                              SetValueOnLostFocus="True"
-                                             Value="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Value="{Binding SupposedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              MaxDate="{Binding CurrentDate}" 
                                              HorizontalAlignment="Stretch"
                                              Margin="3 5 3 0"/>
+                   
+                </StackPanel>
+                <StackPanel Grid.Column="1">
                     <TextBlock Style="{StaticResource Label}"
                                Text="Account"
                                Margin="3 5 3 0">
                     </TextBlock>
                     <ComboBox ItemsSource="{Binding AvailibleAccounts}"
                               Margin="3 5 3 0"
-                              SelectedItem="{Binding SelectedAccount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                              SelectedItem="{Binding SupposedAccount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Style="{StaticResource Label}"
@@ -88,8 +95,8 @@
                                Margin="3 5 3 0">
                     </TextBlock>
                     <ComboBox ItemsSource="{Binding AvailibleCategories}"
-                              Margin="3 5 3 7"
-                              SelectedItem="{Binding SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                              Margin="3 5 3 0"
+                              SelectedItem="{Binding SupposedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Style="{StaticResource Label}"
@@ -101,6 +108,25 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
+
+                <Button Style="{StaticResource CircleButton}"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        Margin="5"
+                        Width="50"
+                        Height="50"
+                        Content="Save"
+                        IsEnabled="{Binding SaveAbility}"
+                        Command="{Binding SaveCommand}">
+                    <Button.Background>
+                        <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                    </Button.Background>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                    </Button.Foreground>
+                </Button>
             </Grid>
             
         </Border>

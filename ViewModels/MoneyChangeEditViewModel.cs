@@ -11,12 +11,23 @@ namespace FinanceManager.ViewModels
     public class MoneyChangeEditViewModel : ViewModelBase
     {
         private MoneyChangeViewModel? _moneyChange;
-        private CategoryViewModel? _selectedCategory;
-        private AccountViewModel? _selectedAccount;
         private ObservableCollection<CategoryViewModel> _availibleCategories;
         private ObservableCollection<AccountViewModel> _availibleAccounts;
+        private string _supposedDescription;
+        private double _supposedImpact;
+        private DateTime _supposedDate;
+        private AccountViewModel? _supposedAccount;
+        private CategoryViewModel? _supposedCategory;
         private bool _isEditable;
         private bool _isVisible;
+
+        public DateTime CurrentDate
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+        }
 
         public bool IsEditable
         {
@@ -71,60 +82,91 @@ namespace FinanceManager.ViewModels
                     this._moneyChange.PropertyChanged -= MoneyChangeEditPropertyChanged;
                     this._moneyChange.PropertyChanged += MoneyChangeEditPropertyChanged;
                     this.IsVisible = true;
-                    this.IsEditable = true;
-                    this._selectedAccount = this._moneyChange.Account;
-                    this._selectedCategory = this._moneyChange.Category;
-                    this.OnPropertyChange(nameof(this.SelectedAccount));
-                    this.OnPropertyChange(nameof(this.SelectedCategory));
-                    this.OnPropertyChange(nameof(this.Account));
-                    this.OnPropertyChange(nameof(this.Category));
-                    this.OnPropertyChange(nameof(this.Date));
-                    this.OnPropertyChange(nameof(this.Description));
-                    this.OnPropertyChange(nameof(this.Impact));
+                    this.SupposedDescription = this._moneyChange.Description;
+                    this.SupposedImpact = this._moneyChange.Impact;
+                    this.SupposedDate = this._moneyChange.Date;
+                    this.SupposedAccount = this._moneyChange.Account;
+                    this.SupposedCategory = this._moneyChange.Category;
                     this.OnPropertyChange();
                 }
             }
         }
 
-        public string Description
+        public bool SaveAbility
         {
             get
             {
-                if (this.VisibilityCheck())
-                {
-                    return this._moneyChange.Description;
-                }
-
-                return string.Empty;
-            }
-
-            set
-            {
-                if (this.VisibilityCheck())
-                {
-                    this._moneyChange.Description = value;
-                }
+                return this.SaveAbilityCheck();
             }
         }
 
-        public double Impact
+        public string SupposedDescription
         {
             get
             {
-                if (this.VisibilityCheck())
-                {
-                    return this._moneyChange.Impact;
-                }
-
-                return 0d;
+                return this._supposedDescription;
             }
 
             set
             {
-                if (this.VisibilityCheck())
-                {
-                    this._moneyChange.Impact = value;
-                }
+                this._supposedDescription = value;
+                OnPropertyChange();
+            }
+        }
+
+        public double SupposedImpact
+        {
+            get
+            {
+                return this._supposedImpact;
+            }
+
+            set
+            {
+                this._supposedImpact = value;
+                OnPropertyChange();
+            }
+        }
+
+        public DateTime SupposedDate
+        {
+            get
+            {
+                return this._supposedDate;
+            }
+
+            set
+            {
+                this._supposedDate = value;
+                OnPropertyChange();
+            }
+        }
+
+        public AccountViewModel? SupposedAccount
+        {
+            get
+            {
+                return this._supposedAccount;
+            }
+
+            set
+            {
+                this._supposedAccount = value;
+                OnPropertyChange();
+            }
+        }
+
+        public CategoryViewModel? SupposedCategory
+        {
+            get
+            {
+                return this._supposedCategory;
+            }
+
+            set
+            {
+                this._supposedCategory = value;
+                OnPropertyChange();
             }
         }
 
@@ -149,23 +191,6 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public CategoryViewModel SelectedCategory
-        {
-            get
-            {
-                return this._selectedCategory;
-            }
-
-            set
-            {
-                this._selectedCategory = value;
-                this.Category = this._selectedCategory;
-                this.OnPropertyChange();
-            }
-        }
-
-       
-
         public AccountViewModel Account
         {
             get
@@ -187,21 +212,6 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public AccountViewModel SelectedAccount
-        {
-            get
-            {
-                return this._selectedAccount;
-            }
-
-            set
-            {
-                this._selectedAccount = value;
-                this.Account = this._selectedAccount;
-                this.OnPropertyChange();
-            }
-        }
-
         public ObservableCollection<CategoryViewModel> AvailibleCategories
         {
             get
@@ -213,36 +223,6 @@ namespace FinanceManager.ViewModels
             {
                 this._availibleCategories = value;
                 this.OnPropertyChange();
-            }
-        }
-
-        public DateTime CurrentDate
-        {
-            get
-            {
-                return DateTime.Now;
-            }
-        } 
-
-        public DateTime Date
-        {
-            get
-            {
-                if (this.VisibilityCheck())
-                {
-                    return this._moneyChange.Date;
-                }
-
-                return DateTime.Now;
-            }
-
-            set
-            {
-                if (this.VisibilityCheck())
-                {
-                    this._moneyChange.Date = value;
-                    OnPropertyChange();
-                }
             }
         }
 
@@ -262,10 +242,15 @@ namespace FinanceManager.ViewModels
 
         public RelayCommand EditCommand { get; set; }
 
+        public RelayCommand RemoveCommand { get; set; }
+
         public RelayCommand AddMoneyChangeCommand { get; set; }
+
+        public RelayCommand SaveCommand { get; set; }
 
         public MoneyChangeEditViewModel()
         {
+            this.PropertyChanged += SupposedPropertiesChanged;
             this.MoneyChange = new();
             this.IsVisible = false;
             this.EditCommand = new RelayCommand(o =>
@@ -274,8 +259,17 @@ namespace FinanceManager.ViewModels
             });
             this.AddMoneyChangeCommand = new RelayCommand(o =>
             {
-                this.MoneyChange = new MoneyChangeViewModel();
+                this.IsVisible = true;
                 this.IsEditable = true;
+                this.SupposedDescription = "New money change";
+                this.SupposedImpact = default;
+                this.SupposedDate = DateTime.Now;
+                this.SupposedAccount = null;
+                this.SupposedCategory = null;
+            });
+            this.SaveCommand = new RelayCommand(o =>
+            {
+                SaveFromSupposed();
             });
             AvailibleAccountsLoad();
             AvailibleCategoriesLoad();
@@ -286,21 +280,38 @@ namespace FinanceManager.ViewModels
             this.MoneyChange = moneyChange;
         }
 
-        private void MoneyChangeEditPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void SupposedPropertiesChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(MoneyChangeViewModel.Description):
-                    this.OnPropertyChange(nameof(this.Description));
+                case nameof(this.SupposedDescription):
+                    OnPropertyChange(nameof(this.SaveAbility));
                     break;
+                case nameof(this.SupposedImpact):
+                    OnPropertyChange(nameof(this.SaveAbility));
+                    break;
+                case nameof(this.SupposedDate):
+                    OnPropertyChange(nameof(this.SaveAbility));
+                    break;
+                case nameof(this.SupposedAccount):
+                    OnPropertyChange(nameof(this.SaveAbility));
+                    break;
+                case nameof(this.SupposedCategory):
+                    OnPropertyChange(nameof(this.SaveAbility));
+                    break;
+                case nameof(this.MoneyChange):
+                    OnPropertyChange(nameof(this.SaveAbility));
+                    break;
+                default:
+                    break;
+            }
+        }
+            private void MoneyChangeEditPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
                 case nameof(MoneyChangeViewModel.Category):
                     this.OnPropertyChange(nameof(this.Category));
-                    break;
-                case nameof(MoneyChangeViewModel.Date):
-                    this.OnPropertyChange(nameof(this.Date));
-                    break;
-                case nameof(MoneyChangeViewModel.Impact):
-                    this.OnPropertyChange(nameof(this.Impact));
                     break;
                 case nameof(MoneyChangeViewModel.Account):
                     this.OnPropertyChange(nameof(this.Account));
@@ -318,6 +329,42 @@ namespace FinanceManager.ViewModels
             }
 
             this.IsVisible = false;
+            return false;
+        }
+
+        private void SaveFromSupposed()
+        {
+            if (this._moneyChange == null)
+            {
+                this._moneyChange = new MoneyChangeViewModel();
+                this._moneyChange.PropertyChanged += MoneyChangeEditPropertyChanged;
+            }
+            this._moneyChange.Description = this.SupposedDescription;
+            this._moneyChange.Impact = this.SupposedImpact;
+            this._moneyChange.Date = this.SupposedDate;
+            this._moneyChange.Account = this.SupposedAccount;
+            this._moneyChange.Category = this.SupposedCategory;
+            OnPropertyChange(nameof(this.Category));
+            Service.SaveChanges();
+        }
+
+        private bool SaveAbilityCheck()
+        {
+            if (this.SupposedDescription != null 
+                && this.SupposedDescription != string.Empty
+                && this.SupposedAccount != null
+                && this.SupposedCategory != null)
+            {
+                if (this._moneyChange == null
+                    || this.SupposedDescription != this._moneyChange.Description
+                    || this.SupposedImpact != this._moneyChange.Impact
+                    || this.SupposedDate.Date != this._moneyChange.Date.Date
+                    || !this.SupposedAccount.Equals(this._moneyChange.Account)
+                    || !this.SupposedCategory.Equals(this._moneyChange.Category))
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
