@@ -57,7 +57,10 @@ namespace FinanceManager.ViewModels
             set 
             { 
                 this._selectedmoneyChange = value;
-                this.MoneyChangeEditViewModel.MoneyChange = this._selectedmoneyChange;
+                if (this.MoneyChangeEditViewModel.MoneyChange != this._selectedmoneyChange)
+                {
+                    this.MoneyChangeEditViewModel.MoneyChange = this._selectedmoneyChange;
+                }
                 OnPropertyChange();
             }
         }
@@ -121,8 +124,12 @@ namespace FinanceManager.ViewModels
                         this._selectedmoneyChange = null;
                         OnPropertyChange(nameof(this.SelectedMoneyChange));
                     }
+                    MoneyChangeViewModel buffer = this.SelectedMoneyChange;
+                    this.CategoriesLoad();
+                    this.SelectedMoneyChange = buffer;
                     break;
-                case nameof(MoneyChangeEditViewModel.CurrentType):
+                case nameof(MoneyChangeEditViewModel.MoneyChange):
+                    this.SelectedMoneyChange = MoneyChangeEditViewModel.MoneyChange;
                     break;
                 default:
                     break;

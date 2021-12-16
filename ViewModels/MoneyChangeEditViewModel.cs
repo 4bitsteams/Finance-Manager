@@ -99,8 +99,8 @@ namespace FinanceManager.ViewModels
                     this.SupposedDate = this._moneyChange.Date;
                     this.SupposedAccount = this._moneyChange.Account;
                     this.SupposedCategory = this._moneyChange.Category;
-                    this.OnPropertyChange();
                 }
+                this.OnPropertyChange();
             }
         }
 
@@ -270,6 +270,7 @@ namespace FinanceManager.ViewModels
             });
             this.AddMoneyChangeCommand = new RelayCommand(o =>
             {
+                this.MoneyChange = null;
                 this.IsVisible = true;
                 this.IsEditable = true;
                 this.SupposedDescription = "New money change";
@@ -356,10 +357,10 @@ namespace FinanceManager.ViewModels
             this._moneyChange.Description = this.SupposedDescription;
             this._moneyChange.Impact = this.SupposedImpact;
             this._moneyChange.Date = this.SupposedDate;
+            this._moneyChange.Type = this.CurrentType;
             this._moneyChange.Account = this.SupposedAccount;
             this._moneyChange.Category = this.SupposedCategory;
-            this._moneyChange.Type = this.CurrentType;
-            OnPropertyChange(nameof(this.Category));
+
             Service.SaveChanges();
         }
 

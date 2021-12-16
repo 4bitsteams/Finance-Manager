@@ -68,6 +68,10 @@ namespace FinanceManager.ViewModels
                 {
                     if (this.MoneyChange.Account != null)
                     {
+                        if (this._accountViewModel == null)
+                        {
+                            this._accountViewModel = new AccountViewModel(this.MoneyChange.Account);
+                        }
                         return this._accountViewModel;
                     }
                 }
@@ -135,6 +139,10 @@ namespace FinanceManager.ViewModels
                 {
                     if (this.MoneyChange.Category != null)
                     {
+                        if (this._categoryViewModel == null)
+                        {
+                            this._categoryViewModel = new CategoryViewModel(this.MoneyChange.Category);
+                        }
                         return this._categoryViewModel;
                     }
                 }
