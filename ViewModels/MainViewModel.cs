@@ -47,13 +47,9 @@ namespace FinanceManager.ViewModels
                 this.CurrentView = this.AccountsView;
             }
             );
-            AccountsViewCommand = new RelayCommand(o =>
+            this.InformationViewCommand = new RelayCommand(o =>
             {
-                this.CurrentView = this.AccountsView;
-            }
-            );
-            InformationViewCommand = new RelayCommand(o =>
-            {
+                this.InformationView.CategoriesLoad();
                 this.CurrentView = this.InformationView;
             });
             this.CategoriesViewCommand = new RelayCommand(o =>

@@ -2,6 +2,7 @@
 using FinanceManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,14 @@ namespace FinanceManager.ViewModels
     public class CategoryEditViewModel : ViewModelBase
     {
         private CategoryViewModel? _editableCategory;
+        private ChangeType _currentChangeType;
+        private ObservableCollection<ChangeType> changeTypes;
+        private bool _isAvailible;
         private bool _isEditable;
 
-        public CategoryViewModel EditableCategory
+        public ObservableCollection<ChangeType> ChangeTypes { get; set; }
+
+        public CategoryViewModel? EditableCategory
         {
             get
             {
@@ -23,12 +29,40 @@ namespace FinanceManager.ViewModels
 
             set
             {
-                this._editableCategory = value;
-                if (EditabilityCheck())
-                { }
+                if (this._editableCategory != value)
+                {
+                    this._editableCategory = value;
+                    if(this._editableCategory != null)
+                    {
+                        this.IsAvailible = true;
+                    }
+                    else
+                    {
+                        this.IsAvailible = false;
+                    }
+                    OnPropertyChange();
+                    OnPropertyChange(nameof(this.Color));
+                    OnPropertyChange(nameof(this.Name));
+                    OnPropertyChange(nameof(this.ChangeType));
+                }
+            }
+        }
+
+        public bool IsAvailible
+        {
+            get
+            {
+                return this._isAvailible;
+            }
+
+            set
+            {
+                this._isAvailible = value;
+                if (value == false)
+                {
+                    this.IsEditable = false;
+                }
                 OnPropertyChange();
-                OnPropertyChange(nameof(this.Color));
-                OnPropertyChange(nameof(this.Name));
             }
         }
 
@@ -45,13 +79,25 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public bool IsVisible { get; set; }
+        public ChangeType CurrentType
+        {
+            get
+            {
+                return this._currentChangeType;
+            }
+
+            set 
+            { 
+                this._currentChangeType = value;
+                OnPropertyChange(nameof(this.ChangeType));
+            }
+        }
 
         public string Name
         {
             get 
             {
-                if (EditabilityCheck())
+                if (this._editableCategory != null)
                 {
                     return this._editableCategory.Name;
                 }
@@ -61,7 +107,7 @@ namespace FinanceManager.ViewModels
 
             set
             {
-                if (EditabilityCheck())
+                if (this._editableCategory != null)
                 {
                     this._editableCategory.Name = value;
                     OnPropertyChange();
@@ -73,7 +119,7 @@ namespace FinanceManager.ViewModels
         {
             get
             {
-                if (EditabilityCheck())
+                if (this._editableCategory != null)
                 {
                     return this.EditableCategory.Color;
                 }
@@ -83,7 +129,7 @@ namespace FinanceManager.ViewModels
 
             set
             {
-                if (EditabilityCheck())
+                if (this._editableCategory != null)
                 {
                     this.EditableCategory.Color = value;
                     OnPropertyChange();
@@ -91,30 +137,58 @@ namespace FinanceManager.ViewModels
             }
         }
 
+        public ChangeType ChangeType
+        {
+            get
+            {
+                if (this._editableCategory != null)
+                {
+                    return this.EditableCategory.Type;
+                }
+
+                return this.CurrentType;
+            }
+
+            set
+            {
+                if (this._editableCategory != null)
+                {
+                    if (this.EditableCategory.Type != value)
+                    {
+                        this.EditableCategory.Type = value;
+                        this.EditableCategory = null;
+                        OnPropertyChange();
+                    }
+                }
+            }
+        }
+
         public RelayCommand AddCategoryCommand { get; set; }
-        //public RelayCommand SaveCategoryCommand { get; set; }
+
+        public RelayCommand EditCategoryCommand { get; set; }
+
+        public RelayCommand RemoveCategoryCommand { get; set; }
 
         public CategoryEditViewModel()
         {
             this.AddCategoryCommand = new RelayCommand(o =>
             {
-                this.EditableCategory = new CategoryViewModel(new Category("New Category", "none", Service.MoneyChanges));
+                this.EditableCategory = new CategoryViewModel(new Category("New Category", "none", this.CurrentType));
                 Service.AddCategory(this.EditableCategory.Category);
-            });
-            this.Color = Colors.Blue;
-
-        }
-
-        private bool EditabilityCheck()
-        {
-            if (this._editableCategory != null)
-            {
                 this.IsEditable = true;
-                return true;
-            }
-
-            this.IsEditable = false;
-            return false;
+            });
+            this.RemoveCategoryCommand = new RelayCommand(o =>
+            {
+                Service.RemoveCategory(this.EditableCategory.Category);
+                this.EditableCategory = null;
+            });
+            this.EditCategoryCommand = new RelayCommand(o =>
+            {
+                this.IsEditable = !this.IsEditable;
+            });
+            this.ChangeTypes = new ObservableCollection<ChangeType>();
+            this.ChangeTypes.Add(ChangeType.Expenses);
+            this.ChangeTypes.Add(ChangeType.Income);
         }
     }
 }

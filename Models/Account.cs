@@ -73,7 +73,6 @@ namespace FinanceManager.Models
 
         public Account() 
         {
-            this.Id = default;
             this._name = string.Empty;
             this._balance = default;
             this._count = false;

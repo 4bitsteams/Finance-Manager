@@ -10,11 +10,11 @@ namespace FinanceManager.ViewModels
 {
     public class MoneyChangeViewModel : ViewModelBase
     {
-        private MoneyChange _moneyChange;
-        private AccountViewModel _account;
-        private CategoryViewModel _category;
+        private MoneyChange? _moneyChange;
+        private AccountsViewModel? _accountsViewModel;
+        private CategoriesViewModel? _categoriesViewModel;
 
-        public MoneyChange MoneyChange
+        public MoneyChange? MoneyChange
         {
             get 
             { 
@@ -37,26 +37,49 @@ namespace FinanceManager.ViewModels
         {
             get
             {
-                return this._moneyChange.Impact;
+                if (this.MoneyChange != null)
+                {
+                    return this._moneyChange.Impact;
+                }
+
+                return 0d;
             }
 
             set
             {
-                this._moneyChange.Impact = value;
+                if (this.MoneyChange != null)
+                {
+                    this._moneyChange.Impact = value;
+                }
                 OnPropertyChange();
             }
         }
 
-        public AccountViewModel Account
+        public AccountViewModel? Account
         {
             get
             {
-                return new AccountViewModel(this.MoneyChange.Account);
+                if (this.MoneyChange != null)
+                {
+                    if (this.MoneyChange.Account != null)
+                    {
+                        return new AccountViewModel(this.MoneyChange.Account);
+                    }
+                }
+
+                return null;
             }
 
             set
             {
-                this.MoneyChange.Account = (value as AccountViewModel).Account;
+                if (value != null)
+                {
+                    if (this.MoneyChange != null)
+                    {
+                        this.MoneyChange.Account = value.Account;
+                    }
+                }
+
                 OnPropertyChange();
             }
         }
@@ -79,26 +102,49 @@ namespace FinanceManager.ViewModels
         {
             get
             {
-                return this._moneyChange.Description;
+                if (this.MoneyChange != null)
+                {
+                    return this._moneyChange.Description;
+                }
+
+                return string.Empty;
             }
 
             set
             {
-                this._moneyChange.Description = value;
+                if (this.MoneyChange != null)
+                {
+                    this._moneyChange.Description = value;
+                }
                 OnPropertyChange();
             }
         }
 
-        public CategoryViewModel Category
+        public CategoryViewModel? Category
         {
             get
             {
-                return new CategoryViewModel(this.MoneyChange.Category);
+                if (this.MoneyChange != null)
+                {
+                    if (this.MoneyChange.Category != null)
+                    {
+                        return new CategoryViewModel(this.MoneyChange.Category);
+                    }
+                }
+
+                return null;
             }
 
             set
             {
-                this.MoneyChange.Category = (value as CategoryViewModel).Category;
+                if (value != null)
+                {
+                    if (this.MoneyChange != null)
+                    {
+                        this.MoneyChange.Category = (value as CategoryViewModel).Category;
+                    }
+                }
+
                 OnPropertyChange();
             }
         }
@@ -119,21 +165,21 @@ namespace FinanceManager.ViewModels
         public MoneyChangeViewModel()
         {
             this._moneyChange = new MoneyChange();
-            this.MoneyChange.Impact = default;
-            this.MoneyChange.Account = new Account();
-            this.MoneyChange.Category = new Category();
-            this.MoneyChange.Description = string.Empty;
             this.PropertyChanged += DB_SaveChanges;
         }
 
         public MoneyChangeViewModel(MoneyChange change) : this()
         {
-            this.MoneyChange = change;
+
+            this._moneyChange = change;
         }
 
         private void DB_SaveChanges(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Service.SaveChanges();
+            if (this.Category != null && this.Account != null)
+            {
+                Service.SaveChanges();
+            }
         }
     }
 }

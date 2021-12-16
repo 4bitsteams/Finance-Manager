@@ -12,6 +12,7 @@ namespace FinanceManager.ViewModels
     public class CategoriesViewModel : ViewModelBase
     {
         private CategoryViewModel _selectedCategory;
+        private ObservableCollection<CategoryViewModel> _shownCategories;
         private ObservableCollection<CategoryViewModel> _incomes;
         private ObservableCollection<CategoryViewModel> _expances;
         private bool _incomesRadioButtonIsChecked;
@@ -42,6 +43,7 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._expances = value;
+                OnPropertyChange();
             }
         }
 
@@ -55,10 +57,23 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._incomes = value;
+                OnPropertyChange();
             }
         }
 
-        public ObservableCollection<CategoryViewModel> ShownCategories { get; set; }
+        public ObservableCollection<CategoryViewModel> ShownCategories 
+        {
+            get
+            {
+                return this._shownCategories;
+            }
+
+            set
+            {
+                this._shownCategories = value;
+                OnPropertyChange();
+            }
+        }
 
         public RelayCommand ExpencesCommand { get; set; }
 
@@ -98,16 +113,19 @@ namespace FinanceManager.ViewModels
             this.CategoryEditViewModel = new CategoryEditViewModel();
             this.CategoryEditViewModel.PropertyChanged += CategoryAdded;
             this.CategoriesLoad();
-            this.ShownCategories = this.Expences;
             this.ExpencesCommand = new RelayCommand(o =>
             {
                 this.ShownCategories = this.Expences;
+                this.ExpenxesRadioButtonIsChecked = true;
+                this.CategoryEditViewModel.CurrentType = ChangeType.Expenses;
             });
             this.IncomesCommand = new RelayCommand(o =>
             {
                 this.ShownCategories = this.Incomes;
+                this.IncomesRadioButtonIsChecked = true;
+                this.CategoryEditViewModel.CurrentType = ChangeType.Income;
             });
-            this.IncomesRadioButtonIsChecked = true;
+            this.ExpencesCommand.Execute(this);
         }
 
         private void CategoryAdded(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -115,7 +133,11 @@ namespace FinanceManager.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(CategoryEditViewModel.EditableCategory):
-                    if(this.SelectedCategory != this.CategoryEditViewModel.EditableCategory)
+                    if (this.CategoryEditViewModel.EditableCategory == null)
+                    {
+                        this.CategoriesLoad();
+                    }
+                    if (this.SelectedCategory != this.CategoryEditViewModel.EditableCategory && this.CategoryEditViewModel.EditableCategory != null)
                     {
                         this.ShownCategories.Add(this.CategoryEditViewModel.EditableCategory);
                     }
@@ -127,58 +149,35 @@ namespace FinanceManager.ViewModels
 
         public void CategoriesLoad()
         {
-            if (this.Expences != null)
-            {
-                this.Expences.Clear();
-            }
-            else
+            if (this.Expences == null)
             {
                 this.Expences = new ObservableCollection<CategoryViewModel>();
             }
-
-            if (this.Incomes != null)
-            {
-                this.Incomes.Clear();
-            }
             else
+            {
+                this.Expences.Clear();
+            }
+
+            if (this.Incomes == null)
             {
                 this.Incomes = new ObservableCollection<CategoryViewModel>();
             }
-            foreach (var category in Service.Categories)
-            {
-                this.Expences.Add(new CategoryViewModel(category));
-            }
-        }
-
-        public void AccountsUpdate()
-        {
-            if (this.Accounts == null)
-            {
-                this.Accounts = new ObservableCollection<AccountViewModel>();
-                this.AccountsLoad();
-            }
             else
             {
-                foreach (var account in Service.Accounts)
+                this.Incomes.Clear();
+            }
+            foreach (var category in Service.Categories)
+            {
+                if (category.Type == ChangeType.Income)
                 {
-                    bool flag = true;
-                    foreach (var exAcc in this.Accounts)
-                    {
-                        if (exAcc.Account == account)
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
-
-                    if (flag)
-                    {
-                        AccountViewModel acc = new AccountViewModel(account);
-                        acc.PropertyChanged += AccountsChanged;
-                        Accounts.Add(new AccountViewModel(account));
-                    }
+                    this.Incomes.Add(new CategoryViewModel(category));
+                }
+                else if (category.Type == ChangeType.Expenses)
+                {
+                    this.Expences.Add(new CategoryViewModel(category));
                 }
             }
+            OnPropertyChange(nameof(this.ShownCategories));
         }
     }
 }

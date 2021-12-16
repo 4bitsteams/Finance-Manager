@@ -71,8 +71,11 @@ namespace FinanceManager.ViewModels
                     this._moneyChange.PropertyChanged -= MoneyChangeEditPropertyChanged;
                     this._moneyChange.PropertyChanged += MoneyChangeEditPropertyChanged;
                     this.IsVisible = true;
+                    this.IsEditable = true;
                     this._selectedAccount = this._moneyChange.Account;
+                    this._selectedCategory = this._moneyChange.Category;
                     this.OnPropertyChange(nameof(this.SelectedAccount));
+                    this.OnPropertyChange(nameof(this.SelectedCategory));
                     this.OnPropertyChange(nameof(this.Account));
                     this.OnPropertyChange(nameof(this.Category));
                     this.OnPropertyChange(nameof(this.Date));
@@ -146,7 +149,7 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public CategoryViewModel? SelectedCategory
+        public CategoryViewModel SelectedCategory
         {
             get
             {
@@ -156,44 +159,12 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._selectedCategory = value;
+                this.Category = this._selectedCategory;
                 this.OnPropertyChange();
             }
         }
 
-        public ObservableCollection<CategoryViewModel> AvailibleCategories
-        {
-            get
-            {
-                AvailibleCategoriesLoad();
-                return this._availibleCategories;
-            }
-            set
-            {
-                this._availibleCategories = value;
-                this.OnPropertyChange();
-            }
-        }
-
-        public DateTime Date
-        {
-            get
-            {
-                if (this.VisibilityCheck())
-                {
-                    return this._moneyChange.Date;
-                }
-
-                return DateTime.Now;
-            }
-
-            set
-            {
-                if (this.VisibilityCheck())
-                {
-                    this._moneyChange.Date = value;
-                }
-            }
-        }
+       
 
         public AccountViewModel Account
         {
@@ -216,7 +187,7 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public AccountViewModel? SelectedAccount
+        public AccountViewModel SelectedAccount
         {
             get
             {
@@ -228,6 +199,50 @@ namespace FinanceManager.ViewModels
                 this._selectedAccount = value;
                 this.Account = this._selectedAccount;
                 this.OnPropertyChange();
+            }
+        }
+
+        public ObservableCollection<CategoryViewModel> AvailibleCategories
+        {
+            get
+            {
+                AvailibleCategoriesLoad();
+                return this._availibleCategories;
+            }
+            set
+            {
+                this._availibleCategories = value;
+                this.OnPropertyChange();
+            }
+        }
+
+        public DateTime CurrentDate
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+        } 
+
+        public DateTime Date
+        {
+            get
+            {
+                if (this.VisibilityCheck())
+                {
+                    return this._moneyChange.Date;
+                }
+
+                return DateTime.Now;
+            }
+
+            set
+            {
+                if (this.VisibilityCheck())
+                {
+                    this._moneyChange.Date = value;
+                    OnPropertyChange();
+                }
             }
         }
 
@@ -247,12 +262,19 @@ namespace FinanceManager.ViewModels
 
         public RelayCommand EditCommand { get; set; }
 
+        public RelayCommand AddMoneyChangeCommand { get; set; }
+
         public MoneyChangeEditViewModel()
         {
             this.MoneyChange = new();
             this.IsVisible = false;
             this.EditCommand = new RelayCommand(o =>
             {
+                this.IsEditable = !this.IsEditable;
+            });
+            this.AddMoneyChangeCommand = new RelayCommand(o =>
+            {
+                this.MoneyChange = new MoneyChangeViewModel();
                 this.IsEditable = true;
             });
             AvailibleAccountsLoad();
@@ -330,5 +352,7 @@ namespace FinanceManager.ViewModels
                 this._availibleCategories.Add(new CategoryViewModel(category));
             }
         }
+
+        
     }
 }

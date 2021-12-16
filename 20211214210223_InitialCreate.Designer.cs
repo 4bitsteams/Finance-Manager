@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceManager.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211214193047_ColumnAdd")]
-    partial class ColumnAdd
+    [Migration("20211214210223_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,6 +64,9 @@ namespace FinanceManager.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<byte>("R")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

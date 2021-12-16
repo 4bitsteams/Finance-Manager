@@ -92,6 +92,7 @@ namespace FinanceManager.Models
                 this._color.G = value;
             }
         }
+
         [NotMapped]
         public Color Color
         {
@@ -135,14 +136,25 @@ namespace FinanceManager.Models
 
         public Category()
         {
+            this._name = "New Category";
             this._changes = new List<MoneyChange>();
             this.ImageSource = "some source";
+            this.Color = Colors.White;
+            this.Type = ChangeType.Expenses;
         }
 
-        public Category(string Name, string ImageSource, List<MoneyChange> MoneyChanges) : this()
+        public Category(string Name, string ImageSource, ChangeType type, List<MoneyChange> MoneyChanges = null)
         {
             this.Name = Name;
             this.ImageSource = ImageSource;
+            this.MoneyChanges = MoneyChanges;
+            this.Type = type;
+            this.Color= Colors.White;
+            if (MoneyChanges == null)
+            {
+                MoneyChanges = new List<MoneyChange>();
+            }
+
             this.MoneyChanges = MoneyChanges;
         }
 

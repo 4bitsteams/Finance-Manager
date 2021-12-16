@@ -9,7 +9,8 @@ namespace FinanceManager.Models
     public enum ChangeType
     {
         Expenses,
-        Income
+        Income,
+        None
     };
 
     public class MoneyChange
@@ -123,8 +124,9 @@ namespace FinanceManager.Models
         {
             this._impact = 0;
             this._account = null;
+            this._category = null;
             this._date = DateTime.Now;
-            this._description = null;
+            this._description = string.Empty;
         }
 
         public MoneyChange(double Impact, Account Account, DateTime Date, ChangeType Type, string Description, Category Category)

@@ -31,7 +31,12 @@ namespace FinanceManager.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    ImageSource = table.Column<string>(type: "TEXT", nullable: false)
+                    ImageSource = table.Column<string>(type: "TEXT", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    A = table.Column<byte>(type: "INTEGER", nullable: false),
+                    R = table.Column<byte>(type: "INTEGER", nullable: false),
+                    B = table.Column<byte>(type: "INTEGER", nullable: false),
+                    G = table.Column<byte>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

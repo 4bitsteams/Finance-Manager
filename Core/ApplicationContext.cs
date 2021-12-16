@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FinanceManager.Models;
-using System.Windows.Media;
 
 namespace FinanceManager.Core
 {
@@ -23,7 +18,7 @@ namespace FinanceManager.Core
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}dataBase.db";
+            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}financialManagerDB.db";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

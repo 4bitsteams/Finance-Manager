@@ -71,5 +71,18 @@ namespace FinanceManager.ViewModels
         {
             Service.SaveChanges();
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is AccountViewModel acc)
+            {
+                if(this.Account == acc.Account)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

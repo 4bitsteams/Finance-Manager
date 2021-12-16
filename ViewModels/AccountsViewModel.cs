@@ -124,7 +124,7 @@ namespace FinanceManager.ViewModels
             {
                 AccountViewModel acc = new AccountViewModel(account);
                 acc.PropertyChanged += AccountsChanged;
-                Accounts.Add(new AccountViewModel(account));
+                Accounts.Add(acc);
             }
         }
 

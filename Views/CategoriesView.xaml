@@ -120,11 +120,6 @@
                                            FontSize="20"
                                            HorizontalAlignment="Left"
                                            Text="{Binding Name}">
-                                       
-                                        <!--<TextBlock.Foreground>
-                                            <SolidColorBrush Color="{Binding Color}"/>
-                                        </TextBlock.Foreground>-->
-
                                 </TextBlock>
                             </Grid>
                         </DataTemplate>

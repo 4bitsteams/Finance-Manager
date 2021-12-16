@@ -28,11 +28,11 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._category = value;
-                this.MoneyChangesLoad();
                 OnPropertyChange(nameof(this.Name));
                 OnPropertyChange(nameof(this.ImageSource));
                 OnPropertyChange(nameof(this.Color));
-                OnPropertyChange(nameof(this.MoneyChanges));
+                this.MoneyChangesLoad();
+
             }
         }
 
@@ -59,19 +59,7 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._moneyChanges = value;
-                this._moneyChanges.CollectionChanged -= CollectionChanged;
-                this._moneyChanges.CollectionChanged += CollectionChanged;
                 OnPropertyChange();
-            }
-        }
-
-        private void CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
-            {
-                this._category.MoneyChanges.Add(this.MoneyChanges[^1].MoneyChange);
-                Service.SaveChanges();
-
             }
         }
 
@@ -85,6 +73,7 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._category.Name = value;
+                OnPropertyChange("DbChanged");
                 OnPropertyChange();
             }
         }
@@ -99,6 +88,7 @@ namespace FinanceManager.ViewModels
             set
             {
                 this._category.ImageSource = value;
+                OnPropertyChange("DbChanged");
                 OnPropertyChange();
             }
         }
@@ -113,6 +103,21 @@ namespace FinanceManager.ViewModels
             set 
             {
                 this._category.Color = value;
+                OnPropertyChange("DbChanged");
+                OnPropertyChange();
+            }
+        }
+
+        public ChangeType Type
+        {
+            get
+            {
+                return this._category.Type;
+            }
+
+            set
+            {
+                this._category.Type = value;
                 OnPropertyChange();
             }
         }
@@ -136,7 +141,6 @@ namespace FinanceManager.ViewModels
         public CategoryViewModel()
         {
             this._category = new Category();
-            this.MoneyChangesLoad();
             this.PropertyChanged += DB_SaveChanges;
         }
 
@@ -157,11 +161,19 @@ namespace FinanceManager.ViewModels
             }
         }
 
-
+        public void AddMoneyChange(MoneyChangeViewModel moneyChange)
+        {
+            this.Category.AddMoneyChange(moneyChange.MoneyChange);
+            this.MoneyChanges.Add(moneyChange);
+            OnPropertyChange(nameof(this.MoneyChanges));
+        }
 
         private void DB_SaveChanges(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Service.SaveChanges();
+            if (e.PropertyName == "DbChanged")
+            {
+                Service.SaveChanges();
+            }
         }
 
 
@@ -179,6 +191,19 @@ namespace FinanceManager.ViewModels
                 }
             }
             OnPropertyChange(nameof(this.MoneyChanges));
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is CategoryViewModel cat)
+            {
+                if (this.Category == cat.Category)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

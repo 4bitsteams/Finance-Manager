@@ -3,7 +3,6 @@ using System;
 using FinanceManager.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +10,12 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinanceManager.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211212212325_InitialCreate")]
-    partial class InitialCreate
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
 
             modelBuilder.Entity("FinanceManager.Models.Account", b =>
                 {
@@ -46,6 +44,15 @@ namespace FinanceManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<byte>("A")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte>("B")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte>("G")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ImageSource")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -53,6 +60,12 @@ namespace FinanceManager.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<byte>("R")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

@@ -95,8 +95,8 @@ namespace FinanceManager.ViewModels
         public InformationViewModel()
         {
             this.MoneyChangeEditViewModel = new MoneyChangeEditViewModel();
-            this.ExpenscesLoad();
-            this.Incomes = new ObservableCollection<CategoryViewModel>();
+            this.MoneyChangeEditViewModel.PropertyChanged += MoneyChangeEditViewModelChandged;
+            this.CategoriesLoad();
             this.ExpencesCommand = new RelayCommand(o =>
             {
                 this.ShownMoneyChanges = Expences;
@@ -107,6 +107,22 @@ namespace FinanceManager.ViewModels
             });
             this.ShownMoneyChanges = this.Expences;
             this.ExpenxesRadioButtonIsChecked = true;
+        }
+
+        private void MoneyChangeEditViewModelChandged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(MoneyChangeEditViewModel.SelectedCategory):
+                    if (this.MoneyChangeEditViewModel.MoneyChange != this.SelectedMoneyChange)
+                    {
+                        this._selectedmoneyChange = null;
+                        OnPropertyChange(nameof(this.SelectedMoneyChange));
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void CategoryViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -134,9 +150,9 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        private void ExpenscesLoad()
+        public void CategoriesLoad()
         {
-            if(this.Expences != null)
+            if (this.Expences != null)
             {
                 this.Expences.Clear();
             }
@@ -144,15 +160,51 @@ namespace FinanceManager.ViewModels
             {
                 this.Expences = new ObservableCollection<CategoryViewModel>();
             }
+
+            if (this.Incomes != null)
+            {
+                this.Incomes.Clear();
+            }
+            else
+            {
+                this.Incomes = new ObservableCollection<CategoryViewModel>();
+            }
             foreach (var category in Service.Categories)
             {
-                
-                //if (category.MoneyChanges.Count > 0)
+                if (category.Type == ChangeType.Income)
                 {
-                    //category.AddMoneyChange(new MoneyChange(50, Service.Accounts[0], DateTime.Now, ChangeType.Expenses, "Some description", category));
-                    //Service.SaveChanges();
-                    this.Expences.Add(new CategoryViewModel(category));
-                    this.Expences[^1].PropertyChanged += CategoryViewModelPropertyChanged;
+                    CategoryViewModel categoryViewModel = new CategoryViewModel(category);
+                    categoryViewModel.PropertyChanged += CategoryViewModelPropertyChanged;
+                    this.Incomes.Add(categoryViewModel);
+                }
+                else if (category.Type == ChangeType.Expenses)
+                {
+                    CategoryViewModel categoryViewModel = new CategoryViewModel(category);
+                    categoryViewModel.PropertyChanged += CategoryViewModelPropertyChanged;
+                    this.Expences.Add(categoryViewModel);
+                }
+            }
+
+            this.NormilizeCategories();
+        }
+
+        public void NormilizeCategories()
+        {
+            for(int i = 0; i < this.Expences.Count; i++)
+            {
+                if (this.Expences[i].MoneyChanges.Count == 0)
+                {
+                    this.Expences.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            for (int i = 0; i < this.Incomes.Count; i++)
+            {
+                if (this.Incomes[i].MoneyChanges.Count == 0)
+                {
+                    this.Incomes.RemoveAt(i);
+                    i--;
                 }
             }
         }

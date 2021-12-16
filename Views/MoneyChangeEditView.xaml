@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FinanceManager.Views"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              xmlns:viewModel="clr-namespace:FinanceManager.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -45,7 +46,7 @@
                         
                     </TextBox>
                     <TextBlock Style="{StaticResource Label}"
-                               Text="Blance"
+                               Text="Balance"
                                Margin="3 5 3 0">
                     </TextBlock>
                     <TextBox Text="{Binding Impact, StringFormat={}{0:N2}, Mode=TwoWay}"
@@ -56,12 +57,22 @@
                              MaxWidth="500">
                     </TextBox>
                     <TextBlock Style="{StaticResource Label}"
+                               Text="Date"
+                               Margin="3 5 3 0">
+                    </TextBlock>
+                    <syncfusion:SfDatePicker x:Name="sfDatePicker" 
+                                             SetValueOnLostFocus="True"
+                                             Value="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             MaxDate="{Binding CurrentDate}" 
+                                             HorizontalAlignment="Stretch"
+                                             Margin="3 5 3 0"/>
+                    <TextBlock Style="{StaticResource Label}"
                                Text="Account"
                                Margin="3 5 3 0">
                     </TextBlock>
                     <ComboBox ItemsSource="{Binding AvailibleAccounts}"
                               Margin="3 5 3 0"
-                              SelectedItem="{Binding SelectedAccount}">
+                              SelectedItem="{Binding SelectedAccount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Style="{StaticResource Label}"
@@ -71,7 +82,23 @@
                                 </TextBlock>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
-                        
+                    </ComboBox>
+                    <TextBlock Style="{StaticResource Label}"
+                               Text="Category"
+                               Margin="3 5 3 0">
+                    </TextBlock>
+                    <ComboBox ItemsSource="{Binding AvailibleCategories}"
+                              Margin="3 5 3 7"
+                              SelectedItem="{Binding SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource Label}"
+                                               HorizontalAlignment="Left"
+                                               FontSize="12"
+                                               Text="{Binding Name}">
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
             </Grid>
@@ -90,7 +117,7 @@
                     Style="{StaticResource CircleButton}"
                     Content="Add"
                     FontWeight="DemiBold"
-                    Command="{Binding AddAccountCommand}">
+                    Command="{Binding AddMoneyChangeCommand}">
                 <Button.Background>
                     <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
                 </Button.Background>
