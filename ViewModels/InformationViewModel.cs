@@ -100,10 +100,12 @@ namespace FinanceManager.ViewModels
             this.ExpencesCommand = new RelayCommand(o =>
             {
                 this.ShownMoneyChanges = Expences;
+                this.MoneyChangeEditViewModel.CurrentType = ChangeType.Expenses;
             });
             this.IncomesCommand = new RelayCommand(o =>
             {
                 this.ShownMoneyChanges = Incomes;
+                this.MoneyChangeEditViewModel.CurrentType = ChangeType.Income;
             });
             this.ShownMoneyChanges = this.Expences;
             this.ExpenxesRadioButtonIsChecked = true;
@@ -119,6 +121,8 @@ namespace FinanceManager.ViewModels
                         this._selectedmoneyChange = null;
                         OnPropertyChange(nameof(this.SelectedMoneyChange));
                     }
+                    break;
+                case nameof(MoneyChangeEditViewModel.CurrentType):
                     break;
                 default:
                     break;

@@ -51,17 +51,14 @@ namespace FinanceManager.Models
             {
                 if (this._account != null)
                 {
-                    if (this._account != value)
-                    {
-                        this._account.RemoveMoneyChange(this);
-                        (value as Account).AddMoneyChange(this);
-                        this._account = value;
-                    }
+                    this._account.RemoveMoneyChange(this);
+                    this._account = value;
+                    this._account.AddMoneyChange(this);
                 }
                 else
                 {
                     this._account = value;
-                    (value as Account).AddMoneyChange(this);
+                    value.AddMoneyChange(this);
                 }
             }
         }
@@ -126,6 +123,7 @@ namespace FinanceManager.Models
             this._account = null;
             this._category = null;
             this._date = DateTime.Now;
+            this.Type = ChangeType.Income;
             this._description = string.Empty;
         }
 
@@ -137,6 +135,19 @@ namespace FinanceManager.Models
             this.Description = Description;
             this.Type = Type;
             this.Category = Category;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is MoneyChange moneyChange)
+            {
+                if(this.Id != null && moneyChange.Id != null && this.Id == moneyChange.Id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

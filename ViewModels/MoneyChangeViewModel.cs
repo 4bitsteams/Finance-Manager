@@ -11,8 +11,8 @@ namespace FinanceManager.ViewModels
     public class MoneyChangeViewModel : ViewModelBase
     {
         private MoneyChange? _moneyChange;
-        private AccountsViewModel? _accountsViewModel;
-        private CategoriesViewModel? _categoriesViewModel;
+        private AccountViewModel? _accountViewModel;
+        private CategoryViewModel? _categoryViewModel;
 
         public MoneyChange? MoneyChange
         {
@@ -24,6 +24,11 @@ namespace FinanceManager.ViewModels
             set 
             { 
                 this._moneyChange = value;
+                if (this._moneyChange != null)
+                {
+                    this._accountViewModel = new AccountViewModel(this._moneyChange.Account);
+                    this._categoryViewModel = new CategoryViewModel(this._moneyChange.Category);
+                }
                 OnPropertyChange(nameof(this.Impact));
                 OnPropertyChange(nameof(this.Account));
                 OnPropertyChange(nameof(this.Date));
@@ -63,7 +68,7 @@ namespace FinanceManager.ViewModels
                 {
                     if (this.MoneyChange.Account != null)
                     {
-                        return new AccountViewModel(this.MoneyChange.Account);
+                        return this._accountViewModel;
                     }
                 }
 
@@ -77,6 +82,8 @@ namespace FinanceManager.ViewModels
                     if (this.MoneyChange != null)
                     {
                         this.MoneyChange.Account = value.Account;
+                        this._accountViewModel = value;
+                        
                     }
                 }
 
@@ -128,7 +135,7 @@ namespace FinanceManager.ViewModels
                 {
                     if (this.MoneyChange.Category != null)
                     {
-                        return new CategoryViewModel(this.MoneyChange.Category);
+                        return this._categoryViewModel;
                     }
                 }
 
@@ -142,6 +149,7 @@ namespace FinanceManager.ViewModels
                     if (this.MoneyChange != null)
                     {
                         this.MoneyChange.Category = (value as CategoryViewModel).Category;
+                        this._categoryViewModel = value;
                     }
                 }
 

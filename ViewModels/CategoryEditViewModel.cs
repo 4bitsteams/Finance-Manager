@@ -13,8 +13,8 @@ namespace FinanceManager.ViewModels
     public class CategoryEditViewModel : ViewModelBase
     {
         private CategoryViewModel? _editableCategory;
-        private ChangeType _currentChangeType;
         private ObservableCollection<ChangeType> changeTypes;
+        private ChangeType _currentChangeType;
         private bool _isAvailible;
         private bool _isEditable;
 

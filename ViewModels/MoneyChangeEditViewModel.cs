@@ -1,4 +1,5 @@
 ﻿using FinanceManager.Core;
+using FinanceManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,17 @@ namespace FinanceManager.ViewModels
         private CategoryViewModel? _supposedCategory;
         private bool _isEditable;
         private bool _isVisible;
+        private ChangeType _currentType;
+
+        public ChangeType CurrentType
+        {
+            get { return _currentType; }
+            set 
+            { 
+                _currentType = value;
+                OnPropertyChange();
+            }
+        }
 
         public DateTime CurrentDate
         {
@@ -302,6 +314,9 @@ namespace FinanceManager.ViewModels
                 case nameof(this.MoneyChange):
                     OnPropertyChange(nameof(this.SaveAbility));
                     break;
+                case nameof(this.CurrentType):
+                    AvailibleCategoriesLoad();
+                    break;
                 default:
                     break;
             }
@@ -344,6 +359,7 @@ namespace FinanceManager.ViewModels
             this._moneyChange.Date = this.SupposedDate;
             this._moneyChange.Account = this.SupposedAccount;
             this._moneyChange.Category = this.SupposedCategory;
+            this._moneyChange.Type = this.CurrentType;
             OnPropertyChange(nameof(this.Category));
             Service.SaveChanges();
         }
@@ -396,8 +412,12 @@ namespace FinanceManager.ViewModels
             }
             foreach (var category in Service.Categories)
             {
-                this._availibleCategories.Add(new CategoryViewModel(category));
+                if (category.Type == this.CurrentType)
+                {
+                    this._availibleCategories.Add(new CategoryViewModel(category));
+                }
             }
+            OnPropertyChange(nameof(this.AvailibleCategories));
         }
 
         

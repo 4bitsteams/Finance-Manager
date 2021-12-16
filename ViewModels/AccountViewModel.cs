@@ -72,6 +72,18 @@ namespace FinanceManager.ViewModels
             Service.SaveChanges();
         }
 
+        public void AddMoneyChange(MoneyChangeViewModel money)
+        {
+            this.Account.AddMoneyChange(money.MoneyChange);
+            OnPropertyChange(nameof(this.Balance));
+        }
+
+        public void RemoveMoneyChange(MoneyChangeViewModel money)
+        {
+            this.Account.RemoveMoneyChange(money.MoneyChange);
+            OnPropertyChange(nameof(this.Balance));
+        }
+
         public override bool Equals(object? obj)
         {
             if (obj is AccountViewModel acc)
