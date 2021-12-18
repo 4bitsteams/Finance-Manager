@@ -279,6 +279,12 @@ namespace FinanceManager.ViewModels
                 this.SupposedAccount = null;
                 this.SupposedCategory = null;
             });
+            this.RemoveCommand = new RelayCommand(o =>
+            {
+                Service.RemoveMoneyChange(this.MoneyChange.MoneyChange);
+                this.MoneyChange.Account.RemoveMoneyChange(this.MoneyChange);
+                this.MoneyChange = null;
+            });
             this.SaveCommand = new RelayCommand(o =>
             {
                 SaveFromSupposed();

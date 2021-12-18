@@ -173,7 +173,11 @@ namespace FinanceManager.ViewModels
                     this.SelectedMoneyChange = buffer;
                     break;
                 case nameof(MoneyChangeEditViewModel.MoneyChange):
-                    this.SelectedMoneyChange = MoneyChangeEditViewModel.MoneyChange;
+                    if (this.SelectedMoneyChange != MoneyChangeEditViewModel.MoneyChange)
+                    {
+                        this.SelectedMoneyChange = MoneyChangeEditViewModel.MoneyChange;
+                        CategoriesLoad();
+                    }
                     break;
                 default:
                     break;

@@ -115,12 +115,13 @@
                                              Margin="3 5 3 0"
                                              MaxDate="{Binding To}"
                                              SetValueOnLostFocus="True"
+                                             FormatString="ddd, dd MMM yyy"
                                              Value="{Binding From, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     
                     </syncfusion:SfDatePicker>
                     <TextBlock Grid.Row="2"
                                Style="{StaticResource Label}"
-                               Text="Date to show changes antil:"
+                               Text="Date to show changes until:"
                                Margin="3 5 3 0">
 
                     </TextBlock>
@@ -128,6 +129,7 @@
                                              Margin="3 5 3 0"
                                              MaxDate="{Binding CurrentDate}"
                                              MinDate="{Binding From}"
+                                             FormatString="ddd, dd MMM yyy"
                                              SetValueOnLostFocus="True"
                                              Value="{Binding To, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
