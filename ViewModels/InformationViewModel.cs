@@ -138,9 +138,7 @@ namespace FinanceManager.ViewModels
 
         public InformationViewModel()
         {
-            this.To = DateTime.Now.Date;
-            this.From = DateTime.Now.Date;
-            this.From = this.From.AddDays(-7);
+            DateSetting();
             this.MoneyChangeEditViewModel = new MoneyChangeEditViewModel();
             this.MoneyChangeEditViewModel.PropertyChanged += MoneyChangeEditViewModelChandged;
             this.CategoriesLoad();
@@ -255,6 +253,36 @@ namespace FinanceManager.ViewModels
 
             this.NormilizeCategories();
             OnPropertyChange(nameof(this.ShownMoneyChanges));
+        }
+
+        private void DateSetting()
+        {
+            switch(DateTime.Now.Date.DayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    this.From = DateTime.Today;
+                    break;
+                case DayOfWeek.Tuesday:
+                    this.From = DateTime.Today.AddDays(-1);
+                    break;
+                case DayOfWeek.Wednesday:
+                    this.From = DateTime.Today.AddDays(-2);
+                    break;
+                case DayOfWeek.Thursday:
+                    this.From = DateTime.Today.AddDays(-3);
+                    break;
+                case DayOfWeek.Friday:
+                    this.From = DateTime.Today.AddDays(-4);
+                    break;
+                case DayOfWeek.Saturday:
+                    this.From = DateTime.Today.AddDays(-5);
+                    break;
+                case DayOfWeek.Sunday:
+                    this.From = DateTime.Today.AddDays(-6);
+                    break;
+            }
+
+            this.To = this.From.AddDays(7);
         }
 
         public void NormilizeCategories()

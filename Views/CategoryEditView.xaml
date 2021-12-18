@@ -61,22 +61,7 @@
                                             Color="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     </syncfusion:ColorPicker>
                 </StackPanel>
-                    <Button Name="SaveButton"
-                            Grid.Row="1"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom"
-                            Style="{StaticResource CircleButton}"
-                            Margin="5"
-                            Width="35"
-                            Height="35">
-                        <Button.Background>
-                            <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
-                        </Button.Background>
-                        <TextBlock Style="{StaticResource Label}"
-                                   Text="Save">
-                        </TextBlock>
                     
-                </Button>
                 </Grid>
 
             </Border>
