@@ -131,6 +131,10 @@ namespace FinanceManager.ViewModels
 
             set
             {
+                if (value < 0)
+                {
+                    value = 0;
+                }
                 this._supposedImpact = value;
                 OnPropertyChange();
             }
@@ -277,8 +281,11 @@ namespace FinanceManager.ViewModels
             });
             this.RemoveCommand = new RelayCommand(o =>
             {
-                Service.RemoveMoneyChange(this.MoneyChange.MoneyChange);
-                this.MoneyChange.Account.RemoveMoneyChange(this.MoneyChange);
+                if (this.MoneyChange != null)
+                {
+                    Service.RemoveMoneyChange(this.MoneyChange.MoneyChange);
+                    this.MoneyChange.Account.RemoveMoneyChange(this.MoneyChange);
+                }
                 this.MoneyChange = null;
             });
             this.SaveCommand = new RelayCommand(o =>

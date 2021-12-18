@@ -63,8 +63,13 @@ namespace FinanceManager.ViewModels
             {
                 if (this.VisibilityCheck())
                 {
+                    if(value == string.Empty)
+                    {
+                        value = "The Account without name";
+                    }
                     this._editable.Name = value;
                 }
+                OnPropertyChange();
             }
         }
 

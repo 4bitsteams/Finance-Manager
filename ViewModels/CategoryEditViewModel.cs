@@ -103,6 +103,10 @@ namespace FinanceManager.ViewModels
             {
                 if (this._editableCategory != null)
                 {
+                    if(value == string.Empty)
+                    {
+                        value = "Category without name";
+                    }
                     this._editableCategory.Name = value;
                     OnPropertyChange();
                 }

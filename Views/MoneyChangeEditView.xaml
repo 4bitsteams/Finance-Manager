@@ -53,7 +53,8 @@
                                Text="Balance"
                                Margin="3 5 3 0">
                     </TextBlock>
-                    <TextBox Text="{Binding SupposedImpact, StringFormat={}{0:N2}, Mode=TwoWay}"
+                    <TextBox Name="ImpactText"
+                             Text="{Binding SupposedImpact, StringFormat={}{0:N2}, Mode=TwoWay}"
                              Style="{StaticResource AccountInfoEdit}"
                              MaxLength="9"
                              Margin="3 5 3 0"

@@ -36,7 +36,7 @@
                                    Style="{StaticResource Label}"
                                    Margin="3 5 3 0">
                         </TextBlock>
-                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBox Text="{Binding Name, UpdateSourceTrigger=LostFocus}"
                                  Style="{StaticResource AccountInfoEdit}"
                                  Margin="3 5 3 0"
                                  Height="Auto"
