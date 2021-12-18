@@ -13,7 +13,6 @@ namespace FinanceManager.ViewModels
     public class CategoryEditViewModel : ViewModelBase
     {
         private CategoryViewModel? _editableCategory;
-        private ObservableCollection<ChangeType> changeTypes;
         private ChangeType _currentChangeType;
         private bool _isAvailible;
         private bool _isEditable;
@@ -133,7 +132,16 @@ namespace FinanceManager.ViewModels
                 {
                     this.EditableCategory.Color = value;
                     OnPropertyChange();
+                    OnPropertyChange(nameof(this.ColorBrush));
                 }
+            }
+        }
+
+        public SolidColorBrush ColorBrush
+        {
+            get
+            {
+                return new SolidColorBrush(this.Color);
             }
         }
 

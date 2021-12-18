@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinanceManager.Models
 {
@@ -21,13 +18,14 @@ namespace FinanceManager.Models
         private DateTime _date;
         private string _description;
         private Category _category;
+        private bool _shouldBeCounted = true;
 
         public int Id
         {
             get { return this._id; }
             set { this._id = value; }
         }
-        public double Impact 
+        public double Impact
         {
             get
             {
@@ -65,9 +63,9 @@ namespace FinanceManager.Models
 
         public DateTime Date
         {
-            get 
-            { 
-                return this._date; 
+            get
+            {
+                return this._date;
             }
 
             set
@@ -83,16 +81,23 @@ namespace FinanceManager.Models
                 return this._description;
             }
 
-            set 
-            { 
-                this._description = value; 
+            set
+            {
+                this._description = value;
             }
+        }
+
+        [NotMapped]
+        public bool ShouldBeCounted
+        {
+            get => this._shouldBeCounted;
+            set => this._shouldBeCounted = value;
         }
 
         public Category Category
         {
-            get 
-            { 
+            get
+            {
                 return this._category;
             }
 
@@ -117,7 +122,7 @@ namespace FinanceManager.Models
 
         public ChangeType Type { get; set; }
 
-        public MoneyChange() 
+        public MoneyChange()
         {
             this._impact = 0;
             this._account = null;
@@ -141,7 +146,7 @@ namespace FinanceManager.Models
         {
             if (obj is MoneyChange moneyChange)
             {
-                if(this.Id != null && moneyChange.Id != null && this.Id == moneyChange.Id)
+                if (this.Id != null && moneyChange.Id != null && this.Id == moneyChange.Id)
                 {
                     return true;
                 }

@@ -21,8 +21,8 @@ namespace FinanceManager.ViewModels
         public Category Category
         {
             get
-            { 
-                return _category; 
+            {
+                return _category;
             }
 
             set
@@ -66,7 +66,7 @@ namespace FinanceManager.ViewModels
         public string Name
         {
             get
-            { 
+            {
                 return this._category.Name;
             }
 
@@ -100,11 +100,19 @@ namespace FinanceManager.ViewModels
                 return this._category.Color;
             }
 
-            set 
+            set
             {
                 this._category.Color = value;
                 OnPropertyChange("DbChanged");
                 OnPropertyChange();
+            }
+        }
+
+        public SolidColorBrush ColorBrush
+        {
+            get
+            {
+                return this._category.ColorBrush;
             }
         }
 
@@ -119,6 +127,14 @@ namespace FinanceManager.ViewModels
             {
                 this._category.Type = value;
                 OnPropertyChange();
+            }
+        }
+
+        public double TotalImpact
+        {
+            get
+            {
+                return this._category.TotalImpact;
             }
         }
 
@@ -155,6 +171,7 @@ namespace FinanceManager.ViewModels
             {
                 case nameof(MoneyChangeViewModel.Impact):
                     OnPropertyChange(nameof(this.TotalExpencesImpact));
+                    OnPropertyChange(nameof(this.TotalIncomesImpact));
                     break;
                 default:
                     break;

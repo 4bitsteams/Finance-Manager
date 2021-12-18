@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace FinanceManager.Models
@@ -22,10 +18,10 @@ namespace FinanceManager.Models
             get { return this._id; }
             set { this._id = value; }
         }
-        public string Name 
+        public string Name
         {
             set { this._name = value; }
-            get { return this._name; } 
+            get { return this._name; }
         }
         public string ImageSource
         {
@@ -100,6 +96,27 @@ namespace FinanceManager.Models
             set { this._color = value; }
         }
 
+        [NotMapped]
+        public SolidColorBrush ColorBrush
+        {
+            get { return new SolidColorBrush(Color); }
+        }
+        [NotMapped]
+        public double TotalImpact
+        {
+            get
+            {
+                if (this.Type == ChangeType.Expenses)
+                {
+                    return this.TotalExpencesImpact;
+                }
+                else
+                {
+                    return this.TotalIncomesImpact;
+                }
+            }
+        }
+
         public double TotalExpencesImpact
         {
             get
@@ -107,7 +124,8 @@ namespace FinanceManager.Models
                 double totalExpencesImpact = 0;
                 foreach (MoneyChange change in MoneyChanges)
                 {
-                    if (change.Type == ChangeType.Expenses)
+                    if (change.ShouldBeCounted == true
+                        && change.Type == ChangeType.Expenses)
                     {
                         totalExpencesImpact += change.Impact;
                     }
@@ -124,7 +142,8 @@ namespace FinanceManager.Models
                 double totalIncomesImpact = 0;
                 foreach (MoneyChange change in MoneyChanges)
                 {
-                    if (change.Type == ChangeType.Income)
+                    if (change.ShouldBeCounted == true
+                        && change.Type == ChangeType.Income)
                     {
                         totalIncomesImpact += change.Impact;
                     }
@@ -149,7 +168,7 @@ namespace FinanceManager.Models
             this.ImageSource = ImageSource;
             this.MoneyChanges = MoneyChanges;
             this.Type = type;
-            this.Color= Colors.White;
+            this.Color = Colors.White;
             if (MoneyChanges == null)
             {
                 MoneyChanges = new List<MoneyChange>();

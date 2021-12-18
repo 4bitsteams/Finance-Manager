@@ -11,7 +11,7 @@
              d:DataContext="{d:DesignInstance {x:Type viewModel:MoneyChangeEditViewModel}}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"
@@ -132,14 +132,14 @@
         </Border>
         <StackPanel Grid.Row="0"
                     Grid.Column="1"
-                    Orientation="Vertical"
+                    Orientation="Horizontal"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Right">
             <Button Name="AddButton"
                     Width="50"
                     Height="50"
                     HorizontalAlignment="Right"
-                    Margin="0 5 20 20"
+                    Margin="10 5 20 15"
                     Style="{StaticResource CircleButton}"
                     Content="Add"
                     FontWeight="DemiBold"
@@ -155,12 +155,12 @@
                     Width="50"
                     Height="50"
                     HorizontalAlignment="Right"
-                    Margin="0 5 20 20"
+                    Margin="0 5 20 15"
                     Style="{StaticResource CircleButton}"
                     IsEnabled="{Binding IsVisible}"
                     Content="Remove"
                     FontWeight="DemiBold"
-                    Command="{Binding DeleteAccountCommand}">
+                    Command="{Binding RemoveCommand}">
                 <Button.Background>
                     <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
                 </Button.Background>
@@ -172,7 +172,7 @@
                     Width="50"
                     Height="50"
                     HorizontalAlignment="Right"
-                    Margin="0 5 20 20"
+                    Margin="0 5 20 15"
                     Style="{StaticResource CircleButton}"
                     IsEnabled="{Binding IsVisible}"
                     Content="Edit"

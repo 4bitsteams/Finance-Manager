@@ -50,6 +50,7 @@ namespace FinanceManager.ViewModels
             this.InformationViewCommand = new RelayCommand(o =>
             {
                 this.InformationView.SelectedMoneyChange = null;
+                this.InformationView.CategoriesLoad();
                 this.CurrentView = this.InformationView;
             });
             this.CategoriesViewCommand = new RelayCommand(o =>

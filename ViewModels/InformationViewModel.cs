@@ -13,9 +13,12 @@ namespace FinanceManager.ViewModels
     {
         private MoneyChangeViewModel? _selectedmoneyChange;
         private ObservableCollection<CategoryViewModel> _categories;
+        private ObservableCollection<CategoryViewModel> _incomes;
         private ObservableCollection<CategoryViewModel> _expances;
         private bool _incomesRadioButtonIsChecked;
         private bool _expencesRadioButtonIsChecked;
+        private DateTime _startDate;
+        private DateTime _endDate;
 
         public ObservableCollection<CategoryViewModel> Expences 
         { 
@@ -30,7 +33,45 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public ObservableCollection<CategoryViewModel> Incomes { get; set; }
+        public DateTime From
+        {
+            get { return this._startDate; }
+            set 
+            { 
+                this._startDate = value;
+                OnPropertyChange();
+                CategoriesLoad();
+            }
+        }
+
+        public DateTime To
+        {
+            get { return this._endDate; }
+            set
+            {
+                this._endDate = value;
+                OnPropertyChange();
+                CategoriesLoad();
+            }
+        }
+
+        public DateTime CurrentDate
+        {
+            get => DateTime.Now.Date;
+        }
+
+        public ObservableCollection<CategoryViewModel> Incomes 
+        { 
+            get
+            {
+                return this._incomes;
+            }
+            set
+            {
+                this._incomes = value;
+                OnPropertyChange();
+            }
+        }
 
         public MoneyChangeEditViewModel MoneyChangeEditViewModel { get; set; }
 
@@ -97,6 +138,9 @@ namespace FinanceManager.ViewModels
 
         public InformationViewModel()
         {
+            this.To = DateTime.Now.Date;
+            this.From = DateTime.Now.Date;
+            this.From = this.From.AddDays(-7);
             this.MoneyChangeEditViewModel = new MoneyChangeEditViewModel();
             this.MoneyChangeEditViewModel.PropertyChanged += MoneyChangeEditViewModelChandged;
             this.CategoriesLoad();
@@ -182,21 +226,31 @@ namespace FinanceManager.ViewModels
             }
             foreach (var category in Service.Categories)
             {
+                CategoryViewModel categoryViewModel = new CategoryViewModel(category);
+                categoryViewModel.PropertyChanged += CategoryViewModelPropertyChanged;
+                foreach(MoneyChangeViewModel changeViewModel in categoryViewModel.MoneyChanges)
+                {
+                    if(changeViewModel.Date.Date > this.To || changeViewModel.Date.Date < this.From)
+                    {
+                        changeViewModel.ShouldBeCounted = false;
+                    }
+                    else
+                    {
+                        changeViewModel.ShouldBeCounted = true;
+                    }
+                }
                 if (category.Type == ChangeType.Income)
                 {
-                    CategoryViewModel categoryViewModel = new CategoryViewModel(category);
-                    categoryViewModel.PropertyChanged += CategoryViewModelPropertyChanged;
                     this.Incomes.Add(categoryViewModel);
                 }
                 else if (category.Type == ChangeType.Expenses)
                 {
-                    CategoryViewModel categoryViewModel = new CategoryViewModel(category);
-                    categoryViewModel.PropertyChanged += CategoryViewModelPropertyChanged;
                     this.Expences.Add(categoryViewModel);
                 }
             }
 
             this.NormilizeCategories();
+            OnPropertyChange(nameof(this.ShownMoneyChanges));
         }
 
         public void NormilizeCategories()

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FinanceManager.Models
 {
@@ -15,27 +10,27 @@ namespace FinanceManager.Models
         private List<MoneyChange> _influenceMoneyChanges;
 
         public int Id { get; set; }
-        public string Name 
-        { 
-            set 
-            { 
-                this._name = value; 
+        public string Name
+        {
+            set
+            {
+                this._name = value;
             }
-            get 
-            { 
-                return this._name; 
-            } 
+            get
+            {
+                return this._name;
+            }
         }
-        public double Balance 
-        { 
-            set 
+        public double Balance
+        {
+            set
             {
                 this._balance = value;
             }
-            get 
-            { 
-                return this._balance; 
-            } 
+            get
+            {
+                return this._balance;
+            }
         }
         public bool ToCount
         {
@@ -43,9 +38,9 @@ namespace FinanceManager.Models
             {
                 this._count = value;
             }
-            get 
-            { 
-                return this._count; 
+            get
+            {
+                return this._count;
             }
         }
 
@@ -71,7 +66,7 @@ namespace FinanceManager.Models
         }
 
 
-        public Account() 
+        public Account()
         {
             this._name = string.Empty;
             this._balance = default;
@@ -79,15 +74,15 @@ namespace FinanceManager.Models
             this._influenceMoneyChanges = new List<MoneyChange>();
         }
 
-        public Account (string Name, double Balance, bool ToCount, List<MoneyChange> InfluenceMoneyChanges = null)
+        public Account(string Name, double Balance, bool ToCount, List<MoneyChange> InfluenceMoneyChanges = null)
         {
             this.Name = Name;
             this.Balance = Balance;
             this.ToCount = ToCount;
 
             if (InfluenceMoneyChanges == null)
-            { 
-                InfluenceMoneyChanges = new List<MoneyChange>(); 
+            {
+                InfluenceMoneyChanges = new List<MoneyChange>();
             }
 
             this.InfluenceMoneyChanges = InfluenceMoneyChanges;

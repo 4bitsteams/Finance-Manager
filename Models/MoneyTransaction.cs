@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinanceManager.Models
 {
@@ -37,12 +33,12 @@ namespace FinanceManager.Models
             get { return this._impact; }
         }
         public DateTime PerformDate
-        { 
+        {
             set { this._performDate = value; }
-            get { return this._performDate; } 
+            get { return this._performDate; }
         }
 
-        public MoneyTransaction() 
+        public MoneyTransaction()
         {
             this._description = string.Empty;
             this._categoryID = string.Empty;
@@ -53,7 +49,7 @@ namespace FinanceManager.Models
             //need toget account by its ID
             Account account = new Account();
             account.Balance += this.Impact;
-            if(this.PerformDate == default)
+            if (this.PerformDate == default)
             {
                 this.PerformDate = DateTime.Today;
             }

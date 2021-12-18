@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FinanceManager.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
-using FinanceManager.Models;
 
 namespace FinanceManager.Core
 {

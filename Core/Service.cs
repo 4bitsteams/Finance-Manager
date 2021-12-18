@@ -1,10 +1,7 @@
 ﻿using FinanceManager.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinanceManager.Core
 {
@@ -21,7 +18,7 @@ namespace FinanceManager.Core
 
         public static List<Account> Accounts
         {
-            get 
+            get
             {
                 return _db.Accounts.ToList();
             }
@@ -97,7 +94,7 @@ namespace FinanceManager.Core
 
         public static void ClearCategories()
         {
-            while(Categories.Count > 0)
+            while (Categories.Count > 0)
             {
                 _db.Categories.Remove(Categories[0]);
                 _db.SaveChanges();

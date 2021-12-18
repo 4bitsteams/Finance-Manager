@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FinanceManager.Core
@@ -14,7 +10,7 @@ namespace FinanceManager.Core
 
         public event EventHandler? CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value;}
+            add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
 

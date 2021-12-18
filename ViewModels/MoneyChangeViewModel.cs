@@ -109,6 +109,19 @@ namespace FinanceManager.ViewModels
             }
         }
 
+        public bool ShouldBeCounted
+        {
+            get 
+            { 
+                return this._moneyChange.ShouldBeCounted; 
+            }
+            set
+            { 
+                this._moneyChange.ShouldBeCounted = value;
+                OnPropertyChange();
+            }
+        }
+
         public string Description
         {
             get
