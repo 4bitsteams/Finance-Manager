@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinanceManager.Core;
+﻿using FinanceManager.Core;
 using FinanceManager.Models;
+using System;
+using System.Collections.ObjectModel;
 
 namespace FinanceManager.ViewModels
 {
@@ -20,8 +16,8 @@ namespace FinanceManager.ViewModels
         private DateTime _startDate;
         private DateTime _endDate;
 
-        public ObservableCollection<CategoryViewModel> Expences 
-        { 
+        public ObservableCollection<CategoryViewModel> Expences
+        {
             get
             {
                 return this._expances;
@@ -36,8 +32,8 @@ namespace FinanceManager.ViewModels
         public DateTime From
         {
             get { return this._startDate; }
-            set 
-            { 
+            set
+            {
                 this._startDate = value;
                 OnPropertyChange();
                 CategoriesLoad();
@@ -60,8 +56,8 @@ namespace FinanceManager.ViewModels
             get => DateTime.Now.Date;
         }
 
-        public ObservableCollection<CategoryViewModel> Incomes 
-        { 
+        public ObservableCollection<CategoryViewModel> Incomes
+        {
             get
             {
                 return this._incomes;
@@ -90,13 +86,13 @@ namespace FinanceManager.ViewModels
 
         public MoneyChangeViewModel? SelectedMoneyChange
         {
-            get 
-            { 
-                return this._selectedmoneyChange; 
+            get
+            {
+                return this._selectedmoneyChange;
             }
 
-            set 
-            { 
+            set
+            {
                 this._selectedmoneyChange = value;
                 if (this.MoneyChangeEditViewModel.MoneyChange != this._selectedmoneyChange)
                 {
@@ -230,9 +226,9 @@ namespace FinanceManager.ViewModels
             {
                 CategoryViewModel categoryViewModel = new CategoryViewModel(category);
                 categoryViewModel.PropertyChanged += CategoryViewModelPropertyChanged;
-                foreach(MoneyChangeViewModel changeViewModel in categoryViewModel.MoneyChanges)
+                foreach (MoneyChangeViewModel changeViewModel in categoryViewModel.MoneyChanges)
                 {
-                    if(changeViewModel.Date.Date > this.To || changeViewModel.Date.Date < this.From)
+                    if (changeViewModel.Date.Date > this.To || changeViewModel.Date.Date < this.From)
                     {
                         changeViewModel.ShouldBeCounted = false;
                     }
@@ -257,7 +253,7 @@ namespace FinanceManager.ViewModels
 
         private void DateSetting()
         {
-            switch(DateTime.Now.Date.DayOfWeek)
+            switch (DateTime.Now.Date.DayOfWeek)
             {
                 case DayOfWeek.Monday:
                     this.From = DateTime.Today;
@@ -287,7 +283,7 @@ namespace FinanceManager.ViewModels
 
         public void NormilizeCategories()
         {
-            for(int i = 0; i < this.Expences.Count; i++)
+            for (int i = 0; i < this.Expences.Count; i++)
             {
                 if (this.Expences[i].MoneyChanges.Count == 0)
                 {

@@ -1,11 +1,6 @@
 ﻿using FinanceManager.Core;
 using FinanceManager.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace FinanceManager.ViewModels
@@ -31,7 +26,7 @@ namespace FinanceManager.ViewModels
                 if (this._editableCategory != value)
                 {
                     this._editableCategory = value;
-                    if(this._editableCategory != null)
+                    if (this._editableCategory != null)
                     {
                         this.IsAvailible = true;
                     }
@@ -85,8 +80,8 @@ namespace FinanceManager.ViewModels
                 return this._currentChangeType;
             }
 
-            set 
-            { 
+            set
+            {
                 this._currentChangeType = value;
                 OnPropertyChange(nameof(this.ChangeType));
             }
@@ -94,7 +89,7 @@ namespace FinanceManager.ViewModels
 
         public string Name
         {
-            get 
+            get
             {
                 if (this._editableCategory != null)
                 {

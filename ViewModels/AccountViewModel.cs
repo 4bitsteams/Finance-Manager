@@ -56,7 +56,7 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public AccountViewModel() 
+        public AccountViewModel()
         {
             this._account = new Account();
             this.PropertyChanged += DB_SaveChanges;
@@ -88,7 +88,7 @@ namespace FinanceManager.ViewModels
         {
             if (obj is AccountViewModel acc)
             {
-                if(this.Account == acc.Account)
+                if (this.Account == acc.Account)
                 {
                     return true;
                 }

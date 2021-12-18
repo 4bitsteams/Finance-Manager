@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinanceManager.Core;
+﻿using FinanceManager.Core;
 using FinanceManager.Models;
+using System;
 
 namespace FinanceManager.ViewModels
 {
@@ -16,13 +12,13 @@ namespace FinanceManager.ViewModels
 
         public MoneyChange? MoneyChange
         {
-            get 
-            { 
-                return _moneyChange; 
+            get
+            {
+                return _moneyChange;
             }
 
-            set 
-            { 
+            set
+            {
                 this._moneyChange = value;
                 if (this._moneyChange != null)
                 {
@@ -87,7 +83,7 @@ namespace FinanceManager.ViewModels
                     {
                         this.MoneyChange.Account = value.Account;
                         this._accountViewModel = value;
-                        
+
                     }
                 }
 
@@ -111,12 +107,12 @@ namespace FinanceManager.ViewModels
 
         public bool ShouldBeCounted
         {
-            get 
-            { 
-                return this._moneyChange.ShouldBeCounted; 
+            get
+            {
+                return this._moneyChange.ShouldBeCounted;
             }
             set
-            { 
+            {
                 this._moneyChange.ShouldBeCounted = value;
                 OnPropertyChange();
             }

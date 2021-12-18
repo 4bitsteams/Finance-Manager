@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinanceManager.Models;
-using FinanceManager.Core;
+﻿using FinanceManager.Core;
 
 namespace FinanceManager.ViewModels
 {
@@ -16,8 +10,8 @@ namespace FinanceManager.ViewModels
 
         public bool IsVisible
         {
-            get 
-            { 
+            get
+            {
                 return this._isVisible;
             }
             set
@@ -34,13 +28,13 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public AccountViewModel? Editable 
-        { 
-            get 
-            { 
-                return this._editable; 
+        public AccountViewModel? Editable
+        {
+            get
+            {
+                return this._editable;
             }
-            set 
+            set
             {
                 this._editable = value;
                 if (this.VisibilityCheck())
@@ -56,7 +50,7 @@ namespace FinanceManager.ViewModels
 
         public string Name
         {
-            get 
+            get
             {
                 if (this.VisibilityCheck())
                 {
@@ -76,7 +70,7 @@ namespace FinanceManager.ViewModels
 
         public double Balance
         {
-            get 
+            get
             {
                 if (this.VisibilityCheck())
                 {
@@ -102,7 +96,7 @@ namespace FinanceManager.ViewModels
                 {
                     return this._editable.ToCount;
                 }
-                
+
                 return false;
             }
             set

@@ -1,11 +1,7 @@
 ﻿using FinanceManager.Core;
 using FinanceManager.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinanceManager.ViewModels
 {
@@ -26,8 +22,8 @@ namespace FinanceManager.ViewModels
         public ChangeType CurrentType
         {
             get { return _currentType; }
-            set 
-            { 
+            set
+            {
                 _currentType = value;
                 OnPropertyChange();
             }
@@ -81,7 +77,7 @@ namespace FinanceManager.ViewModels
 
         public MoneyChangeViewModel? MoneyChange
         {
-            get 
+            get
             {
                 return this._moneyChange;
             }
@@ -327,7 +323,7 @@ namespace FinanceManager.ViewModels
                     break;
             }
         }
-            private void MoneyChangeEditPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void MoneyChangeEditPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -344,7 +340,7 @@ namespace FinanceManager.ViewModels
 
         private bool VisibilityCheck()
         {
-            if(this._moneyChange != null)
+            if (this._moneyChange != null)
             {
                 return true;
             }
@@ -372,7 +368,7 @@ namespace FinanceManager.ViewModels
 
         private bool SaveAbilityCheck()
         {
-            if (this.SupposedDescription != null 
+            if (this.SupposedDescription != null
                 && this.SupposedDescription != string.Empty
                 && this.SupposedAccount != null
                 && this.SupposedCategory != null)
@@ -400,7 +396,7 @@ namespace FinanceManager.ViewModels
             {
                 this._availibleAccounts = new ObservableCollection<AccountViewModel>();
             }
-            foreach(var account in Service.Accounts)
+            foreach (var account in Service.Accounts)
             {
                 this._availibleAccounts.Add(new AccountViewModel(account));
             }
@@ -426,6 +422,6 @@ namespace FinanceManager.ViewModels
             OnPropertyChange(nameof(this.AvailibleCategories));
         }
 
-        
+
     }
 }

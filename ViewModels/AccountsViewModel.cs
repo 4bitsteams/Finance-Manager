@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FinanceManager.Core;
+using FinanceManager.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FinanceManager.Core;
-using FinanceManager.Models;
 
 namespace FinanceManager.ViewModels
 {
@@ -16,9 +11,9 @@ namespace FinanceManager.ViewModels
 
         public AccountViewModel SelectedAccount
         {
-            get 
-            { 
-                return this._selectedAccount; 
+            get
+            {
+                return this._selectedAccount;
             }
             set
             {
@@ -55,7 +50,7 @@ namespace FinanceManager.ViewModels
 
         public ObservableCollection<AccountViewModel> Accounts { get; set; }
         public double TotalBalance
-        { 
+        {
             get
             {
                 double totalBalance = 0;
@@ -113,7 +108,7 @@ namespace FinanceManager.ViewModels
 
         public void AccountsLoad()
         {
-            if(this.Accounts != null)
+            if (this.Accounts != null)
             {
                 this.Accounts.Clear();
             }
@@ -163,7 +158,7 @@ namespace FinanceManager.ViewModels
         private void AccountsChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(AccountViewModel.Balance)
-                || e.PropertyName == nameof(AccountViewModel.ToCount)) 
+                || e.PropertyName == nameof(AccountViewModel.ToCount))
             {
                 OnPropertyChange(nameof(this.TotalBalance));
             }

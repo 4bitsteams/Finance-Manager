@@ -1,11 +1,6 @@
 ﻿using FinanceManager.Core;
 using FinanceManager.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinanceManager.ViewModels
 {
@@ -20,13 +15,13 @@ namespace FinanceManager.ViewModels
 
         public CategoryViewModel SelectedCategory
         {
-            get 
-            { 
+            get
+            {
                 return _selectedCategory;
             }
 
-            set 
-            { 
+            set
+            {
                 this._selectedCategory = value;
                 this.CategoryEditViewModel.EditableCategory = this._selectedCategory;
                 OnPropertyChange();
@@ -61,7 +56,7 @@ namespace FinanceManager.ViewModels
             }
         }
 
-        public ObservableCollection<CategoryViewModel> ShownCategories 
+        public ObservableCollection<CategoryViewModel> ShownCategories
         {
             get
             {
