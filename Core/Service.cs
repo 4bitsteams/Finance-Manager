@@ -140,6 +140,7 @@ namespace FinanceManager.Core
                 valueCell.SetCellValue("Transaction amount");
                 descriptionCell.SetCellValue("Description");
                 int i = 1;
+                account.Sorting();
                 foreach(MoneyChange transaction in account.InfluenceMoneyChanges)
                 {
                     if (transaction.Date.Date >= start && transaction.Date.Date <= end)
