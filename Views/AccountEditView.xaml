@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewmodels="clr-namespace:FinanceManager.ViewModels"
              xmlns:local="clr-namespace:FinanceManager.Views"
+             xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=viewmodels:AccountEditViewModel}">
@@ -45,29 +46,58 @@
                              Margin="0 0 0 10">
                         
                     </TextBox>
-                    <CheckBox Content="Shoud be counted" IsChecked="{Binding ToCount, Mode=TwoWay}">
+                    <CheckBox Content="Shoud be counted" 
+                              IsChecked="{Binding ToCount, Mode=TwoWay}"
+                              Margin="0 0 0 10">
                         <CheckBox.Foreground>
                             <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
                         </CheckBox.Foreground>
                     </CheckBox>
+                    <Expander IsEnabled="{Binding SaveAbility}"
+                              Margin="0 0 0 10"
+                              Header="Exel saving">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Date to saving information from:"
+                                     Style="{StaticResource Label}"
+                                     Margin="0 10 0 10">
+                            </TextBlock>
+                            <syncfusion:SfDatePicker Margin="0 0 0 10"
+                                                     Name="StartDatePicker"
+                                                     Value="{Binding StartDate}"
+                                                     MaxDate="{Binding EndDate}">
+
+                            </syncfusion:SfDatePicker>
+                            <TextBlock Text="Date to saving information until:"
+                                     Style="{StaticResource Label}"
+                                     Margin="0 0 0 10">
+                            </TextBlock>
+                            <syncfusion:SfDatePicker Margin="0 0 0 10"
+                                                     Name="EndDatePicker"
+                                                     Value="{Binding EndDate}"
+                                                     MaxDate="{Binding CurrentDate}"
+                                                     MinDate="{Binding StartDate}">
+
+                            </syncfusion:SfDatePicker>
+                            <Button Name="SaveToExelButton"
+                                    Grid.Row="1"
+                                    Style="{StaticResource CircleButton}"
+                                    Height="50"
+                                    Width="50"
+                                    Margin="0 0 0 10"
+                                    HorizontalAlignment="Right"
+                                    IsEnabled="{Binding SaveAbility}">
+                                <Button.Background>
+                                    <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                                </Button.Background>
+                                <TextBlock Style="{StaticResource Label}"
+                                           Text="Save to&#x0d;&#x0a;   Exel">
+                                </TextBlock>
+
+                            </Button>
+                        </StackPanel>
+                    </Expander>
                 </StackPanel>
-                <Button Name="SaveToExelButton"
-                        Grid.Row="1"
-                        Style="{StaticResource CircleButton}"
-                        Height="50"
-                        Width="50"
-                        Margin="10"
-                        HorizontalAlignment="Right"
-                        IsEnabled="{Binding SaveAbility}">
-                    <Button.Background>
-                        <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
-                    </Button.Background>
-                    <TextBlock Style="{StaticResource Label}"
-                               Text="Save to&#x0d;&#x0a;   Exel">
-                        
-                    </TextBlock>
-                    
-                </Button>
+                
             </Grid>
         </Border>
     </Grid>

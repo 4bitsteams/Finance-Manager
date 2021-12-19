@@ -45,7 +45,7 @@ namespace FinanceManager.Views
 
                 if (result == true)
                 {
-                    string strResult = Service.AccountToExel(account, dialog.FileName);
+                    string strResult = Service.AccountToExel(account, dialog.FileName, StartDatePicker.Value, EndDatePicker.Value);
                     if (strResult != null)
                     {
                         MessageBox.Show(strResult);

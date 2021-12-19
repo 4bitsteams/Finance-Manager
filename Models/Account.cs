@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FinanceManager.Models
 {
@@ -101,6 +102,7 @@ namespace FinanceManager.Models
                 {
                     this.Balance += change.Impact;
                 }
+                this.Sorting();
             }
         }
 
@@ -114,6 +116,23 @@ namespace FinanceManager.Models
             else
             {
                 this.Balance += change.Impact;
+            }
+        }
+
+        public void Sorting()
+        {
+            MoneyChange buffer;
+            for(int i = 0; i < this.InfluenceMoneyChanges.Count; i++)
+            {
+                for(int j = 0; j < this.InfluenceMoneyChanges.Count - 1; j++)
+                {
+                    if(this.InfluenceMoneyChanges[j].Date > this.InfluenceMoneyChanges[j + 1].Date)
+                    {
+                        buffer = this.InfluenceMoneyChanges[j + 1];
+                        this.InfluenceMoneyChanges[j + 1] = this.InfluenceMoneyChanges[j];
+                        this.InfluenceMoneyChanges[j] = buffer;
+                    }
+                }
             }
         }
     }

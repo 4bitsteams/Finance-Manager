@@ -123,10 +123,10 @@ namespace FinanceManager.Core
             }
         }
 
-        public static string? AccountToExel(Account account, string fileName)
+        public static string? AccountToExel(Account account, string fileName, DateTime? start, DateTime? end)
         {
             int rowCount = account.InfluenceMoneyChanges.Count;
-            if (rowCount > 0)
+            if (rowCount > 0 && start != null && end != null)
             {
                 XSSFWorkbook workBook = new XSSFWorkbook();
                 XSSFSheet sheet = (XSSFSheet)workBook.CreateSheet("Лист 1");
@@ -142,31 +142,34 @@ namespace FinanceManager.Core
                 int i = 1;
                 foreach(MoneyChange transaction in account.InfluenceMoneyChanges)
                 {
-                    IRow currentRow = sheet.CreateRow(i);
-                    ICell currentCategoryNameCell = currentRow.CreateCell(0);
-                    currentCategoryNameCell.SetCellValue(transaction.Category.Name);
-                    ICell currentDateCell = currentRow.CreateCell(1);
-                    currentDateCell.SetCellValue(transaction.Date.ToString("f"));
-                    ICell currentValueCell = currentRow.CreateCell(2);
-                    if (transaction.Type == ChangeType.Income)
+                    if (transaction.Date.Date >= start && transaction.Date.Date <= end)
                     {
-                        currentValueCell.SetCellValue(transaction.Impact);
-                    }
-                    else
-                    {
-                        currentValueCell.SetCellValue(transaction.Impact - 2*transaction.Impact);
-                    }
-                    ICell currentDescriptionCell = currentRow.CreateCell(3);
-                    if(transaction.Description == string.Empty)
-                    {
-                        currentDescriptionCell.SetCellValue("No Description");
-                    }
-                    else
-                    {
-                        currentDescriptionCell.SetCellValue(transaction.Description);
-                    }
+                        IRow currentRow = sheet.CreateRow(i);
+                        ICell currentCategoryNameCell = currentRow.CreateCell(0);
+                        currentCategoryNameCell.SetCellValue(transaction.Category.Name);
+                        ICell currentDateCell = currentRow.CreateCell(1);
+                        currentDateCell.SetCellValue(transaction.Date.ToString("f"));
+                        ICell currentValueCell = currentRow.CreateCell(2);
+                        if (transaction.Type == ChangeType.Income)
+                        {
+                            currentValueCell.SetCellValue(transaction.Impact);
+                        }
+                        else
+                        {
+                            currentValueCell.SetCellValue(transaction.Impact - 2 * transaction.Impact);
+                        }
+                        ICell currentDescriptionCell = currentRow.CreateCell(3);
+                        if (transaction.Description == string.Empty)
+                        {
+                            currentDescriptionCell.SetCellValue("No Description");
+                        }
+                        else
+                        {
+                            currentDescriptionCell.SetCellValue(transaction.Description);
+                        }
 
-                    i++;
+                        i++;
+                    }
                 }
                 IRow finaleRow = sheet.CreateRow(i);
                 ICell finalResultText = finaleRow.CreateCell(1);

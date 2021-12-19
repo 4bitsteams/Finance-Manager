@@ -1,10 +1,13 @@
 ﻿using FinanceManager.Core;
+using System;
 
 namespace FinanceManager.ViewModels
 {
     public class AccountEditViewModel : ViewModelBase
     {
         private AccountViewModel? _editable;
+        private DateTime _startDate;
+        private DateTime _endDate;
 
         private bool _isVisible;
 
@@ -26,6 +29,23 @@ namespace FinanceManager.ViewModels
                 }
                 OnPropertyChange();
             }
+        }
+
+        public DateTime CurrentDate
+        {
+            get { return DateTime.Now.Date; }
+        }
+
+        public DateTime StartDate
+        {
+            get { return this._startDate;}
+            set { this._startDate = value; OnPropertyChange(); }
+        }
+
+        public DateTime EndDate
+        {
+            get { return this._endDate; }
+            set { this._endDate = value; OnPropertyChange(); }
         }
 
         public AccountViewModel? Editable
@@ -129,9 +149,10 @@ namespace FinanceManager.ViewModels
 
         public AccountEditViewModel()
         {
+            DatesLoading();
         }
 
-        public AccountEditViewModel(AccountViewModel account)
+        public AccountEditViewModel(AccountViewModel account) : this()
         {
             this.Editable = account;
         }
@@ -163,6 +184,12 @@ namespace FinanceManager.ViewModels
 
             this.IsVisible = false;
             return false;
+        }
+
+        private void DatesLoading()
+        {
+            this.StartDate = DateTime.Now.Date.AddDays(1 - DateTime.Now.Date.Day);
+            this.EndDate = DateTime.Now.Date;
         }
     }
 }
