@@ -94,6 +94,13 @@
                                           XBindingPath="Name"
                                           YBindingPath="TotalImpact"
                                           SegmentColorPath="ColorBrush">
+                        <chart:DoughnutSeries.AdornmentsInfo>
+                            <syncfusion:ChartAdornmentInfo SegmentLabelContent="Percentage"
+                                                           ShowLabel="True"
+                                                           Background="Transparent"
+                                                           LabelPosition="Inner">
+                            </syncfusion:ChartAdornmentInfo>
+                        </chart:DoughnutSeries.AdornmentsInfo>
                     </chart:DoughnutSeries>
                 </chart:SfChart>
                 <Grid Grid.Column="3"
