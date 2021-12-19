@@ -42,9 +42,23 @@ namespace FinanceManager.ViewModels
                     OnPropertyChange(nameof(this.Name));
                     OnPropertyChange(nameof(this.Balance));
                     OnPropertyChange(nameof(this.ToCount));
+                    OnPropertyChange(nameof(this.SaveAbility));
                     this._editable.PropertyChanged -= PropertyChanged;
                     this._editable.PropertyChanged += PropertyChanged;
                 }
+            }
+        }
+
+        public bool SaveAbility
+        {
+            get
+            {
+                if (VisibilityCheck())
+                {
+                    return this.Editable.Account.InfluenceMoneyChanges.Count > 0;
+                }
+                
+                return false;
             }
         }
 

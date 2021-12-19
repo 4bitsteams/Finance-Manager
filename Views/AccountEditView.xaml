@@ -8,37 +8,67 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=viewmodels:AccountEditViewModel}">
-    <Grid VerticalAlignment="Stretch"  Width="300" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisConverter}}">
+    <Grid VerticalAlignment="Stretch"
+          Width="300"
+          Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisConverter}}">
 
         <Border VerticalAlignment="Stretch" CornerRadius="5 0 15 5">
             <Border.Background>
                 <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"/>
             </Border.Background>
-            <StackPanel Margin="10">
-                <TextBlock Text="Name"
-                           Style="{StaticResource Label}">
-                </TextBlock>
-                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                         MaxLength="40"
-                         Style="{StaticResource AccountInfoEdit}"
-                         Margin="0 10 0 10">
-                </TextBox>
-                <TextBlock Margin="0 0 0 10"
-                           Text="Balance"
-                           Style="{StaticResource Label}">
-                </TextBlock>
-                <TextBox Name="BalanceTextBox" 
-                         Text="{Binding Balance, Mode=TwoWay, StringFormat=N2}"
-                         MaxLength="9"
-                         Style="{StaticResource AccountInfoEdit}"
-                         Margin="0 0 0 10">
-                </TextBox>
-                <CheckBox Content="Shoud be counted" IsChecked="{Binding ToCount, Mode=TwoWay}">
-                    <CheckBox.Foreground>
-                        <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
-                    </CheckBox.Foreground>
-                </CheckBox>
-        </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                            Margin="10">
+                    <TextBlock Text="Name"
+                               Style="{StaticResource Label}">
+                        
+                    </TextBlock>
+                    <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                             MaxLength="40"
+                             Style="{StaticResource AccountInfoEdit}"
+                             Margin="0 10 0 10">
+                        
+                    </TextBox>
+                    <TextBlock Margin="0 0 0 10"
+                               Text="Balance"
+                               Style="{StaticResource Label}">
+                        
+                    </TextBlock>
+                    <TextBox Name="BalanceTextBox"
+                             Text="{Binding Balance, Mode=TwoWay, StringFormat=N2}"
+                             MaxLength="9"
+                             Style="{StaticResource AccountInfoEdit}"
+                             Margin="0 0 0 10">
+                        
+                    </TextBox>
+                    <CheckBox Content="Shoud be counted" IsChecked="{Binding ToCount, Mode=TwoWay}">
+                        <CheckBox.Foreground>
+                            <SolidColorBrush Color="{StaticResource TextDarkColor}"/>
+                        </CheckBox.Foreground>
+                    </CheckBox>
+                </StackPanel>
+                <Button Name="SaveToExelButton"
+                        Grid.Row="1"
+                        Style="{StaticResource CircleButton}"
+                        Height="50"
+                        Width="50"
+                        Margin="10"
+                        HorizontalAlignment="Right"
+                        IsEnabled="{Binding SaveAbility}">
+                    <Button.Background>
+                        <SolidColorBrush Color="{StaticResource ContentAreaColorLight}"></SolidColorBrush>
+                    </Button.Background>
+                    <TextBlock Style="{StaticResource Label}"
+                               Text="Save to&#x0d;&#x0a;   Exel">
+                        
+                    </TextBlock>
+                    
+                </Button>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

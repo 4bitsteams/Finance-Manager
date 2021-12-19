@@ -30,6 +30,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NPOI" Version="2.5.5" />
     <PackageReference Include="Syncfusion.SfChart.WPF" Version="19.3.0.59" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="19.3.0.59" />
     <PackageReference Include="Syncfusion.SfInput.WPF" Version="19.3.0.59" />
