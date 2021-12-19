@@ -67,6 +67,7 @@
                     </TextBlock>
                     <syncfusion:SfDatePicker x:Name="sfDatePicker" 
                                              SetValueOnLostFocus="True"
+                                             FormatString="dddd, dd MMMM yyyy"
                                              Value="{Binding SupposedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              MaxDate="{Binding CurrentDate}" 
                                              HorizontalAlignment="Stretch"
