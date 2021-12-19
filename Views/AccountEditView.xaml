@@ -54,6 +54,7 @@
                         </CheckBox.Foreground>
                     </CheckBox>
                     <Expander IsEnabled="{Binding SaveAbility}"
+                              IsExpanded="{Binding SaveAbility, Mode=OneWay}"
                               Margin="0 0 0 10"
                               Header="Exel saving">
                         <StackPanel Margin="10">
