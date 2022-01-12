@@ -16,6 +16,7 @@ namespace FinanceManager.Core
         static Service()
         {
             _db = new ApplicationContext();
+            _db.Database.EnsureCreated();
             var categories = _db.Categories.Include(c => c.MoneyChanges).ToList();
             var changes = _db.MoneyChanges.Include(m => m.Category).Include(m => m.Account).ToList();
         }

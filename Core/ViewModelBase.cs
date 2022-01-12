@@ -4,26 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace FinanceManager.Core
 {
-    public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        private bool _disposed;
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
-        protected virtual void Dispose(bool Disposing)
-        {
-            if (_disposed || !Disposing)
-            {
-                return;
-            }
-            _disposed = true;
-            // Disposing Logic
-        }
 
         protected virtual void OnPropertyChange([CallerMemberName] string? name = null)
         {
@@ -41,10 +24,5 @@ namespace FinanceManager.Core
             OnPropertyChange(name);
             return true;
         }
-
-        //~ViewModelBase()
-        //{
-        //    Dispose(false);
-        //}
     }
 }
