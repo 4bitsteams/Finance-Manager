@@ -5,12 +5,12 @@ An application for financial accounting and income, expenses controlling.
 
 The application allows you to perform the following operations:
 
-  create and edit categories of expenses and income;
+    create and edit categories of expenses and income;
   
-  creating, editing, deleting accounts;
+    creating, editing, deleting accounts;
   
-  creating, editing, deleting monetary transactions; 
+    creating, editing, deleting monetary transactions; 
   
-  viewing statistics of expenses, incomes in the form of a diagram;
+    viewing statistics of expenses, incomes in the form of a diagram;
   
-  saving information about transactions for a specific account for an arbitrary period of time in the form of an Excel table, etc.
+    saving information about transactions for a specific account for an arbitrary period of time in the form of an Excel table, etc.
